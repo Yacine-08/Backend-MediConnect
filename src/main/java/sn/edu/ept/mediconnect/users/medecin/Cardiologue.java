@@ -5,6 +5,8 @@ import lombok.*;
 
 @Entity
 @Table(name = "cardiologues")
+@DiscriminatorValue("CARDIOLOGUE")
+@PrimaryKeyJoinColumn(name = "id")
 @Getter
 @Setter
 @NoArgsConstructor

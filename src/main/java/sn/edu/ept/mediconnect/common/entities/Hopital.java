@@ -13,15 +13,20 @@ import sn.edu.ept.mediconnect.users.User;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Hopital extends User {
+public class Hopital {
+    @Id
+    @Column(length = 36)
+    private String id;
+
     @Column(nullable = false, length = 200)
     private String nom;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "adresse_id")
-    private Adresse adresse;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "adresse_id")
+//    private Adresse adresse;
 
-    @Column(name = "type_etablissement", length = 100)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type_etablissement")
     private TypeEtablissement typeEtablissement;
 
     @Column(length = 20)

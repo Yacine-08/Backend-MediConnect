@@ -7,6 +7,8 @@ import sn.edu.ept.mediconnect.users.User;
 
 @Entity
 @Table(name = "medecins")
+@DiscriminatorValue("MEDECIN")
+@PrimaryKeyJoinColumn(name = "id")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,7 +32,7 @@ public class Medecin extends User {
     private Boolean disponible = true;
 
     @Column(name = "is_verify", nullable = false)
-    private Boolean isVerify = false;
+    private Boolean verified = false;
 
 
     public boolean verifierOrdre() {

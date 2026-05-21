@@ -1,0 +1,4531 @@
+{
+  "type": "FeatureCollection",
+  "generator": "overpass-turbo",
+  "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.",
+  "timestamp": "2026-05-20T21:39:30Z",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "relation/5386723",
+        "amenity": "hospital",
+        "check_date": "2024-09-20",
+        "healthcare": "hospital",
+        "landuse": "military",
+        "name": "Hôpital Militaire de Ouakam",
+        "type": "multipolygon",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4814547,
+          14.7150394
+        ]
+      },
+      "id": "relation/5386723"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "relation/5411079",
+        "amenity": "hospital",
+        "emergency": "yes",
+        "healthcare": "hospital",
+        "name": "Centre de Santé de Diofior",
+        "type": "multipolygon",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.6604301,
+          14.1788199
+        ]
+      },
+      "id": "relation/5411079"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "relation/5605265",
+        "amenity": "hospital",
+        "emergency": "yes",
+        "healthcare": "hospital",
+        "name": "Hôpital de la Paix",
+        "type": "multipolygon",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.2763924,
+          12.5688416
+        ]
+      },
+      "id": "relation/5605265"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "relation/11190710",
+        "amenity": "hospital",
+        "building": "yes",
+        "healthcare": "hospital",
+        "layer": "2",
+        "name": "Maternity Clinic",
+        "type": "multipolygon",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.6357799,
+          12.4561971
+        ]
+      },
+      "id": "relation/11190710"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/100202397",
+        "amenity": "hospital",
+        "barrier": "wall",
+        "healthcare": "hospital",
+        "name": "Hôpital Roi Baudouin",
+        "source": "survey",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.3844039,
+          14.7743154
+        ]
+      },
+      "id": "way/100202397"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/166815845",
+        "addr:full": "route de sangalkam",
+        "amenity": "hospital",
+        "beds": "82",
+        "contact:phone": "3.38366327E8",
+        "electricity": "grid",
+        "emergency": "yes",
+        "healthcare": "Ultrasound,X-Ray,Operating,Theater,Laboratory,Imaging Equipment,Emergency Department",
+        "name": "Centre Hospitalier Youssou Mbargane Diop",
+        "operational_status": "operational",
+        "operator": "Cheikh Mbaye SECK",
+        "operator:type": "Public",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "Water works",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.2597138,
+          14.7262154
+        ]
+      },
+      "id": "way/166815845"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/169804526",
+        "addr:city": "Diourbel",
+        "addr:postcode": "21600",
+        "amenity": "hospital",
+        "emergency": "yes",
+        "name": "Centre Hospitalier Régional \"Heinrich Lübke\"",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.2318536,
+          14.6426353
+        ]
+      },
+      "id": "way/169804526"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/191634699",
+        "amenity": "hospital",
+        "emergency": "yes",
+        "healthcare": "hospital",
+        "name": "Hôpital Général de Grand Yoff",
+        "short_name": "HOGGY",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4448433,
+          14.7318249
+        ]
+      },
+      "id": "way/191634699"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/193912968",
+        "addr:street": "Rue 70x55",
+        "amenity": "hospital",
+        "building": "yes",
+        "healthcare": "hospital",
+        "name": "Clinique Fann Hock;SOS Cardio",
+        "source": "bing;survey",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4620348,
+          14.6799027
+        ]
+      },
+      "id": "way/193912968"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/195543006",
+        "amenity": "hospital",
+        "building": "yes",
+        "building:condition": "good",
+        "building:levels": "1",
+        "building:material": "brick",
+        "healthcare": "hospital",
+        "name": "CCBM electonique",
+        "roof:shape": "flat",
+        "source": "Field survey",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.5046454,
+          16.026429
+        ]
+      },
+      "id": "way/195543006"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/196123066",
+        "amenity": "hospital",
+        "emergency": "no",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.5807251,
+          12.5562659
+        ]
+      },
+      "id": "way/196123066"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/196706353",
+        "amenity": "hospital",
+        "name": "Centre Hospitalier de Bignona",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.231975,
+          12.8095688
+        ]
+      },
+      "id": "way/196706353"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/197039417",
+        "amenity": "hospital",
+        "beds": "15",
+        "electricity": "grid",
+        "emergency": "yes",
+        "healthcare": "hospital",
+        "name": "Centre de santé de Grand Dakar",
+        "operational_status": "operational",
+        "operator": "MSAS",
+        "operator:type": "public",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "groundwater",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4540171,
+          14.7059606
+        ]
+      },
+      "id": "way/197039417"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/200758626",
+        "amenity": "hospital",
+        "building": "yes",
+        "building:condition": "good",
+        "building:levels": "0",
+        "building:material": "brick",
+        "healthcare": "hospital",
+        "name": "Centre médical de Garnison Nord",
+        "roof:shape": "flat",
+        "source": "Field survey",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.5032257,
+          16.0346522
+        ]
+      },
+      "id": "way/200758626"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/205490741",
+        "amenity": "hospital",
+        "beds": "36",
+        "electricity": "grid",
+        "emergency": "yes",
+        "healthcare": "Ultrasound,Operating,Theater,Laboratory,Imaging Equipment,Emergency Department",
+        "healthcare_departments:general_medicine": "yes",
+        "healthcare_departments:medical_laboratory": "yes",
+        "healthcare_departments:operating_room": "yes",
+        "name": "District Sanitaire de Kédougou",
+        "operational_status": "operational",
+        "operator": "Etat du sénégal",
+        "operator:type": "government",
+        "place:area_alternate": "Kédougou",
+        "place:description": "Sud-Est du Sénégal (Sénégal Oriental)",
+        "place:nearestlandmark": "Mairie",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "powered pump",
+        "wheelchair": "no",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -12.1835118,
+          12.5561978
+        ]
+      },
+      "id": "way/205490741"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/206818905",
+        "addr:full": "Rue Savers",
+        "amenity": "hospital",
+        "beds": "40",
+        "electricity": "grid",
+        "emergency": "yes",
+        "healthcare": "Ultrasound,X-Ray,Operating,Theater,Laboratory,Imaging Equipment,Emergency Department",
+        "layer": "1",
+        "name": "centre de santé Polyclinique de Rufisque",
+        "operational_status": "operational",
+        "operator": "État du Senegal",
+        "operator:type": "Public",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "Water works",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.2717612,
+          14.7118924
+        ]
+      },
+      "id": "way/206818905"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/207157394",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Hopital Regional de Ziginchor",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.2823823,
+          12.5580293
+        ]
+      },
+      "id": "way/207157394"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/207449367",
+        "addr:city": "dakar",
+        "addr:street": "Avenue Blaise Diagne",
+        "amenity": "hospital",
+        "building": "yes",
+        "healthcare": "hospital",
+        "source": "bing",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4506096,
+          14.682153
+        ]
+      },
+      "id": "way/207449367"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/207989994",
+        "amenity": "hospital",
+        "denomination": "catholic",
+        "healthcare": "hospital",
+        "name": "Hopital Saint Jean de Dieu",
+        "religion": "christian",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.9357507,
+          14.8018023
+        ]
+      },
+      "id": "way/207989994"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/213114764",
+        "addr:city": "Diamniadio",
+        "addr:street": "N2",
+        "amenity": "hospital",
+        "emergency": "yes",
+        "healthcare": "hospital",
+        "healthcare:speciality": "paediatrics;general;ophthalmology;dermatology;dentistry",
+        "name": "Hôpital des Enfants de Diamniadio",
+        "phone": "+221 33 836 35 21, +221 33 879 02 00, +221 78 137 25 75",
+        "website": "https://hed.sn/",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.1641207,
+          14.7272055
+        ]
+      },
+      "id": "way/213114764"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/229557678",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Dallal Jamm",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4097894,
+          14.7728688
+        ]
+      },
+      "id": "way/229557678"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/238426772",
+        "amenity": "hospital",
+        "building": "yes",
+        "name": "Hopital Barthimée",
+        "source": "bing",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.9384758,
+          14.7749213
+        ]
+      },
+      "id": "way/238426772"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/258889747",
+        "amenity": "hospital",
+        "emergency": "yes",
+        "healthcare": "hospital",
+        "name": "Centre de Santé de Kébémer",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.4425104,
+          15.3716675
+        ]
+      },
+      "id": "way/258889747"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/316471185",
+        "addr:full": "Keur serigne bara",
+        "amenity": "hospital",
+        "barrier": "wall",
+        "emergency": "yes",
+        "healthcare": "Ultrasound,X-Ray,Dialysis,Operating,Theater,Laboratory,Imaging Equipment,Intensive Care Unit,Emergency Department",
+        "name": "Centre hospitalier régional Amadou Sakhir Mbaye Louga",
+        "operational_status": "operational",
+        "operator": "MSAS",
+        "operator:type": "public",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.236426,
+          15.6165278
+        ]
+      },
+      "id": "way/316471185"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/321948584",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "SAMU Municipal",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4655884,
+          14.7386473
+        ]
+      },
+      "id": "way/321948584"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/326701668",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "source": "Bing + survey",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.7390259,
+          12.9277417
+        ]
+      },
+      "id": "way/326701668"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/328020271",
+        "amenity": "hospital",
+        "building": "yes",
+        "source": "survey",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.6542424,
+          12.8087882
+        ]
+      },
+      "id": "way/328020271"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/333235613",
+        "amenity": "hospital",
+        "name": "Centre hospitalier de Hann",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4294169,
+          14.7249916
+        ]
+      },
+      "id": "way/333235613"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/334327210",
+        "addr:full": "Tivaouane",
+        "amenity": "hospital",
+        "beds": "26",
+        "electricity": "grid",
+        "emergency": "yes",
+        "healthcare": "Ultrasound,Laboratory,Imaging Equipment,Emergency Department",
+        "name": "Centre de santé El Massamba Sall",
+        "operational_status": "operational",
+        "operator": "Ministère de la Santé et de l'action Sociale",
+        "operator:type": "Public",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "water works",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.8196879,
+          14.9535502
+        ]
+      },
+      "id": "way/334327210"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/334332071",
+        "amenity": "hospital",
+        "emergency": "yes",
+        "name": "Hopital Abdoul Aziz Sy Dabakh",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.8070808,
+          14.9466282
+        ]
+      },
+      "id": "way/334332071"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/338080500",
+        "addr:full": "Parcelles Assainies Unité 17, Zone Commerciale",
+        "addr:subdistrict": "Unité 17",
+        "amenity": "hospital",
+        "beds": "42",
+        "building": "yes",
+        "electricity": "grid",
+        "emergency": "yes",
+        "healthcare": "Ultrasound,Laboratory,Imaging Equipment,Intensive Care Unit,Emergency Department",
+        "name": "Centre de Santé Abdou Aziz Sy Dabakh",
+        "operational_status": "operational",
+        "operator": "Ministère de la Santé et de l'Action Sociale",
+        "operator:type": "Public",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites #hot_microgrant2020",
+        "water_source": "water works",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4385229,
+          14.757443
+        ]
+      },
+      "id": "way/338080500"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/338327821",
+        "addr:full": "Sokone",
+        "amenity": "hospital",
+        "beds": "96",
+        "electricity": "grid",
+        "emergency": "yes",
+        "healthcare": "hospital",
+        "name": "Centre de Santé de Sokone",
+        "operational_status": "operational",
+        "operator": "Ministère de la Santé et de l'Action Sociale",
+        "operator:type": "government",
+        "operator:wikidata": "Q30285491",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "water works",
+        "wheelchair": "limited",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.3688407,
+          13.8787905
+        ]
+      },
+      "id": "way/338327821"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/340429420",
+        "amenity": "hospital",
+        "barrier": "wall",
+        "emergency": "yes",
+        "name": "Hopital de Keur Massar",
+        "source": "SIC-CKM",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.3221023,
+          14.7780164
+        ]
+      },
+      "id": "way/340429420"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/340565098",
+        "addr:city": "Guediawaye",
+        "addr:street": "Sam-Notaire",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Keur Soeurs",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.394816,
+          14.7728904
+        ]
+      },
+      "id": "way/340565098"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/340592171",
+        "addr:full": "1, avenue Nelson Mandela Dakar",
+        "amenity": "hospital",
+        "beds": "420",
+        "electricity": "grid",
+        "emergency": "yes",
+        "healthcare": "Ultrasound,MRI,X-Ray,Dialysis,Operating,Theater,Laboratory,Imaging Equipment,Intensive Care Unit,Emergency Department",
+        "name": "Hopital Principal de Dakar",
+        "operational_status": "operational",
+        "operator": "DOCTEUR BA",
+        "operator:type": "Public",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "Water works",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.434785,
+          14.6612822
+        ]
+      },
+      "id": "way/340592171"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/340976771",
+        "amenity": "hospital",
+        "barrier": "wall",
+        "healthcare": "hospital",
+        "name": "Hopital El Hadj Ibrahima Niass",
+        "source": "Microsoft Bing orbital imagery",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.0755925,
+          14.14063
+        ]
+      },
+      "id": "way/340976771"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/348008962",
+        "addr:city": "Thiés",
+        "addr:postcode": "21000",
+        "addr:street": "RS-01",
+        "amenity": "hospital",
+        "emergency": "no",
+        "name": "Hôpital régional de Thiés",
+        "operator": "Ministère de la Santé",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.9233259,
+          14.7811294
+        ]
+      },
+      "id": "way/348008962"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/351445723",
+        "amenity": "hospital",
+        "barrier": "wall",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -12.2149045,
+          14.4569214
+        ]
+      },
+      "id": "way/351445723"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/353260070",
+        "amenity": "hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -11.9825618,
+          12.7003866
+        ]
+      },
+      "id": "way/353260070"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/360370797",
+        "addr:full": "NDIOUM",
+        "amenity": "hospital",
+        "electricity": "grid",
+        "emergency": "yes",
+        "healthcare": "Laboratory,Imaging Equipment,Emergency Department",
+        "name": "Hopitale Régionale de Ndioum",
+        "operational_status": "operational",
+        "operator": "MINISTÈRE DE LA SANTE ET DE L'ACTION SOCIALE",
+        "operator:type": "public",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "water works",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -14.6539427,
+          16.5091414
+        ]
+      },
+      "id": "way/360370797"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/362222045",
+        "amenity": "hospital",
+        "building": "batiment",
+        "denomination": "sunni",
+        "healthcare": "hospital",
+        "name": "Grande Mosquée de Touba",
+        "name:ar": "الجامع الكبير في توبا",
+        "name:en": "Great Mosque of Touba",
+        "wikidata": "Q3114987",
+        "wikipedia": "en:Great Mosque of Touba",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.8755582,
+          14.8632007
+        ]
+      },
+      "id": "way/362222045"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/368155287",
+        "amenity": "hospital",
+        "barrier": "wall",
+        "name": "Hôpital de Keur Moussa Frontière",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.8661853,
+          13.6228855
+        ]
+      },
+      "id": "way/368155287"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/369699606",
+        "amenity": "hospital",
+        "emergency": "yes",
+        "healthcare": "hospital",
+        "name": "Hopital de Thiaroye",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.3761243,
+          14.7542902
+        ]
+      },
+      "id": "way/369699606"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/372016821",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "surface": "dirt",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -14.0793928,
+          13.8596889
+        ]
+      },
+      "id": "way/372016821"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/374492438",
+        "amenity": "hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.0296167,
+          13.1616921
+        ]
+      },
+      "id": "way/374492438"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/383513345",
+        "amenity": "hospital",
+        "barrier": "wall",
+        "electricity": "grid",
+        "emergency": "yes",
+        "healthcare": "X-Ray,Dialysis,Operating,Theater,Laboratory,Imaging Equipment,Intensive Care Unit,Emergency Department",
+        "name": "Centre Hospitalier National Mathlaboul Fawzaini de Touba",
+        "operational_status": "operational",
+        "operator": "MATAR LO",
+        "operator:type": "Public",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "Powered pump",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.9088385,
+          14.8582741
+        ]
+      },
+      "id": "way/383513345"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/391469181",
+        "addr:city": "Dakar",
+        "addr:full": "Unité d'oncologie pédiatrique B.P. 3001 30 Avenue Pasteurr Dakar Senegal",
+        "addr:street": "Route de la Corniche Est",
+        "amenity": "hospital",
+        "contact:phone": "33 823 58 96",
+        "electricity": "generator",
+        "emergency": "yes",
+        "healthcare:speciality": "general;paediatrics;ophthalmology;gynaecology;emergency;cardiology",
+        "name": "Hôpital Aristide Le Dantec",
+        "operational_status": "operational",
+        "operator": "Ministère de Santé",
+        "operator:type": "Public",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "Water works",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4366947,
+          14.6571018
+        ]
+      },
+      "id": "way/391469181"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/408647760",
+        "amenity": "hospital",
+        "barrier": "wall",
+        "healthcare": "hospital",
+        "name": "Hôpital Magatte Lo",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.1120264,
+          15.4006907
+        ]
+      },
+      "id": "way/408647760"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/409415280",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -14.6743605,
+          15.278902
+        ]
+      },
+      "id": "way/409415280"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/422397104",
+        "addr:city": "Tambacounda",
+        "addr:full": "Liberté",
+        "amenity": "hospital",
+        "beds": "28",
+        "electricity": "grid",
+        "emergency": "yes",
+        "healthcare": "X-Ray,Laboratory",
+        "name": "Centre de santé de Tambacounda",
+        "operational_status": "operational",
+        "operator": "ministere de la santé du senegal",
+        "operator:type": "Public",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "water works",
+        "wheelchair": "limited",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -13.6736563,
+          13.7788515
+        ]
+      },
+      "id": "way/422397104"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/423039888",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Poste de santé Unité 22",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4451774,
+          14.7511854
+        ]
+      },
+      "id": "way/423039888"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/439517325",
+        "amenity": "hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -13.6588187,
+          13.7050279
+        ]
+      },
+      "id": "way/439517325"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/442758784",
+        "amenity": "hospital",
+        "name": "Hopital Médine",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.8136647,
+          14.9430532
+        ]
+      },
+      "id": "way/442758784"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/448509520",
+        "addr:city": "Dakar",
+        "addr:full": "153, RUE Moussé DIOP, Dakar",
+        "addr:street": "Rue Mousse Diop",
+        "amenity": "hospital",
+        "beds": "1",
+        "electricity": "grid",
+        "emergency": "no",
+        "healthcare": "hospital",
+        "name": "Centre medico-social de la fonction publique",
+        "operational_status": "operational",
+        "operator": "Agent de l'état",
+        "operator:type": "Public",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "water works",
+        "wheelchair": "no",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4348137,
+          14.6656937
+        ]
+      },
+      "id": "way/448509520"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/449693178",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -14.7121095,
+          13.291302
+        ]
+      },
+      "id": "way/449693178"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/451800649",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -13.2619427,
+          15.6606941
+        ]
+      },
+      "id": "way/451800649"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/462536655",
+        "amenity": "hospital",
+        "emergency": "no",
+        "healthcare": "hospital",
+        "name": "Ourossogui Hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -13.3301484,
+          15.6039078
+        ]
+      },
+      "id": "way/462536655"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/477690933",
+        "amenity": "hospital",
+        "name": "Hopital de Mbacké",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.9099361,
+          14.7989743
+        ]
+      },
+      "id": "way/477690933"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/477755585",
+        "amenity": "hospital",
+        "emergency": "yes",
+        "healthcare": "hospital",
+        "name": "Hopital Phillipe.M.Senghor",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4736346,
+          14.7560788
+        ]
+      },
+      "id": "way/477755585"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/492559663",
+        "addr:city": "Diamniadio",
+        "addr:street": "Croisement Diamniadio",
+        "amenity": "hospital",
+        "barrier": "wall",
+        "name": "Hopital Elisabeth Diouf de Diamniadio",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.1835897,
+          14.7190416
+        ]
+      },
+      "id": "way/492559663"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/510314841",
+        "amenity": "hospital",
+        "name": "Hôpital Départemental de Mbour",
+        "name:ar": "مستشفى المقاطعة امبور",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.9872102,
+          14.4229364
+        ]
+      },
+      "id": "way/510314841"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/517074222",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -12.4579097,
+          14.9154815
+        ]
+      },
+      "id": "way/517074222"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/531453549",
+        "amenity": "hospital",
+        "description": "L'hopital n'est pas encore fonctionel à ce jour.",
+        "healthcare": "hospital",
+        "layer": "1",
+        "name": "Sheikh Khalifa Bin Hamad Al-Thani",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.3556472,
+          14.7757931
+        ]
+      },
+      "id": "way/531453549"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/532712636",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -13.2843049,
+          13.3177801
+        ]
+      },
+      "id": "way/532712636"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/536378129",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Cabinet Dentaire Akram;Cabinet Medical AFIA",
+        "phone": "772066586",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.8869674,
+          14.8593322
+        ]
+      },
+      "id": "way/536378129"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/560306242",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Temporary Dar Salaam Health Post",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -12.7899421,
+          12.6287832
+        ]
+      },
+      "id": "way/560306242"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/560766277",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "District Health Center",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -11.7700093,
+          12.8338866
+        ]
+      },
+      "id": "way/560766277"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/584069506",
+        "amenity": "hospital",
+        "name": "Hôpital Régional de Tambacounda",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -13.6726093,
+          13.7532785
+        ]
+      },
+      "id": "way/584069506"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/587057039",
+        "addr:full": "Nord, Saint-Louis, Sénégal",
+        "amenity": "hospital",
+        "beds": "16",
+        "building:condition": "good",
+        "building:levels": "0",
+        "building:material": "brick",
+        "dispensing": "no",
+        "electricity": "grid",
+        "emergency": "yes",
+        "healthcare": "MRI,Laboratory,Imaging Equipment,Emergency Department",
+        "insurance:health": "private;public",
+        "name": "Centre médical Garnison Saint-Louis",
+        "operational_status": "operational",
+        "operator": "Zone militaire n°2 Garnison",
+        "operator:type": "Government",
+        "osm_id": "e476f2f5-20d5-4d4a-aefa-d0c09c5ac100",
+        "roof:shape": "gabled",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "water works",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.5031953,
+          16.034427
+        ]
+      },
+      "id": "way/587057039"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/625101013",
+        "amenity": "hospital",
+        "building": "hospital",
+        "building:condition": "good",
+        "building:levels": "0",
+        "building:material": "brick",
+        "healthcare": "hospital",
+        "name": "Centre médical Garnison Saint-Louis",
+        "roof:shape": "flat",
+        "source": "field survey",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.5033545,
+          16.0343142
+        ]
+      },
+      "id": "way/625101013"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/628809925",
+        "amenity": "hospital",
+        "building": "yes",
+        "building:condition": "average",
+        "building:levels": "0",
+        "building:material": "brick",
+        "healthcare": "hospital",
+        "name": "District sanitaire de Saint-Louis Qrt Hydrobase",
+        "roof:shape": "flat",
+        "source": "field survey Opencities Africa Saint Louis",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.5094887,
+          16.0038302
+        ]
+      },
+      "id": "way/628809925"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/645478408",
+        "addr:full": "Quartier abattoir lot numéro 3 route hôtel Asta kébé",
+        "amenity": "hospital",
+        "electricity": "grid",
+        "emergency": "yes",
+        "healthcare": "Ultrasound,X-Ray,Operating,Theater,Laboratory",
+        "name": "Plateau médical Fama",
+        "operational_status": "operational",
+        "operator": "Dr mamadou thiongane",
+        "operator:type": "Private",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "water works",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -13.6697476,
+          13.7625712
+        ]
+      },
+      "id": "way/645478408"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/658411210",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "poste de santé municipal 1",
+        "source": "survey",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.3959069,
+          14.7480876
+        ]
+      },
+      "id": "way/658411210"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/658714132",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Poste de santé Croix rouge",
+        "source": "survey",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.3920028,
+          14.7516924
+        ]
+      },
+      "id": "way/658714132"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/661000238",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Clinique Milogo",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -13.6672623,
+          13.7622313
+        ]
+      },
+      "id": "way/661000238"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/670193787",
+        "amenity": "hospital",
+        "barrier": "wall",
+        "source": "survey",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.6386811,
+          14.1486499
+        ]
+      },
+      "id": "way/670193787"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/744629162",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Poste de Santé de Kabendou",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -14.1179784,
+          12.914527
+        ]
+      },
+      "id": "way/744629162"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/789975181",
+        "amenity": "hospital",
+        "building": "hospital",
+        "healthcare": "hospital",
+        "name": "BARTHEMY",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.9356561,
+          14.7759673
+        ]
+      },
+      "id": "way/789975181"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/789978493",
+        "addr:full": "Saly Center, route de Ngaparou",
+        "amenity": "hospital",
+        "beds": "10",
+        "contact:phone": "2.2134E11",
+        "electricity": "grid",
+        "emergency": "yes",
+        "healthcare": "MRI,Laboratory,Imaging Equipment,Intensive Care Unit,Emergency Department",
+        "name": "Clinique du Littoral",
+        "operational_status": "operational",
+        "operator": "Audrey CASAHOUS",
+        "operator:type": "private",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "Water works",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.0391584,
+          14.4519186
+        ]
+      },
+      "id": "way/789978493"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/789979690",
+        "addr:full": "TOUBACOUTA",
+        "amenity": "hospital",
+        "beds": "4",
+        "check_date": "2025-04-26",
+        "electricity": "grid",
+        "emergency": "no",
+        "healthcare": "hospital",
+        "name": "Poste de santé Toubacouta",
+        "operational_status": "operational",
+        "operator": "Ministere de santé et de l'action sociale",
+        "operator:type": "Public",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "well",
+        "wheelchair": "no",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.4741945,
+          13.7865551
+        ]
+      },
+      "id": "way/789979690"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/789984265",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Poste de sante Guinaw rail Sud",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.3916198,
+          14.7490896
+        ]
+      },
+      "id": "way/789984265"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/789986970",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Maternité de Grand-Yoff;Poste de santé Grand-Yoff 2",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4511452,
+          14.7363415
+        ]
+      },
+      "id": "way/789986970"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/789987923",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Institut Pasteur",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4669308,
+          14.7457415
+        ]
+      },
+      "id": "way/789987923"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/789993765",
+        "alt_name": "Centre Hospitalier Régional de Saint-Louis",
+        "amenity": "hospital",
+        "beds": "223",
+        "building": "hospital",
+        "contact:phone": "+221775220240",
+        "dispensing": "no",
+        "electricity": "grid",
+        "emergency": "yes",
+        "health_amenity:type": "x_ray;ultrasound;operating_theater;dialysis;laboratory;imaging_equipment;intensive_care_unit;emergency_department",
+        "healthcare": "hospital",
+        "insurance:health": "public;private",
+        "name": "Hôpital régional de Saint-Louis",
+        "opening_hours": "24/7",
+        "operational_status": "operational",
+        "operator": "Ministère de la Santé et de l'Action Sociale",
+        "operator:type": "government",
+        "operator:wikidata": "Q30285491",
+        "osm_id": "a775556d-e3fb-44d4-9ed9-e2024e4bae3f",
+        "source": "bing,survey",
+        "staff_count:doctors": "47",
+        "staff_count:nurses": "254",
+        "water_source": "water_works",
+        "wheelchair": "no",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.505971,
+          16.0228415
+        ]
+      },
+      "id": "way/789993765"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/806005288",
+        "addr:full": "Sénégal, Guédiawaye, Wakhinane Nimzatte II",
+        "amenity": "hospital",
+        "electricity": "grid",
+        "emergency": "no",
+        "healthcare": "hospital",
+        "name": "District Sanitaire Wakhinane Nimzatt II",
+        "operational_status": "operational",
+        "operator": "MINISTERE DE LA SANTE ET DE L'ACTION SOCIALE",
+        "operator:type": "public",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "Water works",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.3717097,
+          14.775967
+        ]
+      },
+      "id": "way/806005288"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/806007261",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4707985,
+          14.7299417
+        ]
+      },
+      "id": "way/806007261"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/806008452",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Polyclinique de la Médina",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4456371,
+          14.6781053
+        ]
+      },
+      "id": "way/806008452"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/806008678",
+        "amenity": "hospital",
+        "emergency": "no",
+        "healthcare": "hospital",
+        "name": "Centre Medico Sportif Fabrique D'Espoir",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.3667356,
+          14.786038
+        ]
+      },
+      "id": "way/806008678"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/806017677",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "healthcare_departments:general_medicine": "no",
+        "healthcare_departments:medical_laboratory": "no",
+        "healthcare_departments:operating_room": "no",
+        "name": "Infirmerie Militaire de Kédougou",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -12.1890091,
+          12.5546804
+        ]
+      },
+      "id": "way/806017677"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/806021900",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Hopital d'Elinkine",
+        "source": "bing",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.6626325,
+          12.5081238
+        ]
+      },
+      "id": "way/806021900"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/806022422",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Centre de Premiers Secours",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -13.3764664,
+          13.376638
+        ]
+      },
+      "id": "way/806022422"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/806024481",
+        "addr:city": "Rufisque",
+        "addr:full": "Keury Kao derrière la SENELEC à côté de l'usine GINA en face de la mer, Rufisque, Dakar",
+        "addr:street": "Rue Saver",
+        "amenity": "hospital",
+        "electricity": "grid",
+        "email": "pasteurdakar@pasteur.sn",
+        "emergency": "yes",
+        "healthcare": "Ultrasound,MRI,Operating,Theater,Laboratory,Imaging Equipment,Intensive Care Unit,Emergency Department",
+        "healthcare:speciality": "general;gynaecology;dermatology",
+        "name": "Polyclinique Louis Pasteur ''La Référence''",
+        "operational_status": "operational",
+        "operator": "Docteur Serigne Falilou Samb",
+        "operator:type": "Private",
+        "phone": "221 33 839 92 00/221 33 839 92 10",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "Water works",
+        "website": "http://www.pasteur.sn/",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.270406,
+          14.711646
+        ]
+      },
+      "id": "way/806024481"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/806025203",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -11.7556939,
+          12.8341909
+        ]
+      },
+      "id": "way/806025203"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/806025698",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Centre de Santé de Dodji",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -14.9504461,
+          15.5357517
+        ]
+      },
+      "id": "way/806025698"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/806027345",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Clinique Suma Assistance",
+        "operator:type": "private",
+        "source": "survey",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4698793,
+          14.7104835
+        ]
+      },
+      "id": "way/806027345"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/806027578",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Maternité de Badiate-Grand",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.392519,
+          12.5212405
+        ]
+      },
+      "id": "way/806027578"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/806028888",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Hopital Regional de Kolda",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -14.9190926,
+          12.8852457
+        ]
+      },
+      "id": "way/806028888"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/806030328",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.6684432,
+          13.9160926
+        ]
+      },
+      "id": "way/806030328"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/806777909",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Institut de Prevoyance Retraite du Senegal Centre Medico-Social de Pikine",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4065897,
+          14.7480784
+        ]
+      },
+      "id": "way/806777909"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/806778299",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Poste de sante Catholique Notre Dame du Cap-Vert",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4018889,
+          14.7482668
+        ]
+      },
+      "id": "way/806778299"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/806779326",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Hopital psychiatrique de thiaroye",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.3539093,
+          14.7430276
+        ]
+      },
+      "id": "way/806779326"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/806780000",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Maternité Dalifort Foirail",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4176162,
+          14.7405648
+        ]
+      },
+      "id": "way/806780000"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/806780374",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Poste de Santé Sourah",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.864556,
+          14.8695485
+        ]
+      },
+      "id": "way/806780374"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/807140531",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -12.8197899,
+          12.6356568
+        ]
+      },
+      "id": "way/807140531"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/807143034",
+        "amenity": "hospital",
+        "beds": "20",
+        "electricity": "grid",
+        "emergency": "yes",
+        "healthcare": "hospital",
+        "name": "Poste de santé de Bambilor",
+        "operational_status": "operational",
+        "operator": "République du Sénégal",
+        "operator:type": "Public",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "water works",
+        "wheelchair": "no",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.1860098,
+          14.8011082
+        ]
+      },
+      "id": "way/807143034"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/807148683",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "La Croix Bleue",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4512597,
+          14.7228698
+        ]
+      },
+      "id": "way/807148683"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/807158844",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Poste de santé",
+        "operator": "Mairie",
+        "source": "survey",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.9771522,
+          12.8351792
+        ]
+      },
+      "id": "way/807158844"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/807159273",
+        "addr:street": "Route Lompoul - Touba",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Poste de santé Serigne Mouhamadou Moustapha Mbacke",
+        "phone": "339781259",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.8824056,
+          14.8750603
+        ]
+      },
+      "id": "way/807159273"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/807159736",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.3482857,
+          15.3473568
+        ]
+      },
+      "id": "way/807159736"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/814138705",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Hopital COUD",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4631544,
+          14.6898514
+        ]
+      },
+      "id": "way/814138705"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/814274652",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name:en": "Poste de Sante de Notto",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.880652,
+          14.7025286
+        ]
+      },
+      "id": "way/814274652"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/814611168",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Institut de Pediatrie Social IPS Mouhamadou Fall",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.3888619,
+          14.7687976
+        ]
+      },
+      "id": "way/814611168"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/814626444",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -13.1846999,
+          15.4847994
+        ]
+      },
+      "id": "way/814626444"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/814626445",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Case de Santé Saré Dickel",
+        "name:en": "Saré Dickel Health Hut",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -14.6401756,
+          13.0376313
+        ]
+      },
+      "id": "way/814626445"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/854270546",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4914879,
+          14.720712
+        ]
+      },
+      "id": "way/854270546"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/894548102",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Centre de santé darou salam",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.8921013,
+          14.8117292
+        ]
+      },
+      "id": "way/894548102"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/925374782",
+        "amenity": "hospital",
+        "electricity": "grid",
+        "emergency": "yes",
+        "healthcare": "Ultrasound,X-Ray,Operating,Theater,Laboratory,Imaging Equipment,Intensive Care Unit,Emergency Department",
+        "name": "Centre hospitalier national pour enfant Albert Royer",
+        "operational_status": "operational",
+        "operator": "Gouvernement",
+        "operator:type": "public",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "Water works",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4649264,
+          14.6922308
+        ]
+      },
+      "id": "way/925374782"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/925374785",
+        "amenity": "hospital",
+        "emergency": "yes",
+        "healthcare": "hospital",
+        "name": "Hopital de Fann",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4666171,
+          14.6931968
+        ]
+      },
+      "id": "way/925374785"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/948540122",
+        "addr:full": "Quartier Escale Kaffrine",
+        "amenity": "hospital",
+        "beds": "71",
+        "electricity": "grid",
+        "emergency": "yes",
+        "healthcare": "hospital",
+        "healthcare:speciality": "emergency;general;radiology;biology",
+        "name": "EPS (Etablissement Publique de Santé) niveau 1 de Kaffrine",
+        "operational_status": "operational",
+        "operator": "Ministère de la santé",
+        "operator:type": "public",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "Powered pump",
+        "website": "https://www.sante.gouv.sn/mediatheque/videotheques/pr%C3%A9sentation-de-l%E2%80%99h%C3%B4pital-thierno-birahim-ndao-de-kaffrine",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.5569385,
+          14.0989168
+        ]
+      },
+      "id": "way/948540122"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/948540133",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Hôpital Régional Thierno Birahim Ndao",
+        "start_date": "2021-05-30",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.5267575,
+          14.1045223
+        ]
+      },
+      "id": "way/948540133"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/949531505",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Hôpital de Ninéfécha",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -12.4767377,
+          12.5598738
+        ]
+      },
+      "id": "way/949531505"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/956361445",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "healthcare:speciality": "general",
+        "name": "poste de sante",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.986058,
+          14.4429838
+        ]
+      },
+      "id": "way/956361445"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/963931256",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4678687,
+          14.7102801
+        ]
+      },
+      "id": "way/963931256"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/974881471",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.0613135,
+          15.5308437
+        ]
+      },
+      "id": "way/974881471"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/975046117",
+        "addr:city": "Mbour",
+        "addr:housenumber": "Grand Mbour",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "healthcare:speciality": "maternity",
+        "name": "Maternité Muriel Africa",
+        "operator": "Centre de Santé de Grand Mbour",
+        "operator:type": "public",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.9798044,
+          14.4352219
+        ]
+      },
+      "id": "way/975046117"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/975046390",
+        "addr:city": "Mbour",
+        "addr:street": "Grand Mbour 2",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "healthcare:speciality": "general",
+        "name": "Centre de Santé de Grand Mbour",
+        "operator": "Etat",
+        "operator:type": "public",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.9797904,
+          14.4350352
+        ]
+      },
+      "id": "way/975046390"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/980175730",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Pharmacie LES PARAS",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.3703306,
+          14.7552055
+        ]
+      },
+      "id": "way/980175730"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1032495939",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "TERRAIN DE JEU",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.4912894,
+          16.0047351
+        ]
+      },
+      "id": "way/1032495939"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1046938021",
+        "amenity": "hospital",
+        "healthcare": "clinic",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -11.477983,
+          12.9264985
+        ]
+      },
+      "id": "way/1046938021"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1066739290",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.8058712,
+          14.4387979
+        ]
+      },
+      "id": "way/1066739290"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1066739981",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.8064677,
+          14.4389871
+        ]
+      },
+      "id": "way/1066739981"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1078044358",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "healthcare:speciality": "general",
+        "name": "HP",
+        "operator": "KH",
+        "operator:type": "private",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.2800284,
+          14.7438966
+        ]
+      },
+      "id": "way/1078044358"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1098945805",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.9362413,
+          14.7959133
+        ]
+      },
+      "id": "way/1098945805"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1136757383",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.0771518,
+          14.5001381
+        ]
+      },
+      "id": "way/1136757383"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1147969157",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Centre de Santé",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.1587795,
+          14.0786729
+        ]
+      },
+      "id": "way/1147969157"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1153920063",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "healthcare:speciality": "maternity",
+        "name": "Poste de Santé Ourour",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.0309017,
+          14.3271608
+        ]
+      },
+      "id": "way/1153920063"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1170962074",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -12.6619167,
+          13.6810649
+        ]
+      },
+      "id": "way/1170962074"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1175609797",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -13.5824254,
+          13.8047976
+        ]
+      },
+      "id": "way/1175609797"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1177235556",
+        "addr:city": "Commune de Grand Yoff",
+        "addr:street": "rue GY-189",
+        "amenity": "hospital",
+        "building:levels": "0",
+        "healthcare": "hospital",
+        "name": "Centre médico-social Keru Yakaar",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4570535,
+          14.7385333
+        ]
+      },
+      "id": "way/1177235556"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1228320063",
+        "addr:city": "Commune de Jaxaay - Parcelles",
+        "addr:street": "Route jaxaay 2",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "healthcare:speciality": "general;vaccination",
+        "name": "District sanitaire Cite Gendarmerie",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.2805393,
+          14.7631341
+        ]
+      },
+      "id": "way/1228320063"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1339778867",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -14.0715788,
+          16.3887559
+        ]
+      },
+      "id": "way/1339778867"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1343047384",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "case de santé",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.7941855,
+          14.4031265
+        ]
+      },
+      "id": "way/1343047384"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1361557918",
+        "addr:city": "Goudomp",
+        "amenity": "hospital",
+        "building": "yes",
+        "healthcare": "hospital",
+        "name": "District Sanitaire de Godomp",
+        "not:operator:wikidata": "Q30285491",
+        "operator": "Ministère de la Santé",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.8823577,
+          12.5666235
+        ]
+      },
+      "id": "way/1361557918"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1380246632",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Centre de Santé de Malicounda Ngoukhoudj",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.9539596,
+          14.4573487
+        ]
+      },
+      "id": "way/1380246632"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1514690383",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Poste de santé koumbal",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.0178336,
+          14.0172295
+        ]
+      },
+      "id": "way/1514690383"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2612353062",
+        "amenity": "hospital",
+        "name": "Imagerie medicale"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4726389,
+          14.7026955
+        ]
+      },
+      "id": "node/2612353062"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2612353063",
+        "amenity": "hospital",
+        "name": "Wari"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.472474,
+          14.7028627
+        ]
+      },
+      "id": "node/2612353063"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3777442010",
+        "amenity": "hospital",
+        "healthcare": "yes",
+        "name": "Centre de Santé de Kolda (Sikilo)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -14.9381684,
+          12.8986076
+        ]
+      },
+      "id": "node/3777442010"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4002392713",
+        "addr:full": "Université Gaston Berger de Saint Louis",
+        "amenity": "hospital",
+        "beds": "7",
+        "contact:phone": "+221771691174",
+        "dispensing": "no",
+        "electricity": "grid",
+        "emergency": "yes",
+        "health_amenity:type": "laboratory;emergency_department",
+        "healthcare": "doctor;pharmacy;hospital;dentist;laboratory;birthing_centre",
+        "insurance:health": "no",
+        "name": "Service Medico social des Etudiants CROUS",
+        "opening_hours": "24/7",
+        "operational_status": "operational",
+        "operator": "Ministere de l'enseignement supérieure",
+        "operator:type": "public",
+        "osm_id": "b7321bc3-bf62-40aa-a0b3-9e25881e2b43",
+        "staff_count:doctors": "2",
+        "staff_count:nurses": "6",
+        "water_source": "powered_pump",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.4265564,
+          16.0667319
+        ]
+      },
+      "id": "node/4002392713"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4386416389",
+        "addr:full": "Saint louis",
+        "amenity": "hospital",
+        "contact:phone": "773134228",
+        "electricity": "grid",
+        "emergency": "no",
+        "healthcare": "pharmacy, hospital, doctor, laboratory",
+        "healthcare:equipment": "laboratory, imaging equipment",
+        "insurance:health": "public",
+        "name": "centre de sante amadou malick guaye",
+        "opening_hours": "Mo-Fr 24/24; PH off",
+        "operational_status": "operational",
+        "operator": "Ministère de la santé et de l'action sociale",
+        "operator:type": "public",
+        "osm_id": "13f9452a-e180-4a82-a11c-845a2ea62e3e",
+        "source": "#senegal #covid-19 #emergency-health-data-validation #healthsites",
+        "water_source": "well",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -14.9534247,
+          16.6427296
+        ]
+      },
+      "id": "node/4386416389"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4442539089",
+        "amenity": "hospital",
+        "electricity": "grid",
+        "name": "District Sanitaire de Thionck-Essyl",
+        "operational_status": "operational",
+        "operator": "DR. Abdel Kader S . SARR",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.5096061,
+          12.7937854
+        ]
+      },
+      "id": "node/4442539089"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4585935302",
+        "addr:full": "Université Gaston Berger de Saint Louis",
+        "addr:street": "Université Gaston Berger",
+        "amenity": "hospital",
+        "beds": "6",
+        "contact:phone": "+221776806969",
+        "dispensing": "no",
+        "electricity": "grid",
+        "emergency": "yes",
+        "health_amenity:type": "laboratory",
+        "healthcare": "hospital",
+        "insurance:health": "no",
+        "name": "CERPAD (Centre de Recherche et de Prise en charge Ambulatoire de la Drépanocytose)",
+        "opening_hours": "Mo-Fr 08:00-17:00; PH off",
+        "operational_status": "operational",
+        "operator": "Ministère de la Santé et de l'Action Sociale",
+        "operator:type": "government",
+        "operator:wikidata": "Q30285491",
+        "osm_id": "81c03458-f29a-4d4d-80b5-ce036692d678",
+        "staff_count:doctors": "5",
+        "staff_count:nurses": "7",
+        "url": "Http://ugb.sn",
+        "water_source": "powered_pump",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.4332574,
+          16.0493031
+        ]
+      },
+      "id": "node/4585935302"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4816503104",
+        "amenity": "hospital",
+        "health_facility:type": "office",
+        "name": "Dr Alakpo",
+        "phone": "776419216"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4624214,
+          14.7545003
+        ]
+      },
+      "id": "node/4816503104"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4818852829",
+        "amenity": "hospital",
+        "health_facility:type": "office",
+        "name": "Naby Touré Frères"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4131898,
+          14.7674584
+        ]
+      },
+      "id": "node/4818852829"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4861527021",
+        "amenity": "hospital",
+        "fixme": "Check location, no buildings visible at point...",
+        "healthcare": "hospital"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -11.695658,
+          13.0820118
+        ]
+      },
+      "id": "node/4861527021"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5238216585",
+        "amenity": "hospital",
+        "check_date": "2024-03-15",
+        "healthcare": "hospital",
+        "name": "Hôpital Militaire de Ouakam",
+        "phone": "338603813",
+        "website": "https://www.hopitalmilitaireouakam.sn"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4816358,
+          14.7151889
+        ]
+      },
+      "id": "node/5238216585"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5242687754",
+        "amenity": "hospital",
+        "health_facility:type": "office",
+        "name": "Touba Laboratoire d'analyses Medicales"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.8780197,
+          14.8585207
+        ]
+      },
+      "id": "node/5242687754"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5243078649",
+        "amenity": "hospital",
+        "health_facility:type": "office",
+        "name": "Complexe Sanitaire Cheikh Ah. Bamba"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.8946407,
+          14.8572669
+        ]
+      },
+      "id": "node/5243078649"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6061605039",
+        "amenity": "hospital",
+        "healthcare": "hospital"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.4584814,
+          16.0279747
+        ]
+      },
+      "id": "node/6061605039"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6630804885",
+        "amenity": "hospital",
+        "beds": "10",
+        "contact:phone": "+221774252374",
+        "dispensing": "no",
+        "electricity": "grid",
+        "emergency": "yes",
+        "health_amenity:type": "emergency_department",
+        "healthcare": "hospital",
+        "healthcare:speciality": "birthing_centre;pharmacy",
+        "insurance:health": "no",
+        "name": "Poste de santé pikine sor",
+        "opening_hours": "24/7",
+        "operational_status": "operational",
+        "operator": "Ministère de la Santé et de l'Action Sociale",
+        "operator:type": "government",
+        "operator:wikidata": "Q30285491",
+        "osm_id": "dd794e33-bbc6-4a1b-9cb1-575b5dbd0800",
+        "staff_count:doctors": "1",
+        "staff_count:nurses": "1",
+        "water_source": "water_works",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.4954058,
+          15.9989193
+        ]
+      },
+      "id": "node/6630804885"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6630806785",
+        "amenity": "hospital",
+        "beds": "25",
+        "contact:phone": "+221339613229",
+        "dispensing": "no",
+        "electricity": "grid",
+        "emergency": "yes",
+        "health_amenity:type": "emergency_department;laboratory",
+        "healthcare": "hospital",
+        "healthcare:speciality": "birthing_centre;pharmacy;dentist;laboratory;optometrist",
+        "insurance:health": "private;public",
+        "name": "Centre de santé de Saint Louis",
+        "opening_hours": "24/7",
+        "operational_status": "operational",
+        "operator": "Ministère de la Santé et de l'Action Sociale",
+        "operator:type": "government",
+        "operator:wikidata": "Q30285491",
+        "osm_id": "719e5b7b-227a-4679-a711-21b87057823e",
+        "staff_count:doctors": "3",
+        "staff_count:nurses": "10",
+        "water_source": "water_works",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.4933452,
+          16.0111015
+        ]
+      },
+      "id": "node/6630806785"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6630813388",
+        "amenity": "hospital",
+        "dispensing": "no",
+        "electricity": "grid",
+        "emergency": "no",
+        "health_amenity:type": "emergency_department;ultrasound",
+        "healthcare": "hospital",
+        "insurance:health": "private",
+        "name": "Poste de santé de khor",
+        "opening_hours": "Mo-Fr 08:00-18:00; PH off",
+        "operational_status": "operational",
+        "operator": "Ministère de la Santé et de l'Action Sociale",
+        "operator:type": "government",
+        "operator:wikidata": "Q30285491",
+        "osm_id": "a7ab064a-63e5-43d7-a5d6-87898f4732d1",
+        "staff_count:doctors": "1",
+        "water_source": "powered_pump",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.4715159,
+          16.0331234
+        ]
+      },
+      "id": "node/6630813388"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7828839990",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "#cognizantindia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.2772125,
+          12.5696414
+        ]
+      },
+      "id": "node/7828839990"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8132683957",
+        "amenity": "hospital",
+        "beds": "44",
+        "electricity": "grid",
+        "emergency": "yes",
+        "healthcare": "Ultrasound,X-Ray,Operating,Theater,Laboratory,Imaging Equipment,Intensive Care Unit,Emergency Department",
+        "name": "Centre de Santé de Nioro du Rip",
+        "operational_status": "operational",
+        "operator": "MINISTERE DE LA SANTE",
+        "operator:type": "public",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "water works",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.7755584,
+          13.7500692
+        ]
+      },
+      "id": "node/8132683957"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8132683962",
+        "amenity": "hospital",
+        "electricity": "grid",
+        "emergency": "yes",
+        "healthcare": "X-Ray,Dialysis,Operating,Theater,Laboratory,Imaging Equipment,Intensive Care Unit,Emergency Department",
+        "name": "centre hospitalier national mathlaboul fawzaini de touba",
+        "operational_status": "operational",
+        "operator": "MATAR LO",
+        "operator:type": "Public",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "Powered pump",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.9087225,
+          14.8583869
+        ]
+      },
+      "id": "node/8132683962"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8132683966",
+        "amenity": "hospital",
+        "electricity": "grid",
+        "emergency": "yes",
+        "healthcare": "Ultrasound,X-Ray,Laboratory",
+        "name": "District Sanitaire de Sédhiou",
+        "opening_hours": "24/7",
+        "operational_status": "operational",
+        "operator": "District Sanitaire de Sédhiou",
+        "operator:type": "Public",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "Water works",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.5611365,
+          12.7071327
+        ]
+      },
+      "id": "node/8132683966"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8132683973",
+        "addr:city": "Khombole",
+        "addr:full": "KHOMBOLE-KEUR MACODOU",
+        "addr:postcode": "SEN",
+        "amenity": "hospital",
+        "beds": "57",
+        "electricity": "generator",
+        "healthcare": "hospital",
+        "healthcare:speciality": "dentist;internal;paediatrics;ophthalmology;radiology;gynaecology;infectious_diseases",
+        "internet_access": "yes",
+        "name": "district sanitaire Fiacre Coly de Khombole",
+        "operational_status": "operational",
+        "operator": "MINISTERE DE LA SANTE ET DE L'ACTION SOCIALE",
+        "operator:type": "public",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "water works",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.683435,
+          14.760766
+        ]
+      },
+      "id": "node/8132683973"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8132683974",
+        "addr:full": "MEKHE-MBAMBARA",
+        "amenity": "hospital",
+        "electricity": "grid",
+        "emergency": "no",
+        "healthcare": "ultrasound,laboratory,intensive care unit,emergency department",
+        "name": "District sanitaire de Mékhé",
+        "operational_status": "operational",
+        "operator": "MINISTERE DE LA SANTE ET DE L'ACTION SOCIALE",
+        "operator:type": "public",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "water works",
+        "wheelchair": "no"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.6271909,
+          15.1079614
+        ]
+      },
+      "id": "node/8132683974"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8132683975",
+        "addr:full": "Fatick extension, RN2",
+        "amenity": "hospital",
+        "beds": "50",
+        "electricity": "grid",
+        "emergency": "yes",
+        "healthcare": "Emergency Department",
+        "operational_status": "operational",
+        "operator": "Ordre hospitalier St Jean de Dieu",
+        "operator:type": "Public",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "water works",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.4259587,
+          14.345123
+        ]
+      },
+      "id": "node/8132683975"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8132683977",
+        "addr:full": "Gossas",
+        "amenity": "hospital",
+        "beds": "12",
+        "electricity": "grid",
+        "emergency": "yes",
+        "healthcare": "Operating,Theater,Laboratory,Intensive Care Unit,Emergency Department",
+        "name": "Centre de Santé de Gossas",
+        "operational_status": "operational",
+        "operator": "MINISTERE DE LA SANTE ET DE L'ACTION SOCIALE",
+        "operator:type": "Public",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "water works",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.0663037,
+          14.4918607
+        ]
+      },
+      "id": "node/8132683977"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8132683981",
+        "addr:full": "N1",
+        "amenity": "hospital",
+        "beds": "60",
+        "building": "yes",
+        "electricity": "grid",
+        "emergency": "yes",
+        "healthcare": "Ultrasound,X-Ray,Operating,Theater,Laboratory,Imaging Equipment,Intensive Care Unit,Emergency Department",
+        "name": "Centre de Santé de Koungheul",
+        "operational_status": "operational",
+        "operator": "Etat du Sénégal",
+        "operator:type": "public",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "powered pump",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -14.7919726,
+          13.981676
+        ]
+      },
+      "id": "node/8132683981"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8132683983",
+        "addr:full": "Sare Moussa",
+        "amenity": "hospital",
+        "beds": "150",
+        "electricity": "grid",
+        "emergency": "yes",
+        "healthcare": "X-Ray,Operating,Theater,Laboratory,Imaging Equipment,Intensive Care Unit,Emergency Department",
+        "name": "Centre Hospitalier Régional de Kolda",
+        "operational_status": "operational",
+        "operator": "Ministère de la Santé et de l'Action Sociale",
+        "operator:type": "public",
+        "source": "#senegal #covid-19 #emergency-health-data #healthsites",
+        "water_source": "water works",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -14.9484396,
+          12.9054789
+        ]
+      },
+      "id": "node/8132683983"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8639800648",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Poste de Santé"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.2237618,
+          16.5227749
+        ]
+      },
+      "id": "node/8639800648"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8933099797",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Poste de Santé de BOTOU"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -13.5824065,
+          13.8047815
+        ]
+      },
+      "id": "node/8933099797"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8976826291",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Poste de Santé  Saré Kemo"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -14.9557234,
+          12.8800253
+        ]
+      },
+      "id": "node/8976826291"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9021712803",
+        "amenity": "hospital",
+        "healthcare": "hospital"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.060569,
+          15.531235
+        ]
+      },
+      "id": "node/9021712803"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9283130714",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "District Sanitaire de Linguère"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.1141922,
+          15.397049
+        ]
+      },
+      "id": "node/9283130714"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9656268978",
+        "addr:full": "Richard Toll",
+        "amenity": "hospital",
+        "beds": "78",
+        "contact:phone": "339633939",
+        "electricity": "grid",
+        "emergency": "yes",
+        "healthcare": "doctor, pharmacy, laboratory, birthing center, blood donation, physiotherapy dentist, hospital, optometry/ophtalmology",
+        "healthcare:equipment": "laboratory, Emergency Department, Intensive Care Unit, Operating Theater, Dialysis",
+        "insurance:health": "public",
+        "name": "établissement public de sante de richard toll",
+        "opening_hours": "24/7",
+        "operational_status": "operational",
+        "operator": "Ministère de la santé et de l'action sociale",
+        "operator:type": "public",
+        "osm_id": "64496ed5-80f2-40bf-b335-02a5dc02b90f",
+        "source": "#senegal #covid-19 #emergency-health-data-validation #healthsites",
+        "staff_count:doctors": "8",
+        "staff_count:nurses": "7",
+        "water_source": "water works",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.6891342,
+          16.4688218
+        ]
+      },
+      "id": "node/9656268978"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9656268992",
+        "addr:full": "Saint Louis",
+        "amenity": "hospital",
+        "beds": "5",
+        "electricity": "grid",
+        "emergency": "no",
+        "healthcare": "hospital",
+        "healthcare:equipment": "imaging equipment",
+        "insurance:health": "public",
+        "name": "poste de sante pmi de sor",
+        "opening_hours": "24/7",
+        "operational_status": "operational",
+        "operator": "Ministère de la Santé et de l'Action Sociale",
+        "operator:type": "government",
+        "operator:wikidata": "Q30285491",
+        "source": "#senegal #covid-19 #emergency-health-data-validation #healthsites",
+        "staff_count:nurses": "1",
+        "water_source": "powered pump",
+        "wheelchair": "limited"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.4979662,
+          16.0256068
+        ]
+      },
+      "id": "node/9656268992"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9656492939",
+        "addr:full": "Richard Toll",
+        "amenity": "hospital",
+        "beds": "78",
+        "electricity": "grid",
+        "emergency": "yes",
+        "healthcare": "Doctor, Pharmacy, Laboratory, Rehabilitation, Dentist, Optometry/Ophtalmology, Birthing center, Blood donation, Physiotherapy",
+        "healthcare:equipment": "Operating Theater, laboratory, Emergency Department, Intensive Care Unit",
+        "insurance:health": "public",
+        "name": "Établissement public de sante de richard toll",
+        "note": "wrong notation opening_hours=24-juil",
+        "operational_status": "operational",
+        "operator": "Ministère de la santé et de l'action sociale",
+        "operator:type": "public",
+        "staff_count:doctors": "8",
+        "staff_count:nurses": "7",
+        "water_source": "water works",
+        "wheelchair": "limited"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.689494,
+          16.468625
+        ]
+      },
+      "id": "node/9656492939"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9657218654",
+        "addr:full": "Mpal/Saint-Louis",
+        "amenity": "hospital",
+        "contact:phone": "339625497",
+        "electricity": "grid",
+        "emergency": "yes",
+        "healthcare": "hospital",
+        "healthcare:equipment": "laboratory",
+        "insurance:health": "public",
+        "name": "centre de sante de mpal",
+        "opening_hours": "24/7",
+        "operational_status": "operational",
+        "operator": "Ministère de la Santé et de l'Action Sociale",
+        "operator:type": "government",
+        "operator:wikidata": "Q30285491",
+        "osm_id": "4d789556-f5a7-4367-8b4a-38b9b2665361",
+        "source": "#senegal #covid-19 #emergency-health-data-validation #healthsites",
+        "staff_count:doctors": "1",
+        "staff_count:nurses": "3",
+        "water_source": "powered pump",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.2702672,
+          15.9191045
+        ]
+      },
+      "id": "node/9657218654"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9658881518",
+        "addr:full": "Saint Louis",
+        "amenity": "hospital",
+        "beds": "25",
+        "contact:phone": "707259088",
+        "electricity": "grid",
+        "emergency": "no",
+        "healthcare": "hospital",
+        "healthcare:equipment": "laboratory, imaging equipment",
+        "healthcare:speciality": "laboratory;dentist;pharmacy;doctor;optometry;ophtalmology",
+        "insurance:health": "public private",
+        "name": "centre de sante de saint_louis",
+        "opening_hours": "24/7",
+        "operational_status": "operational",
+        "operator": "Ministère de la Santé et de l'Action Sociale",
+        "operator:type": "government",
+        "operator:wikidata": "Q30285491",
+        "osm_id": "28c28ed9-dea1-4525-9abe-4f82d6b0b64e",
+        "source": "#senegal #covid-19 #emergency-health-data-validation #healthsites",
+        "staff_count:doctors": "4",
+        "staff_count:nurses": "0",
+        "water_source": "water works",
+        "wheelchair": "limited"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.4932212,
+          16.010812
+        ]
+      },
+      "id": "node/9658881518"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9659561598",
+        "addr:full": "Saint Louis",
+        "amenity": "hospital",
+        "beds": "7",
+        "contact:phone": "773752110",
+        "electricity": "grid",
+        "emergency": "no",
+        "healthcare": "hospital",
+        "insurance:health": "public",
+        "name": "poste de sante mboyo",
+        "opening_hours": "24/7",
+        "operational_status": "operational",
+        "operator": "Ministère de la santé et de l'action sociale",
+        "operator:type": "public",
+        "staff_count:doctors": "1",
+        "staff_count:nurses": "1",
+        "water_source": "powered pump",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -14.8015645,
+          16.6374678
+        ]
+      },
+      "id": "node/9659561598"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9659613046",
+        "addr:full": "Saint Louis",
+        "amenity": "hospital",
+        "contact:phone": "339531124",
+        "electricity": "grid",
+        "emergency": "yes",
+        "healthcare": "hospital",
+        "healthcare:equipment": "laboratory",
+        "insurance:health": "public",
+        "name": "centre de sante de dagana",
+        "opening_hours": "24/7",
+        "operational_status": "operational",
+        "operator": "Ministère de la santé et de l'action sociale",
+        "operator:type": "public",
+        "osm_id": "8eeafc2a-be28-4df6-9abe-1989acc60ceb",
+        "source": "#senegal #covid-19 #emergency-health-data-validation #healthsites",
+        "water_source": "powered pump",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.5131268,
+          16.5107737
+        ]
+      },
+      "id": "node/9659613046"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9670991240",
+        "addr:city": "Commune de Keur Massar Nord",
+        "addr:street": "Route de MTOA unité 12",
+        "amenity": "hospital",
+        "emergency": "yes",
+        "healthcare": "hospital",
+        "name": "Tawfeikh lavage",
+        "start_date": "2022/04/16"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.3297759,
+          14.7751516
+        ]
+      },
+      "id": "node/9670991240"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9670991241",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Multi service Serigne Babacar Sy"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.3350937,
+          14.7700767
+        ]
+      },
+      "id": "node/9670991241"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9989552369",
+        "addr:full": "Galoya/ Pete",
+        "amenity": "hospital",
+        "electricity": "grid",
+        "healthcare": "doctor, pharmacy, birthing center",
+        "insurance:health": "None",
+        "name": "centre de sante de galoya",
+        "opening_hours": "24/7",
+        "operational_status": "operational",
+        "operator": "Ministère de la santé et de l'action sociale",
+        "operator:type": "public",
+        "osm_id": "de9953f3-93e9-478e-a806-33e882d2fedf",
+        "source": "#senegal #covid-19 #emergency-health-data-validation #healthsites",
+        "water_source": "well",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -13.8609154,
+          16.0647989
+        ]
+      },
+      "id": "node/9989552369"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9989552409",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "insurance:health": "Unknown",
+        "name": "centre de sante de cas-cas",
+        "opening_hours": "unknown",
+        "operational_status": "non_operational",
+        "operator": "Ministère de santéMinistère de la santé et de l'action sociale",
+        "operator:type": "public",
+        "osm_id": "5902ae15-0d15-4cf1-a230-f16e0dba3f31",
+        "source": "#senegal #covid-19 #emergency-health-data-validation #healthsites"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -14.0716206,
+          16.3883854
+        ]
+      },
+      "id": "node/9989552409"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9989554729",
+        "addr:full": "Aéré Lao/Pété",
+        "amenity": "hospital",
+        "electricity": "grid",
+        "emergency": "no",
+        "healthcare": "doctor, pharmacy, dentist, birthing center, laboratory",
+        "healthcare:equipment": "ultrasound laboratory",
+        "insurance:health": "None",
+        "name": "centre de sante aéré lao",
+        "opening_hours": "24/7",
+        "operational_status": "operational",
+        "operator": "Ministère de la santé et de l'action sociale",
+        "operator:type": "public",
+        "osm_id": "efa526da-6f2c-4e0f-b2c4-2aa7ab246d9e",
+        "source": "#senegal #covid-19 #emergency-health-data-validation #healthsites",
+        "staff_count:doctors": "1",
+        "staff_count:nurses": "1",
+        "water_source": "water works",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -14.3127759,
+          16.3803617
+        ]
+      },
+      "id": "node/9989554729"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9989554732",
+        "addr:full": "Pété/Podor",
+        "amenity": "hospital",
+        "contact:phone": "776115025",
+        "electricity": "grid",
+        "emergency": "yes",
+        "healthcare": "doctor, pharmacy, dentist, blood donation, birthing center, laboratory",
+        "healthcare:equipment": "laboratory, Emergency Department",
+        "insurance:health": "public",
+        "name": "centre de sante pété",
+        "opening_hours": "24/7",
+        "operational_status": "operational",
+        "operator": "Ministère de la santé et de l'action sociale",
+        "operator:type": "public",
+        "osm_id": "c080323f-d379-4f4f-9fe2-68ca6eda8456",
+        "source": "#senegal #covid-19 #emergency-health-data-validation #healthsites",
+        "staff_count:doctors": "3",
+        "water_source": "well",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -13.954996,
+          16.1016123
+        ]
+      },
+      "id": "node/9989554732"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10082108663",
+        "addr:city": "Mbolo Birane",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "PHARMACIE",
+        "operator": "Privé",
+        "operator:type": "private"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -13.8114641,
+          16.0609545
+        ]
+      },
+      "id": "node/10082108663"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10723162296",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Maternité"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.3469011,
+          15.3506208
+        ]
+      },
+      "id": "node/10723162296"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10860572061",
+        "addr:city": "Ranerou ferlo",
+        "amenity": "hospital",
+        "beds": "55",
+        "electricity": "grid",
+        "insurance:health": "yes",
+        "name": "Centre de sante de Thierno Mouhamadou Saïdou Ba",
+        "opening_hours": "24/7",
+        "operational_status": "operational",
+        "operator:type": "public",
+        "source": "#senegal #Public Health #Sunu Wer Gye Yaram #WNAH #Healthsites",
+        "water_source": "water_works",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -13.9590618,
+          15.3040447
+        ]
+      },
+      "id": "node/10860572061"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10860572068",
+        "addr:city": "matam",
+        "amenity": "hospital",
+        "beds": "0",
+        "electricity": "grid",
+        "healthcare": "hospital",
+        "insurance:health": "yes",
+        "name": "Hopital regionale de Matam",
+        "opening_hours": "24/7",
+        "operational_status": "operational",
+        "operator:type": "public",
+        "source": "#senegal #Public Health #Sunu Wer Gye Yaram #WNAH #Healthsites",
+        "water_source": "water_works",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -13.2618979,
+          15.6605149
+        ]
+      },
+      "id": "node/10860572068"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10860572084",
+        "addr:city": "Ansde Balla",
+        "amenity": "hospital",
+        "beds": "2",
+        "electricity": "grid",
+        "insurance:health": "no",
+        "name": "Case de Sante Ansde Balla",
+        "opening_hours": "24/7",
+        "operational_status": "operational",
+        "operator:type": "public",
+        "source": "#senegal #Public Health #Sunu Wer Gye Yaram #WNAH #Healthsites",
+        "water_source": "water_works",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -13.7097376,
+          16.0121958
+        ]
+      },
+      "id": "node/10860572084"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10860572095",
+        "addr:city": "Thilogne",
+        "amenity": "hospital",
+        "beds": "33",
+        "electricity": "grid",
+        "insurance:health": "yes",
+        "name": "Centre de sante de Thilogne",
+        "opening_hours": "24/7",
+        "operational_status": "operational",
+        "operator:type": "public",
+        "source": "#senegal #Public Health #Sunu Wer Gye Yaram #WNAH #Healthsites",
+        "water_source": "water_works",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -13.6065914,
+          15.9654639
+        ]
+      },
+      "id": "node/10860572095"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10860572104",
+        "addr:city": "X",
+        "amenity": "hospital",
+        "beds": "16",
+        "electricity": "grid",
+        "insurance:health": "yes",
+        "name": "Centre de Sante de Hamady Hounare",
+        "opening_hours": "24/7",
+        "operational_status": "operational",
+        "operator:type": "public",
+        "source": "#senegal #Public Health #Sunu Wer Gye Yaram #WNAH #Healthsites",
+        "water_source": "water_works",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -13.027545,
+          15.3541181
+        ]
+      },
+      "id": "node/10860572104"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10860572109",
+        "addr:city": "Ourossogui",
+        "amenity": "hospital",
+        "beds": "65",
+        "electricity": "grid",
+        "healthcare": "hospital",
+        "insurance:health": "yes",
+        "name": "Centre Hospitalier Regional de Ourossogui",
+        "opening_hours": "24/7",
+        "operational_status": "operational",
+        "operator:type": "public",
+        "source": "#senegal #Public Health #Sunu Wer Gye Yaram #WNAH #Healthsites",
+        "water_source": "water_works",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -13.3298457,
+          15.6038666
+        ]
+      },
+      "id": "node/10860572109"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10860572110",
+        "addr:city": "Agnam Civol",
+        "amenity": "hospital",
+        "beds": "53",
+        "electricity": "grid",
+        "insurance:health": "yes",
+        "name": "Hopital Abdoul Cisse Kane",
+        "opening_hours": "24/7",
+        "operational_status": "operational",
+        "operator:type": "public",
+        "source": "#senegal #Public Health #Sunu Wer Gye Yaram #WNAH #Healthsites",
+        "water_source": "water_works",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -13.6536696,
+          15.9877066
+        ]
+      },
+      "id": "node/10860572110"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10860572167",
+        "addr:city": "Kanel",
+        "amenity": "hospital",
+        "beds": "22",
+        "electricity": "grid",
+        "insurance:health": "yes",
+        "name": "Centre de sante de reference de Kanel",
+        "opening_hours": "24/7",
+        "operational_status": "operational",
+        "operator:type": "public",
+        "source": "#senegal #Public Health #Sunu Wer Gye Yaram #WNAH #Healthsites",
+        "water_source": "water_works",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -13.185398,
+          15.4854524
+        ]
+      },
+      "id": "node/10860572167"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10860572244",
+        "addr:city": "Matam",
+        "amenity": "hospital",
+        "beds": "0",
+        "electricity": "grid",
+        "healthcare": "hospital",
+        "insurance:health": "yes",
+        "name": "Centre de sante Matam",
+        "opening_hours": "24/7",
+        "operational_status": "operational",
+        "operator:type": "public",
+        "source": "#senegal #Public Health #Sunu Wer Gye Yaram #WNAH #Healthsites",
+        "water_source": "water_works",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -13.2538692,
+          15.6535257
+        ]
+      },
+      "id": "node/10860572244"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11243762067",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Clinique Yama Dr MBODJ"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4637853,
+          14.7544574
+        ]
+      },
+      "id": "node/11243762067"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11508306367",
+        "amenity": "hospital",
+        "name": "District sanitaire"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.7632862,
+          13.9355947
+        ]
+      },
+      "id": "node/11508306367"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11508365457",
+        "amenity": "hospital",
+        "name": "Centre de santé de Niodior"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.7228895,
+          13.8571521
+        ]
+      },
+      "id": "node/11508365457"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11508399127",
+        "amenity": "hospital",
+        "name": "Case de santé de Falia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.679159,
+          13.9189278
+        ]
+      },
+      "id": "node/11508399127"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11919651408",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Centre de Santé"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.2349145,
+          15.8421628
+        ]
+      },
+      "id": "node/11919651408"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12007306785",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Case de santé Nianghe"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -12.3209068,
+          12.6068466
+        ]
+      },
+      "id": "node/12007306785"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12949884923",
+        "amenity": "hospital"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.172001,
+          14.7423832
+        ]
+      },
+      "id": "node/12949884923"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13030707403",
+        "amenity": "hospital",
+        "name": "Hopital de fann"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4665714,
+          14.6932181
+        ]
+      },
+      "id": "node/13030707403"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13428289908",
+        "amenity": "hospital"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -11.784782,
+          13.1716377
+        ]
+      },
+      "id": "node/13428289908"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13745126683",
+        "amenity": "hospital",
+        "name": "poste de sante pointe sarene"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.9189218,
+          14.2860353
+        ]
+      },
+      "id": "node/13745126683"
+    }
+  ]
+}

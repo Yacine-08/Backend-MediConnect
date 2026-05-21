@@ -10,6 +10,8 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "patient")
+@DiscriminatorValue("PATIENT")
+@PrimaryKeyJoinColumn(name = "id")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,9 +31,6 @@ public class Patient extends User {
     @Column(name = "groupe_sanguin", length = 10)
     private GroupeSanguin groupeSanguin;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "adresse_id")
-    private Adresse adresse;
 
     @Column(nullable = false)
     private Boolean assurance = false;

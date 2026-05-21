@@ -30,21 +30,21 @@ public class OrdreMedecinImportService {
 
             Elements cols = row.select("td");
 
-            if (cols.size() < 4) continue;
+            if (cols.size() < 5) continue;
 
             String numOrdre = cols.get(0).text();
-            String nom = cols.get(1).text();
-            String prenom = cols.get(2).text();
-            String specialite = cols.get(3).text();
+            String section = cols.get(1).text();
+            String nom = cols.get(2).text();
+            String prenom = cols.get(3).text();
+            String specialite = cols.get(4).text();
 
             if (!repository.existsByNumOrdre(numOrdre)) {
-
                 OrdreMedecin medecin = OrdreMedecin.builder()
                         .numOrdre(numOrdre)
+                        .section(section)
                         .nom(nom)
                         .prenom(prenom)
                         .specialite(specialite)
-                        .actif(true)
                         .build();
 
                 repository.save(medecin);

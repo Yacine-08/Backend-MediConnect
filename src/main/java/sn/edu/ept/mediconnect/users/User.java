@@ -2,19 +2,28 @@ package sn.edu.ept.mediconnect.users;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import sn.edu.ept.mediconnect.common.entities.Adresse;
 import sn.edu.ept.mediconnect.common.entities.Role;
 
+
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
-@Table(name = "user_db")
+@Table(name = "users")
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "dtype", discriminatorType = DiscriminatorType.STRING)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id", nullable = false)
     private Long id;
 
     @Column(unique = true, nullable = false, length = 255)
@@ -39,8 +48,8 @@ public class User {
     @Column(name = "mfa_actif", nullable = false)
     private Boolean mfaActif = false;
 
-    @Column(name = "mfa_secret", length = 100)
-    private String mfaSecret;
+    @Column(name = "actif", length = 100)
+    private Boolean actif = false;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "adresse_id")
@@ -61,5 +70,53 @@ public class User {
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+
+        return List.of(
+                new SimpleGrantedAuthority(
+                        "ROLE_" + role.name()
+                )
+        );
+    }
+
+    @Override
+    public String getPassword() {
+        return motDePasse;
+    }
+
+    @Override
+    public String getUsername() {
+
+        // Spring Security exige un username
+        // On utilise email sinon téléphone
+
+        if (email != null && !email.isBlank()) {
+            return email;
+        }
+
+        return telephone;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return actif;
     }
 }

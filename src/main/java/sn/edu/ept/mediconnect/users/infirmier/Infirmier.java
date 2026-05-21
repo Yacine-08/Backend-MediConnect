@@ -7,6 +7,8 @@ import sn.edu.ept.mediconnect.users.User;
 
 @Entity
 @Table(name = "infirmiers")
+@DiscriminatorValue("INFIRMIER")
+@PrimaryKeyJoinColumn(name = "id")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
