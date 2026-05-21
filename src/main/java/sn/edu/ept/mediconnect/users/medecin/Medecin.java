@@ -16,13 +16,11 @@ public class Medecin extends User {
     @Column(name = "num_ordre", unique = true, length = 50)
     private String numOrdre;
 
-    @Enumerated(EnumType.STRING)
     @Column(length = 50)
-    private Section section;
+    private String section;
 
-    @Enumerated(EnumType.STRING)
     @Column(length = 100)
-    private Specialite specialite;
+    private String specialite;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "etablissement_id")

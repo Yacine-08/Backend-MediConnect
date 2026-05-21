@@ -48,14 +48,13 @@ public class RegisterRequest {
 
     private String numOrdre;
 
-    private Section section;       // A ou B
-    private Specialite specialite;
+    private String section;       // A ou B
+    private String specialite;
 
     // UUID de l'hôpital d'affectation
-    private Hopital etablissement;
+    private String etablissement;
 
     // champs PATIENT
-
     private LocalDate dateNaissance;
     private Sexe sexe;
     private GroupeSanguin groupeSanguin;
@@ -63,8 +62,7 @@ public class RegisterRequest {
     private Boolean   assurance;
 
     // champs INFIRMIER
-
     private String serviceAffecte;
-    private Hopital hopital;
+    private String hopital;
 
 }

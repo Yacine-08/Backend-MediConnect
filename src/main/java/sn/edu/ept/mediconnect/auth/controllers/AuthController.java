@@ -173,34 +173,58 @@ public class AuthController {
             description = "Retourne les informations du profil de l'utilisateur actuellement connecté."
     )
     public ResponseEntity<?> getCurrentUser(
-            @AuthenticationPrincipal
-            sn.edu.ept.mediconnect.users.User userDetails
+            @AuthenticationPrincipal sn.edu.ept.mediconnect.users.User userDetails
     ) {
 
-        try {
-
-            UserDto userDto = new UserDto();
-
-            userDto.setUserId(userDetails.getId());
-            userDto.setPrenom(userDetails.getPrenom());
-            userDto.setNom(userDetails.getNom());
-            userDto.setEmail(userDetails.getEmail());
-            userDto.setTelephone(userDetails.getTelephone());
-            userDto.setRole(userDetails.getRole());
-
-            return ResponseEntity.ok(Map.of(
-                    "success", true,
-                    "data", userDto
-            ));
-
-        } catch (Exception e) {
-
-            return ResponseEntity.badRequest().body(Map.of(
+        if (userDetails == null) {
+            return ResponseEntity.status(401).body(Map.of(
                     "success", false,
-                    "message", e.getMessage()
+                    "message", "Utilisateur non authentifié"
             ));
         }
+
+        UserDto userDto = new UserDto();
+        userDto.setUserId(userDetails.getId());
+        userDto.setPrenom(userDetails.getPrenom());
+        userDto.setNom(userDetails.getNom());
+        userDto.setEmail(userDetails.getEmail());
+        userDto.setTelephone(userDetails.getTelephone());
+        userDto.setRole(userDetails.getRole());
+
+        return ResponseEntity.ok(Map.of(
+                "success", true,
+                "data", userDto
+        ));
     }
+//    public ResponseEntity<?> getCurrentUser(
+//            @AuthenticationPrincipal
+//            sn.edu.ept.mediconnect.users.User userDetails
+//    ) {
+//
+//        try {
+//
+//            UserDto userDto = new UserDto();
+//
+//            userDto.setUserId(userDetails.getId());
+//            userDto.setPrenom(userDetails.getPrenom());
+//            userDto.setNom(userDetails.getNom());
+//            userDto.setEmail(userDetails.getEmail());
+//            userDto.setTelephone(userDetails.getTelephone());
+//            userDto.setRole(userDetails.getRole());
+//
+//            return ResponseEntity.ok(Map.of(
+//                    "success", true,
+//                    "data", userDto
+//            ));
+//
+//        } catch (Exception e) {
+//
+//            return ResponseEntity.badRequest().body(Map.of(
+//                    "success", false,
+//                    "message", e.getMessage()
+//            ));
+//        }
+//    }
 
     @GetMapping("/users")
     @Operation(summary = "Lister les utilisateurs", description = "Retourne la liste de tous les utilisateurs.")
@@ -324,8 +348,21 @@ public class AuthController {
 
     @PostMapping("/logout")
     @Operation(summary = "Déconnexion", description = "Procède à la déconnexion côté client en supprimant le JWT.")
-    public ResponseEntity<?> logout() {
-        // Avec JWT, le logout se fait côté client en supprimant le token
+    public ResponseEntity<?> logout(
+            @RequestHeader("Authorization") String authHeader
+    ) {
+
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "success", false,
+                    "message", "Token manquant"
+            ));
+        }
+
+        String token = authHeader.substring(7);
+
+        authService.blacklistToken(token);
+
         return ResponseEntity.ok(Map.of(
                 "success", true,
                 "message", "Déconnexion réussie"

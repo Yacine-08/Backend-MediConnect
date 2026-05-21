@@ -34,88 +34,54 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException {
 
-        final String path = request.getRequestURI();
-
-        logger.info("JWT FILTER - Path: {}", path);
-
-        // Public endpoints
-        if (isPublicEndpoint(path)) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        final String authHeader = request.getHeader("Authorization");
+        String authHeader = request.getHeader("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            response.sendError(
-                    HttpServletResponse.SC_UNAUTHORIZED,
-                    "Token manquant"
-            );
+            filterChain.doFilter(request, response);
             return;
         }
 
         try {
-            final String jwt = authHeader.substring(7);
+            String jwt = authHeader.substring(7);
+            String username = jwtService.extractUsername(jwt);
 
-            final String username = jwtService.extractUsername(jwt);
-
-            if (username == null) {
+            // check blacklist
+            if (jwtService.isTokenBlacklisted(jwt)) {
                 response.sendError(
                         HttpServletResponse.SC_UNAUTHORIZED,
-                        "Token invalide"
+                        "Token révoqué (logout)"
                 );
                 return;
             }
 
-            // si déjà authentifié
-            if (SecurityContextHolder.getContext().getAuthentication() != null) {
-                filterChain.doFilter(request, response);
-                return;
-            }
+            if (username != null &&
+                    SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            UserDetails userDetails =
-                    userDetailsService.loadUserByUsername(username);
+                UserDetails userDetails =
+                        userDetailsService.loadUserByUsername(username);
 
-            if (!jwtService.isTokenValid(jwt, userDetails)) {
-                response.sendError(
-                        HttpServletResponse.SC_UNAUTHORIZED,
-                        "Token expiré ou invalide"
-                );
-                return;
-            }
+                if (jwtService.isTokenValid(jwt, userDetails)) {
 
-            UsernamePasswordAuthenticationToken authToken =
-                    new UsernamePasswordAuthenticationToken(
-                            userDetails,
-                            null,
-                            userDetails.getAuthorities()
+                    UsernamePasswordAuthenticationToken authToken =
+                            new UsernamePasswordAuthenticationToken(
+                                    userDetails,
+                                    null,
+                                    userDetails.getAuthorities()
+                            );
+
+                    authToken.setDetails(
+                            new WebAuthenticationDetailsSource()
+                                    .buildDetails(request)
                     );
 
-            authToken.setDetails(
-                    new WebAuthenticationDetailsSource()
-                            .buildDetails(request)
-            );
-
-            SecurityContextHolder.getContext()
-                    .setAuthentication(authToken);
-
-            filterChain.doFilter(request, response);
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                }
+            }
 
         } catch (Exception e) {
-            logger.error("Erreur auth JWT", e);
-
-            response.sendError(
-                    HttpServletResponse.SC_UNAUTHORIZED,
-                    "Erreur d'authentification"
-            );
+            logger.error("JWT error", e);
         }
-    }
 
-    private boolean isPublicEndpoint(String path) {
-
-        return path.startsWith("/api/auth/")
-                || path.startsWith("/swagger-ui/")
-                || path.startsWith("/v3/api-docs")
-                || path.startsWith("/swagger-resources/");
+        filterChain.doFilter(request, response);
     }
 }

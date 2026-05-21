@@ -8,7 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 import sn.edu.ept.mediconnect.auth.entities.OtpCode;
 import sn.edu.ept.mediconnect.auth.entities.PasswordResetToken;
 import sn.edu.ept.mediconnect.auth.entities.TypeOtp;
-import sn.edu.ept.mediconnect.users.medecin.MedecinRepository;
+import sn.edu.ept.mediconnect.common.entities.Adresse;
+import sn.edu.ept.mediconnect.common.entities.Hopital;
+import sn.edu.ept.mediconnect.common.repositories.AdresseRepository;
+import sn.edu.ept.mediconnect.common.repositories.HopitalRepository;
+import sn.edu.ept.mediconnect.users.medecin.*;
 import sn.edu.ept.mediconnect.auth.repositories.PasswordResetTokenRepository;
 import sn.edu.ept.mediconnect.users.UserRepository;
 import sn.edu.ept.mediconnect.common.entities.Role;
@@ -19,9 +23,6 @@ import sn.edu.ept.mediconnect.exceptions.BusinessException;
 import sn.edu.ept.mediconnect.exceptions.ResourceNotFoundException;
 import sn.edu.ept.mediconnect.users.User;
 import sn.edu.ept.mediconnect.users.infirmier.Infirmier;
-import sn.edu.ept.mediconnect.users.medecin.Cardiologue;
-import sn.edu.ept.mediconnect.users.medecin.Medecin;
-import sn.edu.ept.mediconnect.users.medecin.Specialite;
 import sn.edu.ept.mediconnect.users.patient.Patient;
 import sn.edu.ept.mediconnect.users.patient.PatientNumeroService;
 import sn.edu.ept.mediconnect.utils.PhoneNumberUtils;
@@ -44,7 +45,10 @@ public class AuthService {
     private final MedecinRepository medecinRepo;
     private final PatientRepository       patientRepo;
     private final InfirmierRepository     infirmierRepo;
+    private final CardiologueRepository cardiologueRepo;
+    private final HopitalRepository hopitalRepo;
     private final OrdreMedecinRepository ordreRepo;
+    private final AdresseRepository adresseRepository;
     private final OtpService              otpService;
     private final EmailService emailService;
     private final SmsService smsService;
@@ -56,45 +60,63 @@ public class AuthService {
     // INSCRIPTION
     public RegisterResponse register(RegisterRequest req) {
 
+        String email = req.getEmail() != null
+                ? req.getEmail().trim().toLowerCase()
+                : null;
+
+        String telephone = req.getTelephone();
+
         // email ou téléphone obligatoire
-        if (estVide(req.getEmail()) && estVide(req.getTelephone())) {
+        if (estVide(email) && estVide(telephone)) {
+
             throw BusinessException.badRequest(
-                "Vous devez fournir un email ou un numéro de téléphone " +
-                "pour recevoir votre code de vérification.");
+                    "Vous devez fournir un email ou un numéro de téléphone.");
         }
 
-        // vérifier unicité email si fourni
-        if (!estVide(req.getEmail())
-                && userRepo.existsByEmail(req.getEmail())) {
-            throw BusinessException.conflict("Cet email est déjà utilisé.");
+        // unicité email
+        if (!estVide(email)
+                && userRepo.existsByEmail(email)) {
+
+            throw BusinessException.conflict(
+                    "Cet email est déjà utilisé.");
         }
 
-        // pour MÉDECIN et CARDIOLOGUE : vérifier dans la table de l'Ordre de medecins
-        if (req.getRole() == Role.MEDECIN || req.getRole() == Role.CARDIOLOGUE) {
+        // unicité téléphone
+        if (!estVide(telephone)
+                && userRepo.existsByTelephone(telephone)) {
+
+            throw BusinessException.conflict(
+                    "Ce numéro de téléphone est déjà utilisé.");
+        }
+
+        // Vérification ordre médecins
+        if (req.getRole() == Role.MEDECIN
+                || req.getRole() == Role.CARDIOLOGUE) {
+
             verifyOrdre(req);
         }
 
-        // créer l'utilisateur selon le rôle (compte INACTIF par defaut)
+        // création utilisateur
         Long userId = createUser(req);
 
-        // générer et envoyer l'OTP
+        // OTP
         OtpCode otp = otpService.generateAndSend(
-            userId,
-            req.getEmail(),
-            req.getTelephone(),
-            TypeOtp.INSCRIPTION
+                userId,
+                email,
+                telephone,
+                TypeOtp.INSCRIPTION
         );
 
         String canalNom = otp.getCanal().name();
-        String dest     = maskDestination(otp.getDestination());
+        String dest = maskDestination(otp.getDestination());
 
         return RegisterResponse.builder()
-            .userId(userId)
-            .message("Un code de vérification a été envoyé par "
-                + canalNom + " à " + dest)
-            .createdAt(new Date())
-            .otpEnvoye(true)
-            .build();
+                .userId(userId)
+                .message("Un code de vérification a été envoyé par "
+                        + canalNom + " à " + dest)
+                .createdAt(new Date())
+                .otpEnvoye(true)
+                .build();
     }
 
     // VÉRIFICATION ORDRE MÉDECINS
@@ -109,7 +131,10 @@ public class AuthService {
         // Vérification par numéro + nom dans le tableau de l'Ordre
         boolean trouve = ordreRepo.verifier(
                 req.getNumOrdre().trim().toUpperCase(),
-                req.getNom().trim().toUpperCase()
+                req.getNom().trim().toUpperCase(),
+                req.getPrenom().trim().toUpperCase(),
+                req.getSection(),
+                req.getSpecialite()
             ).isPresent();
 
         if (!trouve) {
@@ -160,30 +185,87 @@ public class AuthService {
     }
 
     private Long createMedecin(RegisterRequest req) {
+
         Medecin medecin = new Medecin();
         remplirChampCommuns(medecin, req);
+
         medecin.setNumOrdre(req.getNumOrdre().trim().toUpperCase());
-        if (req.getSection() != null)
-            medecin.setSection(req.getSection());
+        medecin.setSection(req.getSection());
         medecin.setSpecialite(req.getSpecialite());
-        medecin.setEtablissement(req.getEtablissement());
-        medecin.setAdresse(req.getAdresse());
+
+        Hopital hopital = hopitalRepo.findByNom(req.getEtablissement())
+                .orElseThrow(() -> BusinessException.badRequest("Hôpital introuvable"));
+
+        medecin.setEtablissement(hopital);
+
+        Adresse adresse = adresseRepository
+                .findByRegionAndDepartementAndCommune(
+                        req.getAdresse().getRegion(),
+                        req.getAdresse().getDepartement(),
+                        req.getAdresse().getCommune()
+                )
+                .orElseThrow(() -> BusinessException.badRequest("Adresse introuvable"));
+
+        medecin.setAdresse(adresse);
         medecin.setDisponible(false);
-        medecin.setVerified(true); // Vérifié par l'Ordre
+        medecin.setVerified(true);
+
+        // 1. toujours sauvegarder médecin
         medecinRepo.save(medecin);
+
+        // 2. SI cardiologie → créer aussi dans table cardiologues
+        if ("CARDIOLOGIE".equalsIgnoreCase(req.getSpecialite())) {
+
+            Cardiologue cardio = new Cardiologue();
+            remplirChampCommuns(cardio, req);
+
+            cardio.setNumOrdre(medecin.getNumOrdre());
+            cardio.setSection(medecin.getSection());
+            cardio.setSpecialite(req.getSpecialite());
+            cardio.setEtablissement(hopital);
+            cardio.setAdresse(adresse);
+            cardio.setDisponible(false);
+            cardio.setVerified(true);
+
+            cardiologueRepo.save(cardio);
+        }
+
         return medecin.getId();
     }
 
     private Long createCardio(RegisterRequest req) {
+
         Cardiologue cardiologue = new Cardiologue();
         remplirChampCommuns(cardiologue, req);
+
         cardiologue.setNumOrdre(req.getNumOrdre().trim().toUpperCase());
+
         if (req.getSection() != null)
             cardiologue.setSection(req.getSection());
-        cardiologue.setSpecialite(Specialite.CARDIOLOGIE);
+
+        cardiologue.setSpecialite(req.getSpecialite());
         cardiologue.setDisponible(false);
         cardiologue.setVerified(true);
-        medecinRepo.save(cardiologue);
+
+        Hopital hopital = hopitalRepo
+                .findByNom(req.getEtablissement())
+                .orElseThrow(() -> BusinessException.badRequest("Hôpital introuvable"));
+
+        cardiologue.setEtablissement(hopital);
+
+        Adresse adresse = adresseRepository
+                .findByRegionAndDepartementAndCommune(
+                        req.getAdresse().getRegion(),
+                        req.getAdresse().getDepartement(),
+                        req.getAdresse().getCommune()
+                )
+                .orElseThrow(() -> BusinessException.badRequest("Adresse introuvable"));
+
+        cardiologue.setAdresse(adresse);
+
+        // IMPORTANT : utiliser le bon repo
+        cardiologueRepo.save(cardiologue);
+
         return cardiologue.getId();
     }
 
@@ -213,7 +295,25 @@ public class AuthService {
         Infirmier infirmier = new Infirmier();
         remplirChampCommuns(infirmier, req);
         infirmier.setServiceAffecte(req.getServiceAffecte());
-        infirmier.setHopital(req.getHopital());
+        Hopital hopital = hopitalRepo.findByNom(req.getHopital())
+                .orElseThrow(() ->
+                        BusinessException.badRequest("Hôpital introuvable")
+                );
+        infirmier.setHopital(hopital);
+        Adresse adresse = adresseRepository
+                .findByRegionAndDepartementAndCommune(
+                        req.getAdresse().getRegion(),
+                        req.getAdresse().getDepartement(),
+                        req.getAdresse().getCommune()
+                )
+                .orElseThrow(() -> new RuntimeException("Adresse introuvable"));
+
+        infirmier.setAdresse(adresse);
+        log.info("Adresse reçue: {}", req.getAdresse());
+        log.info("Region: {}, Departement: {}, Commune: {}",
+                req.getAdresse().getRegion(),
+                req.getAdresse().getDepartement(),
+                req.getAdresse().getCommune());
         infirmierRepo.save(infirmier);
         return infirmier.getId();
     }
@@ -244,6 +344,7 @@ public class AuthService {
             throw BusinessException.badRequest(
                     "Email ou téléphone obligatoire");
         }
+
 
         // Vérification OTP
         otpService.verify(
@@ -286,15 +387,37 @@ public class AuthService {
     public AuthenticationResponse login(LoginRequest req) {
 
         // Recherche utilisateur par email ou téléphone
-        User user = userRepo
-                .findByEmailOrTelephone(
-                        req.getEmail(),
-                        req.getPhoneNumber()
-                )
-                .orElseThrow(() ->
-                        BusinessException.badRequest(
-                                "Identifiant ou mot de passe incorrect."
-                        ));
+        User user;
+
+        if (req.getEmail() != null && !req.getEmail().isBlank()) {
+
+            user = userRepo.findByEmail(
+                    req.getEmail().trim().toLowerCase()
+            ).orElseThrow(() ->
+                    BusinessException.badRequest(
+                            "Identifiant ou mot de passe incorrect."
+                    ));
+
+        } else if (req.getPhoneNumber() != null
+                && !req.getPhoneNumber().isBlank()) {
+
+            String phone =
+                    PhoneNumberUtils.normalizePhoneNumber(
+                            req.getPhoneNumber()
+                    );
+
+            user = userRepo.findByTelephone(phone)
+                    .orElseThrow(() ->
+                            BusinessException.badRequest(
+                                    "Identifiant ou mot de passe incorrect."
+                            ));
+
+        } else {
+
+            throw BusinessException.badRequest(
+                    "Email ou téléphone requis"
+            );
+        }
 
         // Vérifier que le compte est actif
         if (!user.getActif()) {
@@ -334,17 +457,42 @@ public class AuthService {
         return dto;
     }
 
+    public void blacklistToken(String token) {
+        jwtService.blacklistToken(token);
+    }
+
     // RENVOYER OTP
     public RegisterResponse resendOtp(String email, String telephone) {
 
-        User u = userRepo
-                .findByEmailOrTelephone(
-                        email,telephone
-                )
-                .orElseThrow(() ->
-                        BusinessException.badRequest(
-                                "Utilisateur introuvable."
-                        ));
+        User u;
+
+        if (email != null && !email.isBlank()) {
+
+            u = userRepo.findByEmail(email.trim().toLowerCase())
+                    .orElseThrow(() ->
+                            BusinessException.badRequest(
+                                    "Utilisateur introuvable."
+                            ));
+
+        } else if (telephone != null && !telephone.isBlank()) {
+
+            String phone =
+                    PhoneNumberUtils.normalizePhoneNumber(
+                            telephone
+                    );
+
+            u = userRepo.findByTelephone(phone)
+                    .orElseThrow(() ->
+                            BusinessException.badRequest(
+                                    "Utilisateur introuvable."
+                            ));
+
+        } else {
+
+            throw BusinessException.badRequest(
+                    "Email ou téléphone requis"
+            );
+        }
 
         if (u.getActif()) {
             throw BusinessException.badRequest("Ce compte est déjà activé.");
@@ -432,13 +580,26 @@ public class AuthService {
 
     @Transactional
     public void changePassword(Long userId, ChangePasswordRequest request) {
+
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Utilisateur non trouvé"));
 
+        // 1. Vérifier ancien mot de passe
         if (!passwordEncoder.matches(request.getOldPassword(), user.getMotDePasse())) {
             throw new BadRequestException("Ancien mot de passe incorrect");
         }
 
+        // 2. Vérifier confirmation
+        if (!request.getNewPassword().equals(request.getConfirmPassword())) {
+            throw new BadRequestException("Le mot de passe et la confirmation ne correspondent pas");
+        }
+
+        // 3. Nouveau doit être différent de l'ancien
+        if (passwordEncoder.matches(request.getNewPassword(), user.getMotDePasse())) {
+            throw new BadRequestException("Le nouveau mot de passe doit être différent de l'ancien");
+        }
+
+        // 4. Mettre à jour
         user.setMotDePasse(passwordEncoder.encode(request.getNewPassword()));
         userRepo.save(user);
 

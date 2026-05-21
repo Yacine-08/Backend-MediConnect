@@ -16,6 +16,8 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 @Service
@@ -28,6 +30,17 @@ public class JwtService {
     // jwt expiration (24h)
     @Value("${jwt.expiration:86400000}")
     private long jwtExpiration;
+
+    private final Set<String> blacklistedTokens = ConcurrentHashMap.newKeySet();
+
+
+    public void blacklistToken(String token) {
+        blacklistedTokens.add(token);
+    }
+
+    public boolean isTokenBlacklisted(String token) {
+        return blacklistedTokens.contains(token);
+    }
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);

@@ -36,9 +36,6 @@ public class SecurityConfig {
     private final UserRepository userRepository;
     private final JwtService jwtService;
 
-    // =========================
-    // SECURITY FILTER CHAIN
-    // =========================
     @Bean
     public SecurityFilterChain securityFilterChain(
             HttpSecurity http,
@@ -65,8 +62,22 @@ public class SecurityConfig {
                                 "/webjars/**"
                         ).permitAll()
 
-                        // Auth endpoints
-                        .requestMatchers("/api/auth/**").permitAll()
+                        // public endpoints
+                        .requestMatchers(
+                                "/api/auth/register",
+                                "/api/auth/verify-otp",
+                                "/api/auth/resend-otp",
+                                "/api/auth/login",
+                                "/api/auth/forgot-password",
+                                "/api/auth/reset-password",
+                                "/api/auth/logout",
+                                "/api/auth/validate-token"
+                        ).permitAll()
+
+                        // protected endpoints
+                        .requestMatchers("/api/auth/users").authenticated()
+                        .requestMatchers("/api/auth/current-user").authenticated()
+                        .requestMatchers("/api/auth/change-password").authenticated()
 
                         // Everything else secured
                         .anyRequest().authenticated()

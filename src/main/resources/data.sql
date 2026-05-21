@@ -535,3 +535,4 @@ VALUES
     ('515459c1-51c2-451b-a11b-a5f4826e8383', 'Hopital de fann', 14.6932181, -17.4665714, 'PUBLIC'),
     ('e40ec054-5428-47a4-8489-7ef7fac5bfc3', 'poste de sante pointe sarene', 14.2860353, -16.9189218, 'PUBLIC')
     ON CONFLICT DO NOTHING;
+

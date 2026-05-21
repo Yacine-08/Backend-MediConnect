@@ -5,10 +5,11 @@ import org.springframework.stereotype.Repository;
 import sn.edu.ept.mediconnect.common.entities.Adresse;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AdresseRepository extends JpaRepository<Adresse, Long> {
-    List<Adresse> findByRegionAndDepartementAndCommune(
+    Optional<Adresse> findByRegionAndDepartementAndCommune(
             String region,
             String departement,
             String commune

@@ -1,6 +1,7 @@
 package sn.edu.ept.mediconnect.users;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,7 +27,8 @@ public class User implements UserDetails {
     @Column(name = "user_id", nullable = false)
     private Long id;
 
-    @Column(unique = true, nullable = false, length = 255)
+    @Column(length = 255)
+    @Email
     private String email;
 
     @Column(nullable = false, length = 100)
@@ -35,7 +37,7 @@ public class User implements UserDetails {
     @Column(nullable = false, length = 100)
     private String prenom;
 
-    @Column(length = 20)
+    @Column(unique = true, length = 20)
     private String telephone;
 
     @Column(name = "mot_de_passe", nullable = false)
