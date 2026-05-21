@@ -12,7 +12,8 @@ INSERT INTO region (nom) VALUES
                              ('Matam'),
                              ('Louga'),
                              ('Kaffrine'),
-                             ('Kédougou');
+                             ('Kédougou')
+    ON CONFLICT DO NOTHING;
 
 
 INSERT INTO departement (nom, region_id) VALUES
@@ -115,7 +116,8 @@ INSERT INTO departement (nom, region_id) VALUES
 -- =====================
     ('Kédougou', 14),
     ('Salémata', 14),
-    ('Saraya', 14);
+    ('Saraya', 14)
+    ON CONFLICT DO NOTHING;
 
 
 
@@ -308,7 +310,8 @@ INSERT INTO commune (nom, departement_id) VALUES
 ('Dakatéli', 44),
 
 ('Saraya', 45),
-('Khossanto', 45);
+('Khossanto', 45)
+    ON CONFLICT DO NOTHING;;
 
 
 INSERT INTO adresses (region, departement, commune) VALUES
@@ -353,7 +356,8 @@ INSERT INTO adresses (region, departement, commune) VALUES
 ('Saint-Louis', 'Saint-Louis', 'Sor'),
 ('Saint-Louis', 'Saint-Louis', 'Pikine'),
 ('Saint-Louis', 'Dagana', 'Richard-Toll'),
-('Saint-Louis', 'Podor', 'Podor');
+('Saint-Louis', 'Podor', 'Podor')
+ON CONFLICT DO NOTHING;
 
 
 INSERT INTO hopitaux (id, nom, latitude, longitude, type_etablissement)
@@ -529,4 +533,5 @@ VALUES
     ('8242d02e-2e50-4a8f-b9e0-a42e2e704164', 'Centre de Santé', 15.8421628, -16.2349145, 'PUBLIC'),
     ('d74e36ae-7c5d-4e9b-b0a4-cf3a2551df62', 'Case de santé Nianghe', 12.6068466, -12.3209068, 'PUBLIC'),
     ('515459c1-51c2-451b-a11b-a5f4826e8383', 'Hopital de fann', 14.6932181, -17.4665714, 'PUBLIC'),
-    ('e40ec054-5428-47a4-8489-7ef7fac5bfc3', 'poste de sante pointe sarene', 14.2860353, -16.9189218, 'PUBLIC');
+    ('e40ec054-5428-47a4-8489-7ef7fac5bfc3', 'poste de sante pointe sarene', 14.2860353, -16.9189218, 'PUBLIC')
+    ON CONFLICT DO NOTHING;

@@ -45,6 +45,7 @@ public class OrdreMedecinImportService {
                         .nom(nom)
                         .prenom(prenom)
                         .specialite(specialite)
+                        .actif(true)
                         .build();
 
                 repository.save(medecin);

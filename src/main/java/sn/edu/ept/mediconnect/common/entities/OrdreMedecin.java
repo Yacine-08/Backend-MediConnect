@@ -30,7 +30,6 @@ public class OrdreMedecin {
     private String specialite;
 
     // Section A ou B
-    @Column(nullable = false, length = 5)
     private String section;
 
     @Column(nullable = false)
