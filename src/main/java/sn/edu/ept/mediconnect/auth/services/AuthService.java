@@ -186,6 +186,12 @@ public class AuthService {
 
     private Long createMedecin(RegisterRequest req) {
 
+        // Si la spécialité est CARDIOLOGIE, on crée directement un Cardiologue
+        // (qui est un sous-type de Medecin et s'insère dans les 3 tables d'un coup)
+        if ("CARDIOLOGIE".equalsIgnoreCase(req.getSpecialite())) {
+            return createCardio(req);
+        }
+
         Medecin medecin = new Medecin();
         remplirChampCommuns(medecin, req);
 
@@ -195,7 +201,6 @@ public class AuthService {
 
         Hopital hopital = hopitalRepo.findByNom(req.getEtablissement())
                 .orElseThrow(() -> BusinessException.badRequest("Hôpital introuvable"));
-
         medecin.setEtablissement(hopital);
 
         Adresse adresse = adresseRepository
@@ -210,25 +215,7 @@ public class AuthService {
         medecin.setDisponible(false);
         medecin.setVerified(true);
 
-        // 1. toujours sauvegarder médecin
         medecinRepo.save(medecin);
-
-        // 2. SI cardiologie → créer aussi dans table cardiologues
-        if ("CARDIOLOGIE".equalsIgnoreCase(req.getSpecialite())) {
-
-            Cardiologue cardio = new Cardiologue();
-            remplirChampCommuns(cardio, req);
-
-            cardio.setNumOrdre(medecin.getNumOrdre());
-            cardio.setSection(medecin.getSection());
-            cardio.setSpecialite(req.getSpecialite());
-            cardio.setEtablissement(hopital);
-            cardio.setAdresse(adresse);
-            cardio.setDisponible(false);
-            cardio.setVerified(true);
-
-            cardiologueRepo.save(cardio);
-        }
 
         return medecin.getId();
     }
