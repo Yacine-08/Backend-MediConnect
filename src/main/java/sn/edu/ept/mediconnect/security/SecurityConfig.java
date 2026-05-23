@@ -79,6 +79,27 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/current-user").authenticated()
                         .requestMatchers("/api/auth/change-password").authenticated()
 
+                        // Infirmiers :
+                        //   - GET liste  → ADMIN seulement
+                        //   - GET /me et GET /{id} → ADMIN ou INFIRMIER (contrôle dans le controller)
+                        //   - PUT /{id}  → ADMIN ou INFIRMIER (contrôle dans le controller)
+                        //   - PATCH/DELETE → ADMIN seulement
+                        .requestMatchers(HttpMethod.GET,    "/api/infirmiers/me").hasRole("INFIRMIER")
+                        .requestMatchers(HttpMethod.GET,    "/api/infirmiers/**").hasAnyRole("ADMIN", "INFIRMIER")
+                        .requestMatchers(HttpMethod.GET,    "/api/infirmiers").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,    "/api/infirmiers/**").hasAnyRole("ADMIN", "INFIRMIER")
+                        .requestMatchers(HttpMethod.PATCH,  "/api/infirmiers/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/infirmiers/**").hasRole("ADMIN")
+
+                        // Patients :
+                        //   - POST → INFIRMIER (création du compte patient)
+                        //   - GET  → ADMIN, INFIRMIER, MEDECIN, CARDIOLOGUE
+                        //   - PUT/PATCH → ADMIN, INFIRMIER
+                        .requestMatchers(HttpMethod.POST,   "/api/patients").hasRole("INFIRMIER")
+                        .requestMatchers(HttpMethod.GET,    "/api/patients/**").hasAnyRole("ADMIN", "INFIRMIER", "MEDECIN", "CARDIOLOGUE")
+                        .requestMatchers(HttpMethod.PUT,    "/api/patients/**").hasAnyRole("ADMIN", "INFIRMIER", "MEDECIN", "CARDIOLOGUE")
+                        .requestMatchers(HttpMethod.PATCH,  "/api/patients/**").hasAnyRole("ADMIN", "INFIRMIER", "MEDECIN", "CARDIOLOGUE")
+
                         // Everything else secured
                         .anyRequest().authenticated()
                 )
