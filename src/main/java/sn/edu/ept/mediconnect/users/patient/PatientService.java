@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sn.edu.ept.mediconnect.auth.services.EmailService;
 import sn.edu.ept.mediconnect.common.entities.Adresse;
 import sn.edu.ept.mediconnect.common.entities.Role;
 import sn.edu.ept.mediconnect.common.repositories.AdresseRepository;
@@ -13,6 +14,9 @@ import sn.edu.ept.mediconnect.dtos.CreatePatientResponse;
 import sn.edu.ept.mediconnect.dtos.PatientResponse;
 import sn.edu.ept.mediconnect.dtos.UpdatePatientRequest;
 import sn.edu.ept.mediconnect.exceptions.BusinessException;
+import sn.edu.ept.mediconnect.medical.dossier.DossierMedical;
+import sn.edu.ept.mediconnect.medical.dossier.DossierMedicalRepository;
+import sn.edu.ept.mediconnect.medical.dossier.StatutDossier;
 import sn.edu.ept.mediconnect.users.UserRepository;
 import sn.edu.ept.mediconnect.users.infirmier.Infirmier;
 import sn.edu.ept.mediconnect.users.infirmier.InfirmierRepository;
@@ -28,10 +32,12 @@ public class PatientService {
 
     private final PatientRepository   patientRepository;
     private final InfirmierRepository infirmierRepository;
+    private final DossierMedicalRepository dossierMedicalRepository;
     private final UserRepository      userRepository;
     private final AdresseRepository   adresseRepository;
     private final PatientNumeroService patientNumeroService;
     private final PasswordEncoder     passwordEncoder;
+    private final EmailService emailService;
 
     private static final String CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789";
     private static final SecureRandom RANDOM = new SecureRandom();
@@ -105,9 +111,28 @@ public class PatientService {
         }
 
         patientRepository.save(patient);
-
         log.info("Patient créé par l'infirmier {} : {} {} (numPatient={})",
                 infirmierId, patient.getPrenom(), patient.getNom(), patient.getNumPatient());
+
+        // Creation automatique du DME
+        DossierMedical dme = DossierMedical.builder()
+                .patient(patient)
+                .statut(StatutDossier.ACTIF)
+                .build();
+        dossierMedicalRepository.save(dme);
+        log.info("Dossier médical créé automatiquement — patient id={} numPatient={}",
+                patient.getId(), patient.getNumPatient());
+
+        // envoyer uniquement si le patient a un email
+        if (!estVide(patient.getEmail())) {
+            emailService.sendMotDePasseTemporaire(
+                    patient.getEmail(),
+                    patient.getPrenom(),
+                    patient.getNom(),
+                    patient.getNumPatient(),
+                    motDePasseTemp
+            );
+        }
 
         return CreatePatientResponse.builder()
                 .patientId(patient.getId())
@@ -116,14 +141,10 @@ public class PatientService {
                 .email(patient.getEmail())
                 .telephone(patient.getTelephone())
                 .motDePasseTemporaire(motDePasseTemp)
-                .message("Compte patient créé avec succès. "
+                .message("Compte patient et dossier médical créés avec succès. "
                        + "Communiquez le mot de passe temporaire au patient.")
                 .build();
     }
-
-    // ------------------------------------------------------------------ //
-    //  LISTE
-    // ------------------------------------------------------------------ //
 
     @Transactional(readOnly = true)
     public List<PatientResponse> getAll() {

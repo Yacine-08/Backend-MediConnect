@@ -189,4 +189,106 @@ public class EmailService {
                 </html>
                 """.formatted(prenom);
     }
+
+    @Async
+    public void sendMotDePasseTemporaire(String destinataire,
+                                         String prenom,
+                                         String nom,
+                                         String numPatient,
+                                         String motDePasseTemp) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setFrom(expediteur, "MediConnect Sénégal");
+            helper.setTo(destinataire);
+            helper.setSubject("MediConnect — Bienvenue, votre compte patient est créé");
+            helper.setText(buildMotDePasseTemporaireTemplate(
+                    prenom, nom, numPatient, motDePasseTemp), true);
+
+            mailSender.send(message);
+            log.info("Email mot de passe temporaire envoyé à {}", destinataire);
+
+        } catch (Exception e) {
+            log.error("Erreur envoi email mot de passe temporaire à {} : {}",
+                    destinataire, e.getMessage());
+        }
+    }
+
+    private String buildMotDePasseTemporaireTemplate(String prenom,
+                                                     String nom,
+                                                     String numPatient,
+                                                     String motDePasseTemp) {
+        return """
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <style>
+                body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+                .header { background-color: #1A3A6B; color: white;
+                          padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+                .content { background-color: #f9f9f9; padding: 30px; }
+                .credentials { background: #ffffff; border: 2px solid #1A3A6B;
+                               border-radius: 8px; padding: 20px; margin: 20px 0; }
+                .label { font-size: 12px; color: #888; text-transform: uppercase;
+                         font-weight: bold; margin-bottom: 4px; }
+                .value { font-size: 18px; font-weight: bold; color: #1A3A6B;
+                         letter-spacing: 2px; }
+                .warning { background: #FFF3CD; border-left: 4px solid #FFC107;
+                           padding: 12px 16px; margin-top: 20px;
+                           border-radius: 0 4px 4px 0; font-size: 13px; }
+                .footer { text-align: center; margin-top: 20px;
+                          font-size: 12px; color: #888; }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1 style="margin:0;">MediConnect Sénégal</h1>
+                    <p style="margin:8px 0 0; opacity:0.85;">
+                        Plateforme Nationale de Télémédecine
+                    </p>
+                </div>
+                <div class="content">
+                    <p>Bonjour <strong>%s %s</strong>,</p>
+                    <p>
+                        Votre dossier patient a été créé avec succès sur la plateforme
+                        MediConnect Sénégal. Voici vos informations de connexion :
+                    </p>
+
+                    <div class="credentials">
+                        <div class="label">Numéro patient</div>
+                        <div class="value">%s</div>
+                        <br>
+                        <div class="label">Identifiant de connexion</div>
+                        <div class="value" style="font-size:15px;">%s</div>
+                        <br>
+                        <div class="label">Mot de passe temporaire</div>
+                        <div class="value" style="color:#C0392B;">%s</div>
+                    </div>
+
+                    <div class="warning">
+                        <strong>Important :</strong> Ce mot de passe est temporaire.
+                        Connectez-vous et changez-le dès votre première connexion
+                        pour sécuriser votre compte.
+                    </div>
+
+                    <p style="margin-top:24px;">
+                        En cas de problème, contactez votre établissement de santé
+                        ou notre support.
+                    </p>
+                </div>
+                <div class="footer">
+                    <p>&copy; 2025 MediConnect Sénégal. Tous droits réservés.</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        """.formatted(prenom, nom, numPatient,
+                // Identifiant = email si dispo, sinon téléphone
+                "Votre email ou numéro de téléphone enregistré",
+                motDePasseTemp);
+    }
 }
