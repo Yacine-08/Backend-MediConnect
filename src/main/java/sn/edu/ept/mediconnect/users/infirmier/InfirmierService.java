@@ -70,7 +70,7 @@ public class InfirmierService {
         String newEmail      = normalizeEmail(req.getEmail());
         String newPhoneNumber = req.getTelephone();
 
-        if (newEmail != null && !newPhoneNumber.equals(infirmier.getEmail())) {
+        if (newEmail != null && !newEmail.equals(infirmier.getEmail())) {
             userRepository.findByEmail(newEmail).ifPresent(u -> {
                 if (!u.getId().equals(id)) {
                     throw BusinessException.conflict("Cet email est déjà utilisé.");
