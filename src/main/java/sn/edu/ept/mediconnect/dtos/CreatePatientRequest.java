@@ -1,9 +1,7 @@
 package sn.edu.ept.mediconnect.dtos;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import sn.edu.ept.mediconnect.users.patient.GroupeSanguin;
 import sn.edu.ept.mediconnect.users.patient.Sexe;
@@ -45,4 +43,10 @@ public class CreatePatientRequest {
 
     @Valid
     private AdresseRequest adresse;
+
+    // consentement à la politique de confidentialité (obligatoire)
+    // L'infirmier coche cette case après lecture des conditions au patient
+    @NotNull(message = "L'acceptation de la politique de confidentialité est obligatoire")
+    @AssertTrue(message = "La politique de confidentialité doit être acceptée pour créer le compte")
+    private Boolean acceptePolitiqueConfidentialite;
 }
