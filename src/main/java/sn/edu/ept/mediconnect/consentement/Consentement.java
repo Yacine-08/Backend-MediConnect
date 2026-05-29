@@ -18,14 +18,23 @@ public class Consentement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "type_consentement", nullable = false, length = 50)
-    private String typeConsentement;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type_consentement", nullable = false, length = 50, unique = true)
+    private TypeConsentement typeConsentement;
+
+    @Column(name = "titre", nullable = false)
+    private String titre;
 
     @Column(columnDefinition = "TEXT")
     private String contenu;
 
     @Column(length = 10)
     private String version;
+
+    /** true uniquement pour POLITIQUE_CONFIDENTIALITE. */
+    @Column(nullable = false)
+    @Builder.Default
+    private Boolean obligatoire = false;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

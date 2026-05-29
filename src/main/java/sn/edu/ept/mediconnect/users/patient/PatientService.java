@@ -9,6 +9,7 @@ import sn.edu.ept.mediconnect.auth.services.EmailService;
 import sn.edu.ept.mediconnect.common.entities.Adresse;
 import sn.edu.ept.mediconnect.common.entities.Role;
 import sn.edu.ept.mediconnect.common.repositories.AdresseRepository;
+import sn.edu.ept.mediconnect.consentement.ConsentementService;
 import sn.edu.ept.mediconnect.dtos.CreatePatientRequest;
 import sn.edu.ept.mediconnect.dtos.CreatePatientResponse;
 import sn.edu.ept.mediconnect.dtos.PatientResponse;
@@ -36,6 +37,7 @@ public class PatientService {
     private final UserRepository      userRepository;
     private final AdresseRepository   adresseRepository;
     private final PatientNumeroService patientNumeroService;
+    private final ConsentementService consentementService;
     private final PasswordEncoder     passwordEncoder;
     private final EmailService emailService;
 
@@ -122,6 +124,12 @@ public class PatientService {
         dossierMedicalRepository.save(dme);
         log.info("Dossier médical créé automatiquement — patient id={} numPatient={}",
                 patient.getId(), patient.getNumPatient());
+
+        consentementService.saveConsentement(
+                patient,
+                Boolean.TRUE.equals(req.getAcceptePolitiqueConfidentialite()),
+                infirmier
+        );
 
         // envoyer uniquement si le patient a un email
         if (!estVide(patient.getEmail())) {
