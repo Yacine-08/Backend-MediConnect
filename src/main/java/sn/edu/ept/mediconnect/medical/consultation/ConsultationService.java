@@ -18,6 +18,10 @@ import sn.edu.ept.mediconnect.users.medecin.Medecin;
 import sn.edu.ept.mediconnect.users.medecin.MedecinRepository;
 import sn.edu.ept.mediconnect.users.patient.Patient;
 import sn.edu.ept.mediconnect.users.patient.PatientRepository;
+import sn.edu.ept.mediconnect.medical.alerte.AlerteRepository;
+import sn.edu.ept.mediconnect.medical.alerte.Alerte;
+import sn.edu.ept.mediconnect.medical.alerte.NiveauAlerte;
+
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,6 +36,7 @@ public class ConsultationService {
     private final MedecinRepository medecinRepository;
     private final InfirmierRepository infirmierRepository;
     private final RendezVousRepository rendezVousRepository;
+    private final AlerteRepository alerteRepository;
 
     // Créer une consultation — Médecin / Cardiologue
     @Transactional
@@ -96,8 +101,64 @@ public class ConsultationService {
         consultation.setStatut(StatutConsultation.CONSTANTES_PRISES);
 
         consultationRepository.save(consultation);
+        verifierConstantesEtCreerAlertes(consultation, req);
         log.info("Constantes prises pour la consultation id={} par infirmier id={}", consultationId, infirmierId);
         return toResponse(consultation);
+    }
+
+    private void verifierConstantesEtCreerAlertes(Consultation consultation, ConstantesRequest req) {
+
+        if (req.getSpo2() != null && req.getSpo2() < 90) {
+            alerteRepository.save(Alerte.builder()
+                    .patient(consultation.getPatient())
+                    .consultation(consultation)
+                    .niveau(NiveauAlerte.CRITIQUE)
+                    .message("SpO2 critique : " + req.getSpo2() + "%")
+                    .source("Prise des constantes")
+                    .acquittee(false)
+                    .build());
+        }
+
+        if (req.getFrequenceCardiaque() != null &&
+                (req.getFrequenceCardiaque() < 40 || req.getFrequenceCardiaque() > 150)) {
+            alerteRepository.save(Alerte.builder()
+                    .patient(consultation.getPatient())
+                    .consultation(consultation)
+                    .niveau(NiveauAlerte.CRITIQUE)
+                    .message("Fréquence cardiaque anormale : " + req.getFrequenceCardiaque() + " bpm")
+                    .source("Prise des constantes")
+                    .acquittee(false)
+                    .build());
+        }
+
+        if (req.getTemperature() != null && req.getTemperature() > 40) {
+            alerteRepository.save(Alerte.builder()
+                    .patient(consultation.getPatient())
+                    .consultation(consultation)
+                    .niveau(NiveauAlerte.URGENT)
+                    .message("Température élevée : " + req.getTemperature() + "°C")
+                    .source("Prise des constantes")
+                    .acquittee(false)
+                    .build());
+        }
+
+        if (req.getTensionArterielle() != null) {
+            String[] valeurs = req.getTensionArterielle().split("/");
+            if (valeurs.length == 2) {
+                int systolique = Integer.parseInt(valeurs[0]);
+                int diastolique = Integer.parseInt(valeurs[1]);
+                if (systolique > 180 || diastolique > 110) {
+                    alerteRepository.save(Alerte.builder()
+                            .patient(consultation.getPatient())
+                            .consultation(consultation)
+                            .niveau(NiveauAlerte.CRITIQUE)
+                            .message("Hypertension sévère : " + req.getTensionArterielle())
+                            .source("Prise des constantes")
+                            .acquittee(false)
+                            .build());
+                }
+            }
+        }
     }
 
     // Phase 2 — Médecin complète la consultation
