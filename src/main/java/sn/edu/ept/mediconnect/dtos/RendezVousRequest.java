@@ -9,13 +9,6 @@ import java.time.LocalDateTime;
 @Data
 public class RendezVousRequest {
 
-    // Obligatoire uniquement si c'est le médecin qui crée
-    // Ignoré si c'est le patient (on prend son id depuis le token)
-    private Long patientId;
-
-    @NotNull(message = "Le médecin est obligatoire")
-    private Long medecinId;
-
     private String nomHopital;
 
     @NotNull(message = "La date et l'heure sont obligatoires")

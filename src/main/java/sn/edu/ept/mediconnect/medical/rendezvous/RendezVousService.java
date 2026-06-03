@@ -30,31 +30,27 @@ public class RendezVousService {
 
     // Créer un rendez-vous — patientId vient soit du token soit du request
     @Transactional
-    public RendezVousResponse create(Long patientId, RendezVousRequest req) {
+    public RendezVousResponse create(Long patientId, Long medecinId, RendezVousRequest req) {
 
         Patient patient = patientRepository.findById(patientId)
                 .orElseThrow(() -> BusinessException.notFound(
                         "Patient introuvable (id=" + patientId + ")"));
 
-        Medecin medecin = medecinRepository.findById(req.getMedecinId())
-                .orElseThrow(() -> BusinessException.notFound(
-                        "Médecin introuvable (id=" + req.getMedecinId() + ")"));
-
-        // Vérifier qu'il n'y a pas déjà un RDV au même créneau
-        if (rendezVousRepository.existsByPatientIdAndMedecinIdAndDateHeure(
-                patientId, req.getMedecinId(), req.getDateHeure())) {
-            throw BusinessException.conflict(
-                    "Un rendez-vous existe déjà pour ce créneau.");
-        }
-
         RendezVous rendezVous = RendezVous.builder()
                 .patient(patient)
-                .medecin(medecin)
                 .dateHeure(req.getDateHeure())
                 .type(req.getType())
                 .statut(StatutRendezVous.PLANIFIE)
                 .motif(req.getMotif())
                 .build();
+
+        // Médecin optionnel — null si c'est le patient qui crée
+        if (medecinId != null) {
+            Medecin medecin = medecinRepository.findById(medecinId)
+                    .orElseThrow(() -> BusinessException.notFound(
+                            "Médecin introuvable (id=" + medecinId + ")"));
+            rendezVous.setMedecin(medecin);
+        }
 
         if (req.getNomHopital() != null) {
             Hopital hopital = hopitalRepository.findByNom(req.getNomHopital())
@@ -64,13 +60,13 @@ public class RendezVousService {
         }
 
         rendezVousRepository.save(rendezVous);
-        log.info("Rendez-vous créé : patient={} medecin={}", patientId, req.getMedecinId());
+        log.info("Rendez-vous créé : patient={}", patientId);
         return toResponse(rendezVous);
     }
 
     // Confirmer un rendez-vous
     @Transactional
-    public RendezVousResponse confirmer(Long id) {
+    public RendezVousResponse confirmer(Long id, Long medecinId) {
         RendezVous rdv = find(id);
 
         if (rdv.getStatut() != StatutRendezVous.PLANIFIE) {
@@ -78,6 +74,12 @@ public class RendezVousService {
                     "Seul un rendez-vous planifié peut être confirmé.");
         }
 
+        // On assigne le médecin qui confirme
+        Medecin medecin = medecinRepository.findById(medecinId)
+                .orElseThrow(() -> BusinessException.notFound(
+                        "Médecin introuvable (id=" + medecinId + ")"));
+
+        rdv.setMedecin(medecin);
         rdv.setStatut(StatutRendezVous.CONFIRME);
 
         if (rdv.getType() == TypeRendezVous.VIDEO) {
@@ -85,7 +87,7 @@ public class RendezVousService {
         }
 
         rendezVousRepository.save(rdv);
-        log.info("Rendez-vous confirmé : id={}", id);
+        log.info("Rendez-vous confirmé par médecin id={}", medecinId);
         return toResponse(rdv);
     }
 

@@ -59,7 +59,7 @@ public class ConsultationController {
     // GET /api/consultations/patient/{patientId}
     // Médecin / Cardiologue voient les consultations d'un patient
     @GetMapping("/patient/{patientId}")
-    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE')")
+    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE', 'INFIRMIER')")
     @Operation(summary = "Lister les consultations d'un patient")
     public ResponseEntity<?> getByPatient(@PathVariable Long patientId) {
         List<ConsultationResponse> liste = consultationService.getByPatient(patientId);
@@ -87,7 +87,7 @@ public class ConsultationController {
     // PATCH /api/consultations/{id}/constantes
     // Infirmier prend les constantes — Phase 1
     @PatchMapping("/{id}/constantes")
-    @PreAuthorize("hasRole('INFIRMIER')")
+    @PreAuthorize("hasRole('INFIRMIER', 'MEDECIN', 'CARDIOLOGUE')")
     @Operation(summary = "Prise des constantes vitales par l'infirmier")
     public ResponseEntity<?> prendreConstantes(
             @PathVariable Long id,
@@ -106,7 +106,7 @@ public class ConsultationController {
     // PATCH /api/consultations/{id}/completer
     // Médecin / Cardiologue complète la consultation — Phase 2
     @PatchMapping("/{id}/completer")
-    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE')")
+    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE', 'INFIRMIER')")
     @Operation(summary = "Compléter la consultation par le médecin")
     public ResponseEntity<?> completerConsultation(
             @PathVariable Long id,

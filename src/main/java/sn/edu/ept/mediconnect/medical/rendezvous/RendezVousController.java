@@ -14,6 +14,8 @@ import sn.edu.ept.mediconnect.dtos.RendezVousRequest;
 import sn.edu.ept.mediconnect.dtos.RendezVousResponse;
 import sn.edu.ept.mediconnect.exceptions.BusinessException;
 import sn.edu.ept.mediconnect.users.User;
+import sn.edu.ept.mediconnect.users.patient.Patient;
+import sn.edu.ept.mediconnect.users.patient.PatientRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,32 +28,44 @@ import java.util.Map;
 public class RendezVousController {
 
     private final RendezVousService rendezVousService;
+    private final PatientRepository patientRepository;
 
     // POST /api/rendez-vous
     // Patient → patientId depuis le token
     // Médecin → patientId obligatoire dans le request
-    @PostMapping
-    @PreAuthorize("hasAnyRole('PATIENT', 'MEDECIN', 'CARDIOLOGUE')")
-    @Operation(summary = "Créer un rendez-vous")
-    public ResponseEntity<?> create(
-            @AuthenticationPrincipal User utilisateurConnecte,
+    @PostMapping("/{numPatient}")
+    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE')")
+    @Operation(summary = "Créer un rendez-vous pour un patient")
+    public ResponseEntity<?> createByMedecin(
+            @PathVariable String numPatient,
+            @AuthenticationPrincipal User medecinConnecte,
             @Valid @RequestBody RendezVousRequest req) {
 
-        Long patientId;
+        Patient patient = patientRepository.findByNumPatient(numPatient)
+                .orElseThrow(() -> BusinessException.notFound(
+                        "Patient introuvable : " + numPatient));
 
-        if (utilisateurConnecte.getRole() == Role.PATIENT) {
-            // Le patient prend son propre rendez-vous
-            patientId = utilisateurConnecte.getId();
-        } else {
-            // Le médecin doit fournir le patientId
-            if (req.getPatientId() == null) {
-                throw BusinessException.badRequest(
-                        "Le patientId est obligatoire pour un médecin.");
-            }
-            patientId = req.getPatientId();
-        }
+        RendezVousResponse rdv = rendezVousService.create(
+                patient.getId(), medecinConnecte.getId(), req);
 
-        RendezVousResponse rdv = rendezVousService.create(patientId, req);
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
+                "success", true,
+                "message", "Rendez-vous créé avec succès.",
+                "data", rdv,
+                "timestamp", LocalDateTime.now()
+        ));
+    }
+
+    @PostMapping
+    @PreAuthorize("hasRole('PATIENT')")
+    @Operation(summary = "Prendre un rendez-vous")
+    public ResponseEntity<?> createByPatient(
+            @AuthenticationPrincipal User patientConnecte,
+            @Valid @RequestBody RendezVousRequest req) {
+
+        RendezVousResponse rdv = rendezVousService.create(
+                patientConnecte.getId(), null, req);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
                 "success", true,
                 "message", "Rendez-vous créé avec succès.",
@@ -132,8 +146,8 @@ public class RendezVousController {
     @PatchMapping("/{id}/confirmer")
     @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE')")
     @Operation(summary = "Confirmer un rendez-vous")
-    public ResponseEntity<?> confirmer(@PathVariable Long id) {
-        RendezVousResponse rdv = rendezVousService.confirmer(id);
+    public ResponseEntity<?> confirmer(@PathVariable Long id,   @AuthenticationPrincipal User medecinConnecte) {
+        RendezVousResponse rdv = rendezVousService.confirmer(id, medecinConnecte.getId());
         return ResponseEntity.ok(Map.of(
                 "success", true,
                 "message", "Rendez-vous confirmé.",
