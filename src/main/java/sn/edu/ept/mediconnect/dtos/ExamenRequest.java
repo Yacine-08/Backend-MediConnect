@@ -8,8 +8,6 @@ import sn.edu.ept.mediconnect.medical.examen.ExamenType;
 @Data
 public class ExamenRequest {
 
-    @NotNull(message = "La consultation est obligatoire")
-    private Long consultationId;
 
     @NotBlank(message = "Le nom est obligatoire")
     private String nom;

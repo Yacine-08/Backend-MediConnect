@@ -25,11 +25,14 @@ public class ExamenController {
 
     // POST /api/examens
     // Médecin / Cardiologue prescrit un examen
-    @PostMapping
+    @PostMapping("/consultation/{consultationId}")
     @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE')")
     @Operation(summary = "Prescrire un examen")
-    public ResponseEntity<?> create(@Valid @RequestBody ExamenRequest req) {
-        ExamenResponse examen = examenService.create(req);
+    public ResponseEntity<?> create(
+            @PathVariable Long consultationId,
+            @Valid @RequestBody ExamenRequest req) {
+
+        ExamenResponse examen = examenService.create(consultationId, req);
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
                 "success", true,
                 "message", "Examen prescrit avec succès.",

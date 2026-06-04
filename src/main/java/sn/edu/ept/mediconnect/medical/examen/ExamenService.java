@@ -24,11 +24,11 @@ public class ExamenService {
 
     // Prescrire un examen
     @Transactional
-    public ExamenResponse create(ExamenRequest req) {
+    public ExamenResponse create(Long consultationId, ExamenRequest req) {
 
-        Consultation consultation = consultationRepository.findById(req.getConsultationId())
+        Consultation consultation = consultationRepository.findById(consultationId)
                 .orElseThrow(() -> BusinessException.notFound(
-                        "Consultation introuvable (id=" + req.getConsultationId() + ")"));
+                        "Consultation introuvable (id=" + consultationId + ")"));
 
         Examen examen = Examen.builder()
                 .consultation(consultation)
@@ -41,7 +41,7 @@ public class ExamenService {
                 .build();
 
         examenRepository.save(examen);
-        log.info("Examen prescrit : consultation={} type={}", req.getConsultationId(), req.getType());
+        log.info("Examen prescrit : consultation={} type={}", consultationId, req.getType());
         return toResponse(examen);
     }
 
