@@ -21,6 +21,10 @@ import sn.edu.ept.mediconnect.users.patient.PatientRepository;
 import sn.edu.ept.mediconnect.medical.alerte.AlerteRepository;
 import sn.edu.ept.mediconnect.medical.alerte.Alerte;
 import sn.edu.ept.mediconnect.medical.alerte.NiveauAlerte;
+import sn.edu.ept.mediconnect.common.entities.Role;
+import sn.edu.ept.mediconnect.medical.dossier.DossierMedical;
+import sn.edu.ept.mediconnect.medical.dossier.DossierMedicalRepository;
+import sn.edu.ept.mediconnect.users.User;
 
 
 import java.util.List;
@@ -37,42 +41,64 @@ public class ConsultationService {
     private final InfirmierRepository infirmierRepository;
     private final RendezVousRepository rendezVousRepository;
     private final AlerteRepository alerteRepository;
+    private final DossierMedicalRepository dossierMedicalRepository;
 
     // Créer une consultation — Médecin / Cardiologue
     @Transactional
-    public ConsultationResponse create(ConsultationRequest req) {
+    public ConsultationResponse create(Long dossierMedicalId, Long rendezVousId,
+                                       User utilisateur, ConsultationRequest req) {
 
-        Patient patient = patientRepository.findById(req.getPatientId())
+        // Récupérer le patient depuis le dossier médical
+        DossierMedical dossier = dossierMedicalRepository.findById(dossierMedicalId)
                 .orElseThrow(() -> BusinessException.notFound(
-                        "Patient introuvable (id=" + req.getPatientId() + ")"));
+                        "Dossier médical introuvable (id=" + dossierMedicalId + ")"));
 
-        Medecin medecin = medecinRepository.findById(req.getMedecinId())
-                .orElseThrow(() -> BusinessException.notFound(
-                        "Médecin introuvable (id=" + req.getMedecinId() + ")"));
+        Patient patient = dossier.getPatient();
 
         Consultation consultation = Consultation.builder()
                 .patient(patient)
-                .medecin(medecin)
                 .statut(StatutConsultation.EN_ATTENTE)
                 .build();
 
-        // Lier au rendez-vous si fourni
-        if (req.getRendezVousId() != null) {
-            RendezVous rdv = rendezVousRepository.findById(req.getRendezVousId())
-                    .orElseThrow(() -> BusinessException.notFound(
-                            "Rendez-vous introuvable (id=" + req.getRendezVousId() + ")"));
+        if (req != null && req.getMotif() != null) {
+            consultation.setMotif(req.getMotif());
+        }
 
-            // Vérifier que le RDV est confirmé
+        // Récupérer le médecin ou l'infirmier depuis le token
+        if (utilisateur.getRole() == Role.MEDECIN ||
+                utilisateur.getRole() == Role.CARDIOLOGUE) {
+            Medecin medecin = medecinRepository.findById(utilisateur.getId())
+                    .orElseThrow(() -> BusinessException.notFound(
+                            "Médecin introuvable"));
+            consultation.setMedecin(medecin);
+        } else if (utilisateur.getRole() == Role.INFIRMIER) {
+            Infirmier infirmier = infirmierRepository.findById(utilisateur.getId())
+                    .orElseThrow(() -> BusinessException.notFound(
+                            "Infirmier introuvable"));
+            consultation.setInfirmier(infirmier);
+        }
+
+        // Lier au rendez-vous si fourni
+        if (rendezVousId != null) {
+            RendezVous rdv = rendezVousRepository.findById(rendezVousId)
+                    .orElseThrow(() -> BusinessException.notFound(
+                            "Rendez-vous introuvable (id=" + rendezVousId + ")"));
+
             if (rdv.getStatut() != StatutRendezVous.CONFIRME) {
                 throw BusinessException.badRequest(
-                        "Le rendez-vous doit être confirmé pour démarrer une consultation.");
+                        "Le rendez-vous doit être confirmé.");
+            }
+
+            // Si infirmier crée depuis un RDV on récupère le médecin du RDV
+            if (utilisateur.getRole() == Role.INFIRMIER) {
+                consultation.setMedecin(rdv.getMedecin());
             }
 
             consultation.setRendezVous(rdv);
         }
 
         consultationRepository.save(consultation);
-        log.info("Consultation créée : patient={} medecin={}", req.getPatientId(), req.getMedecinId());
+        log.info("Consultation créée par {} id={}", utilisateur.getRole(), utilisateur.getId());
         return toResponse(consultation);
     }
 

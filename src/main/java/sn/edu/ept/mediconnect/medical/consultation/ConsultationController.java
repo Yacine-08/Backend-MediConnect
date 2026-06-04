@@ -27,13 +27,18 @@ public class ConsultationController {
 
     private final ConsultationService consultationService;
 
-    // POST /api/consultations
-    // Médecin / Cardiologue crée une consultation
-    @PostMapping
+    // Créer une consultation depuis un dossier médical
+    @PostMapping("/dossier/{dossierMedicalId}")
     @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE', 'INFIRMIER')")
-    @Operation(summary = "Créer une consultation")
-    public ResponseEntity<?> create(@Valid @RequestBody ConsultationRequest req) {
-        ConsultationResponse consultation = consultationService.create(req);
+    @Operation(summary = "Créer une consultation depuis un dossier médical")
+    public ResponseEntity<?> create(
+            @PathVariable Long dossierMedicalId,
+            @AuthenticationPrincipal User utilisateurConnecte,
+            @RequestBody(required = false) ConsultationRequest req) {
+
+        ConsultationResponse consultation = consultationService.create(
+                dossierMedicalId, null, utilisateurConnecte, req);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
                 "success", true,
                 "message", "Consultation créée avec succès.",
@@ -42,6 +47,26 @@ public class ConsultationController {
         ));
     }
 
+    // Créer une consultation depuis un dossier médical lié à un rendez-vous
+    @PostMapping("/dossier/{dossierMedicalId}/rendez-vous/{rendezVousId}")
+    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE', 'INFIRMIER')")
+    @Operation(summary = "Créer une consultation liée à un rendez-vous")
+    public ResponseEntity<?> createWithRendezVous(
+            @PathVariable Long dossierMedicalId,
+            @PathVariable Long rendezVousId,
+            @AuthenticationPrincipal User utilisateurConnecte,
+            @RequestBody(required = false) ConsultationRequest req) {
+
+        ConsultationResponse consultation = consultationService.create(
+                dossierMedicalId, rendezVousId, utilisateurConnecte, req);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
+                "success", true,
+                "message", "Consultation créée avec succès.",
+                "data", consultation,
+                "timestamp", LocalDateTime.now()
+        ));
+    }
     // GET /api/consultations/{id}
     // Médecin, Cardiologue, Infirmier peuvent voir le détail
     @GetMapping("/{id}")
