@@ -27,14 +27,13 @@ public class OrdonnanceService {
 
     // Créer une ordonnance
     @Transactional
-    public OrdonnanceResponse create(OrdonnanceRequest req) {
+    public OrdonnanceResponse create(Long consultationId, OrdonnanceRequest req) {
 
-        Consultation consultation = consultationRepository.findById(req.getConsultationId())
+        Consultation consultation = consultationRepository.findById(consultationId)
                 .orElseThrow(() -> BusinessException.notFound(
-                        "Consultation introuvable (id=" + req.getConsultationId() + ")"));
+                        "Consultation introuvable (id=" + consultationId + ")"));
 
-        // Vérifier qu'il n'y a pas déjà une ordonnance pour cette consultation
-        if (ordonnanceRepository.existsByConsultationId(req.getConsultationId())) {
+        if (ordonnanceRepository.existsByConsultationId(consultationId)) {
             throw BusinessException.conflict(
                     "Une ordonnance existe déjà pour cette consultation.");
         }
@@ -47,7 +46,6 @@ public class OrdonnanceService {
 
         ordonnanceRepository.save(ordonnance);
 
-        // Créer les lignes de prescription
         List<LignePrescription> lignes = req.getLignes().stream()
                 .map(l -> LignePrescription.builder()
                         .ordonnance(ordonnance)
@@ -62,7 +60,7 @@ public class OrdonnanceService {
         lignePrescriptionRepository.saveAll(lignes);
         ordonnance.setLignes(lignes);
 
-        log.info("Ordonnance créée : consultation={}", req.getConsultationId());
+        log.info("Ordonnance créée : consultation={}", consultationId);
         return toResponse(ordonnance);
     }
 

@@ -25,11 +25,14 @@ public class OrdonnanceController {
 
     // POST /api/ordonnances
     // Médecin / Cardiologue crée une ordonnance
-    @PostMapping
+    @PostMapping("/consultation/{consultationId}")
     @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE')")
     @Operation(summary = "Créer une ordonnance")
-    public ResponseEntity<?> create(@Valid @RequestBody OrdonnanceRequest req) {
-        OrdonnanceResponse ordonnance = ordonnanceService.create(req);
+    public ResponseEntity<?> create(
+            @PathVariable Long consultationId,
+            @Valid @RequestBody OrdonnanceRequest req) {
+
+        OrdonnanceResponse ordonnance = ordonnanceService.create(consultationId, req);
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
                 "success", true,
                 "message", "Ordonnance créée avec succès.",

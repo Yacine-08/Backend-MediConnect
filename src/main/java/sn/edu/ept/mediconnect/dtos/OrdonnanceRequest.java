@@ -9,9 +9,6 @@ import java.util.List;
 @Data
 public class OrdonnanceRequest {
 
-    @NotNull(message = "La consultation est obligatoire")
-    private Long consultationId;
-
     private LocalDateTime dateExpiration;
 
     @NotNull(message = "Les lignes de prescription sont obligatoires")
