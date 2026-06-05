@@ -95,10 +95,10 @@ public class SecurityConfig {
                         //   - POST → INFIRMIER (création du compte patient)
                         //   - GET  → ADMIN, INFIRMIER, MEDECIN, CARDIOLOGUE
                         //   - PUT/PATCH → ADMIN, INFIRMIER
-                        .requestMatchers(HttpMethod.POST,   "/api/patients").hasRole("INFIRMIER")
-                        .requestMatchers(HttpMethod.GET,    "/api/patients/**").hasAnyRole("ADMIN", "INFIRMIER", "MEDECIN", "CARDIOLOGUE")
-                        .requestMatchers(HttpMethod.PUT,    "/api/patients/**").hasAnyRole("ADMIN", "INFIRMIER", "MEDECIN", "CARDIOLOGUE")
-                        .requestMatchers(HttpMethod.PATCH,  "/api/patients/**").hasAnyRole("ADMIN", "INFIRMIER", "MEDECIN", "CARDIOLOGUE")
+//                        .requestMatchers(HttpMethod.POST,   "/api/patients").hasRole("INFIRMIER")
+//                        .requestMatchers(HttpMethod.GET,    "/api/patients/**").hasAnyRole("ADMIN", "INFIRMIER", "MEDECIN", "CARDIOLOGUE")
+//                        .requestMatchers(HttpMethod.PUT,    "/api/patients/**").hasAnyRole("ADMIN", "INFIRMIER", "MEDECIN", "CARDIOLOGUE")
+//                        .requestMatchers(HttpMethod.PATCH,  "/api/patients/**").hasAnyRole("ADMIN", "INFIRMIER", "MEDECIN", "CARDIOLOGUE")
 
                         // Everything else secured
                         .anyRequest().authenticated()

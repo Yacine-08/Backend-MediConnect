@@ -138,27 +138,31 @@ public class ConsentementService {
 
 
     private ConsentementResponse toResponse(Consentement template, SignatureConsentement sig) {
-        ConsentementResponse.ConsentementResponseBuilder b = ConsentementResponse.builder()
-                .consentementId(template.getId())
-                .type(template.getTypeConsentement())
-                .titre(template.getTitre())
-                .contenu(template.getContenu())
-                .version(template.getVersion())
-                .obligatoire(template.getObligatoire());
+
+        ConsentementResponse.ConsentementResponseBuilder b =
+                ConsentementResponse.builder()
+                        .consentementId(template.getId())
+                        .type(template.getTypeConsentement())
+                        .titre(template.getTitre())
+                        .contenu(template.getContenu())
+                        .version(template.getVersion())
+                        .obligatoire(template.getObligatoire())
+                        .accepte(false); // valeur par défaut
 
         if (sig != null) {
             b.signatureId(sig.getId())
-             .accepte(sig.getAccepte())
-             .dateSignature(sig.getDateSignatureConsentement())
-             .dateModification(sig.getDateModification());
+                    .accepte(Boolean.TRUE.equals(sig.getAccepte()))
+                    .dateSignature(sig.getDateSignatureConsentement())
+                    .dateModification(sig.getDateModification());
 
             if (sig.getModifiedBy() != null) {
                 User u = sig.getModifiedBy();
                 b.modifiedById(u.getId())
-                 .modifiedByName(u.getPrenom() + " " + u.getNom())
-                 .modifiedByRole(u.getRole().name());
+                        .modifiedByName(u.getPrenom() + " " + u.getNom())
+                        .modifiedByRole(u.getRole().name());
             }
         }
+
         return b.build();
     }
 }

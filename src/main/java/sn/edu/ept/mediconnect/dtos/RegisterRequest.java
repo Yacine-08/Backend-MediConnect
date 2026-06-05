@@ -2,14 +2,11 @@ package sn.edu.ept.mediconnect.dtos;
 
 import jakarta.validation.constraints.*;
 import lombok.Data;
-import sn.edu.ept.mediconnect.common.entities.Adresse;
-import sn.edu.ept.mediconnect.common.entities.Hopital;
 import sn.edu.ept.mediconnect.common.entities.Role;
-import sn.edu.ept.mediconnect.users.medecin.Section;
-import sn.edu.ept.mediconnect.users.medecin.Specialite;
 import sn.edu.ept.mediconnect.users.patient.GroupeSanguin;
 import sn.edu.ept.mediconnect.users.patient.Sexe;
 import sn.edu.ept.mediconnect.utils.PhoneNumberUtils;
+import sn.edu.ept.mediconnect.dtos.AdresseRequest;
 
 import java.time.LocalDate;
 
@@ -58,7 +55,7 @@ public class RegisterRequest {
     private LocalDate dateNaissance;
     private Sexe sexe;
     private GroupeSanguin groupeSanguin;
-    private Adresse adresse;
+    private AdresseRequest adresse;
     private Boolean   assurance;
 
     // champs INFIRMIER

@@ -171,9 +171,6 @@ public class AuthService {
             case CARDIOLOGUE ->
                     createCardio(req);
 
-            case PATIENT ->
-                    createPatient(req);
-
             case INFIRMIER ->
                     createInfirm(req);
 
@@ -256,28 +253,6 @@ public class AuthService {
         return cardiologue.getId();
     }
 
-    private Long createPatient(RegisterRequest req) {
-        Patient patient = new Patient();
-        remplirChampCommuns(patient, req);
-
-        // Générer le numéro PAT-AAAAMMJJ
-        patient.setNumPatient(patientNumeroService.generer());
-
-        patient.setDateNaissance(req.getDateNaissance());
-
-        if (req.getSexe() != null)
-            patient.setSexe(req.getSexe());
-        if (req.getGroupeSanguin() != null)
-            patient.setGroupeSanguin(req.getGroupeSanguin());
-
-        patient.setAssurance(req.getAssurance() != null ? req.getAssurance() : false);
-        patientRepo.save(patient);
-        return patient.getId();
-    }
-
-    // Dans createPatient, ajouter la résolution de l'infirmier
-// via le token JWT de l'infirmier connecté
-// ← à gérer dans un PatientController séparé (pas dans /auth/register)
     private Long createInfirm(RegisterRequest req) {
         Infirmier infirmier = new Infirmier();
         remplirChampCommuns(infirmier, req);
@@ -596,49 +571,6 @@ public class AuthService {
     public List<User> getAllUsers() {
         return userRepo.findAll();
     }
-
-    @Transactional
-    public User updateUser(User user) {
-        // Vérifier que l'utilisateur existe
-        User existingUser = userRepo.findById(user.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Utilisateur non trouvé"));
-
-
-        // Mettre à jour uniquement les champs non nuls
-        if (user.getPrenom() != null) {
-            existingUser.setPrenom(user.getPrenom());
-        }
-        if (user.getNom() != null) {
-            existingUser.setNom(user.getNom());
-        }
-        if (user.getTelephone() != null) {
-            existingUser.setTelephone(user.getTelephone());
-        }
-
-        return userRepo.save(existingUser);
-    }
-
-//    public User getCurrentUser(Authentication authentication) {
-//        if (authentication == null || !authentication.isAuthenticated()) {
-//            throw new SecurityException("User not authenticated");
-//        }
-//
-//        String username;
-//
-//        if (authentication.getPrincipal() instanceof UserDetails) {
-//            username = ((UserDetails) authentication.getPrincipal()).getUsername();
-//        } else {
-//            username = authentication.getName();
-//        }
-//
-//        // D'abord essayer de trouver par nom d'utilisateur
-//        return userRepo.findByUsername(username)
-//                .orElseGet(() -> {
-//                    // Si non trouvé, essayer par email (pour la rétrocompatibilité)
-//                    return userRepository.findByEmail(username)
-//                            .orElseThrow(() -> new UsernameNotFoundException("User not found with username/email: " + username));
-//                });
-//    }
 
 
     private boolean estVide(String valeur) {

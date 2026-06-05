@@ -33,7 +33,8 @@ public class SignatureConsentement {
     private Consentement consentement;
 
     @Column(name = "accepte", nullable = false)
-    private Boolean accepte;
+    @Builder.Default
+    private Boolean accepte = false;
 
     @Column(name = "date_signature_consentement", nullable = false)
     @Builder.Default

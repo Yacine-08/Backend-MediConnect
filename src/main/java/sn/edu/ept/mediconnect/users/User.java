@@ -92,8 +92,6 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
 
-        // Spring Security exige un username
-        // On utilise email sinon téléphone
 
         if (email != null && !email.isBlank()) {
             return email;

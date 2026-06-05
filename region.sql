@@ -1,4 +1,4 @@
-INSERT INTO region (nom) VALUES
+INSERT INTO region(nom) VALUES
                              ('Dakar'),
                              ('Thiès'),
                              ('Saint-Louis'),

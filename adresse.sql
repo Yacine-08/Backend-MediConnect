@@ -40,4 +40,5 @@ INSERT INTO adresses (region, departement, commune) VALUES
 ('Saint-Louis', 'Saint-Louis', 'Sor'),
 ('Saint-Louis', 'Saint-Louis', 'Pikine'),
 ('Saint-Louis', 'Dagana', 'Richard-Toll'),
-('Saint-Louis', 'Podor', 'Podor');
+('Saint-Louis', 'Podor', 'Podor')
+ON CONFLICT DO NOTHING;
