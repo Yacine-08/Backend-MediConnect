@@ -29,15 +29,15 @@ public class TransfertService {
 
     // Créer un transfert
     @Transactional
-    public TransfertResponse create(TransfertRequest req) {
+    public TransfertResponse create(String numPatient, Long medecinId, TransfertRequest req) {
 
-        Patient patient = patientRepository.findById(req.getPatientId())
+        Patient patient = patientRepository.findByNumPatient(numPatient)
                 .orElseThrow(() -> BusinessException.notFound(
-                        "Patient introuvable (id=" + req.getPatientId() + ")"));
+                        "Patient introuvable : " + numPatient));
 
-        Medecin medecin = medecinRepository.findById(req.getMedecinId())
+        Medecin medecin = medecinRepository.findById(medecinId)
                 .orElseThrow(() -> BusinessException.notFound(
-                        "Médecin introuvable (id=" + req.getMedecinId() + ")"));
+                        "Médecin introuvable (id=" + medecinId + ")"));
 
         Hopital hopitalSource = hopitalRepository.findByNom(req.getNomHopitalSource())
                 .orElseThrow(() -> BusinessException.notFound(
@@ -65,7 +65,7 @@ public class TransfertService {
 
         transfertRepository.save(transfert);
         log.info("Transfert créé : patient={} source={} destination={}",
-                req.getPatientId(), req.getNomHopitalSource(), req.getNomHopitalDestination());
+                numPatient, req.getNomHopitalSource(), req.getNomHopitalDestination());
         return toResponse(transfert);
     }
 

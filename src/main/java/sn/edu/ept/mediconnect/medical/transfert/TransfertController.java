@@ -10,6 +10,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import sn.edu.ept.mediconnect.dtos.TransfertRequest;
 import sn.edu.ept.mediconnect.dtos.TransfertResponse;
+import sn.edu.ept.mediconnect.users.patient.PatientRepository;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import sn.edu.ept.mediconnect.users.User;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,14 +25,21 @@ import java.util.Map;
 public class TransfertController {
 
     private final TransfertService transfertService;
+    private final PatientRepository patientRepository;
 
     // POST /api/transferts
     // Médecin / Cardiologue initie un transfert
-    @PostMapping
+    @PostMapping("/{numPatient}")
     @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE')")
     @Operation(summary = "Initier un transfert de patient")
-    public ResponseEntity<?> create(@Valid @RequestBody TransfertRequest req) {
-        TransfertResponse transfert = transfertService.create(req);
+    public ResponseEntity<?> create(
+            @PathVariable String numPatient,
+            @AuthenticationPrincipal User medecinConnecte,
+            @Valid @RequestBody TransfertRequest req) {
+
+        TransfertResponse transfert = transfertService.create(
+                numPatient, medecinConnecte.getId(), req);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
                 "success", true,
                 "message", "Transfert initié avec succès.",

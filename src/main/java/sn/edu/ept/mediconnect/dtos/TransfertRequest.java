@@ -8,12 +8,6 @@ import sn.edu.ept.mediconnect.medical.transfert.TypeTransfert;
 @Data
 public class TransfertRequest {
 
-    @NotNull(message = "Le patient est obligatoire")
-    private Long patientId;
-
-    @NotNull(message = "Le médecin est obligatoire")
-    private Long medecinId;
-
     @NotBlank(message = "L'hôpital source est obligatoire")
     private String nomHopitalSource;
 
