@@ -517,6 +517,7 @@ public class AuthService {
 
     @Transactional
     public void resetPassword(ResetPasswordRequest request) {
+
         PasswordResetToken resetToken = passwordResetTokenRepo.findByToken(request.getToken())
                 .orElseThrow(() -> new BadRequestException("Token invalide"));
 
@@ -528,16 +529,38 @@ public class AuthService {
             throw new BadRequestException("Ce token a expiré");
         }
 
-        User user = userRepo.findById(resetToken.getUserId())
-                .orElseThrow(() -> new ResourceNotFoundException("Utilisateur non trouvé"));
+        // Vérifier la confirmation
+        if (!request.getNewPassword().equals(request.getConfirmPassword())) {
+            throw new BadRequestException(
+                    "Le mot de passe et la confirmation ne correspondent pas");
+        }
 
-        user.setMotDePasse(passwordEncoder.encode(request.getNewPassword()));
+        User user = userRepo.findById(resetToken.getUserId())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Utilisateur non trouvé"));
+
+        // Optionnel : empêcher de réutiliser le mot de passe actuel
+        if (passwordEncoder.matches(
+                request.getNewPassword(),
+                user.getMotDePasse())) {
+
+            throw new BadRequestException(
+                    "Le nouveau mot de passe doit être différent de l'ancien");
+        }
+
+        user.setMotDePasse(
+                passwordEncoder.encode(request.getNewPassword())
+        );
+
         userRepo.save(user);
 
         resetToken.setUsed(true);
         passwordResetTokenRepo.save(resetToken);
 
-        emailService.sendPasswordChangedEmail(user.getEmail(), user.getPrenom());
+        emailService.sendPasswordChangedEmail(
+                user.getEmail(),
+                user.getPrenom()
+        );
     }
 
     @Transactional
