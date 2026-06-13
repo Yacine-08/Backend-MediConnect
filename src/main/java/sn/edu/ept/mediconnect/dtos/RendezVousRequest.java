@@ -11,6 +11,8 @@ public class RendezVousRequest {
 
     private String nomHopital;
 
+    private Long medecinId;
+
     @NotNull(message = "La date et l'heure sont obligatoires")
     @Future(message = "La date doit être dans le futur")
     private LocalDateTime dateHeure;

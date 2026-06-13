@@ -27,11 +27,37 @@ public class TransfertController {
     private final TransfertService transfertService;
     private final PatientRepository patientRepository;
 
-    // POST /api/transferts
-    // Médecin / Cardiologue initie un transfert
+    // POST /api/transferts  — patientId passé dans le corps de la requête
+    @PostMapping
+    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE', 'INFIRMIER', 'ADMIN')")
+    @Operation(summary = "Initier un transfert (patientId dans le body)")
+    public ResponseEntity<?> createByPatientId(
+            @AuthenticationPrincipal User medecinConnecte,
+            @Valid @RequestBody TransfertRequest req) {
+
+        if (req.getPatientId() == null) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "success", false,
+                    "message", "patientId est obligatoire",
+                    "timestamp", LocalDateTime.now()
+            ));
+        }
+
+        TransfertResponse transfert = transfertService.createByPatientId(
+                req.getPatientId(), medecinConnecte.getId(), req);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
+                "success", true,
+                "message", "Transfert initié avec succès.",
+                "data", transfert,
+                "timestamp", LocalDateTime.now()
+        ));
+    }
+
+    // POST /api/transferts/{numPatient}  — patient identifié par numéro dans l'URL
     @PostMapping("/{numPatient}")
     @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE')")
-    @Operation(summary = "Initier un transfert de patient")
+    @Operation(summary = "Initier un transfert de patient (numPatient en URL)")
     public ResponseEntity<?> create(
             @PathVariable String numPatient,
             @AuthenticationPrincipal User medecinConnecte,
@@ -44,6 +70,32 @@ public class TransfertController {
                 "success", true,
                 "message", "Transfert initié avec succès.",
                 "data", transfert,
+                "timestamp", LocalDateTime.now()
+        ));
+    }
+
+    // GET /api/transferts/mes-initiatives — transferts initiés par le médecin connecté
+    @GetMapping("/mes-initiatives")
+    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE')")
+    @Operation(summary = "Transferts initiés par le médecin connecté")
+    public ResponseEntity<?> getMesInitiatives(@AuthenticationPrincipal User medecinConnecte) {
+        List<TransfertResponse> liste = transfertService.getByMedecin(medecinConnecte.getId());
+        return ResponseEntity.ok(Map.of(
+                "success", true,
+                "data", liste,
+                "timestamp", LocalDateTime.now()
+        ));
+    }
+
+    // GET /api/transferts/mes-demandes — transferts dirigés vers le médecin connecté
+    @GetMapping("/mes-demandes")
+    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE')")
+    @Operation(summary = "Demandes de transfert reçues par le médecin connecté")
+    public ResponseEntity<?> getMesDemandes(@AuthenticationPrincipal User medecinConnecte) {
+        List<TransfertResponse> liste = transfertService.getByMedecinDestination(medecinConnecte.getId());
+        return ResponseEntity.ok(Map.of(
+                "success", true,
+                "data", liste,
                 "timestamp", LocalDateTime.now()
         ));
     }

@@ -37,10 +37,8 @@ public class SecurityConfig {
     private final JwtService jwtService;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(
-            HttpSecurity http,
-            JwtAuthFilter jwtAuthFilter
-    ) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        JwtAuthFilter jwtAuthFilter = new JwtAuthFilter(jwtService, userDetailsService());
 
         http
                 .csrf(csrf -> csrf.disable())
@@ -71,8 +69,13 @@ public class SecurityConfig {
                                 "/api/auth/forgot-password",
                                 "/api/auth/reset-password",
                                 "/api/auth/logout",
-                                "/api/auth/validate-token"
+                                "/api/auth/validate-token",
+                                "/api/ordre-medecins/lookup"
                         ).permitAll()
+                        // GET hopitaux public (formulaires), POST réservé ADMIN (@PreAuthorize)
+                        .requestMatchers(HttpMethod.GET, "/api/hopitaux").permitAll()
+                        // Admin endpoints
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
 
                         // protected endpoints
                         .requestMatchers("/api/auth/users").authenticated()
@@ -178,11 +181,4 @@ public class SecurityConfig {
         return source;
     }
 
-    @Bean
-    public JwtAuthFilter jwtAuthenticationFilter(
-            JwtService jwtService,
-            UserDetailsService userDetailsService
-    ) {
-        return new JwtAuthFilter(jwtService, userDetailsService);
-    }
 }

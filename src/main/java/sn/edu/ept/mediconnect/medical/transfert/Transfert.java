@@ -27,8 +27,13 @@ public class Transfert {
     @JoinColumn(name = "medecin_id", nullable = false)
     private Medecin medecin;
 
+    // Médecin destinataire du transfert (celui qui devra l'accepter/refuser)
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hopital_source_id", nullable = false)
+    @JoinColumn(name = "medecin_destination_id")
+    private Medecin medecinDestination;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "hopital_source_id")
     private Hopital hopitalSource;
 
     @ManyToOne(fetch = FetchType.LAZY)

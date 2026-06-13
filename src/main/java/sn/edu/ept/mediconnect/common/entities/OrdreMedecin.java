@@ -32,6 +32,12 @@ public class OrdreMedecin {
     // Section A ou B
     private String section;
 
+    @Column(name = "mail", length = 150)
+    private String mail;
+
+    @Column(name = "localisation", length = 200)
+    private String localisation;
+
     @Column(nullable = false)
     private Boolean actif = true;
 }

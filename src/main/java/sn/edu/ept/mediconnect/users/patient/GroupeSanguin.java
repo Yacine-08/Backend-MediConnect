@@ -1,5 +1,8 @@
 package sn.edu.ept.mediconnect.users.patient;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum GroupeSanguin {
     A_PLUS("A+"),
     A_MOINS("A-"),
@@ -16,7 +19,20 @@ public enum GroupeSanguin {
         this.label = label;
     }
 
+    @JsonValue
     public String getLabel() {
         return label;
+    }
+
+    @JsonCreator
+    public static GroupeSanguin fromValue(String value) {
+        if (value == null || value.isBlank()) return null;
+        String trimmed = value.trim();
+        for (GroupeSanguin g : values()) {
+            if (g.label.equalsIgnoreCase(trimmed) || g.name().equalsIgnoreCase(trimmed)) {
+                return g;
+            }
+        }
+        throw new IllegalArgumentException("Groupe sanguin invalide: " + value);
     }
 }

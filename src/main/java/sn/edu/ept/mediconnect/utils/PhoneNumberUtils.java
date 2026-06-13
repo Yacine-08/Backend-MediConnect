@@ -6,24 +6,31 @@ public class PhoneNumberUtils {
         if (phoneNumber == null || phoneNumber.trim().isEmpty()) {
             return null;
         }
-        
+
         // Supprimer tous les caractères non numériques
         String digits = phoneNumber.replaceAll("\\D+", "");
-        
-        // Si le numéro commence par l'indicatif du Sénégal (221), on le retire
-        if (digits.startsWith("221")) {
+
+        // Retirer le préfixe international sénégalais (221 ou 00221)
+        if (digits.startsWith("00221")) {
+            digits = digits.substring(5);
+        } else if (digits.startsWith("221")) {
             digits = digits.substring(3);
         }
-        
-        // S'assurer que le numéro a une longueur valide (9 chiffres pour le Sénégal)
-        if (digits.length() != 9) {
-            throw new IllegalArgumentException("Le numéro de téléphone doit contenir 9 chiffres (hors indicatif)");
+
+        // Retirer un éventuel 0 de tête (format local 077...)
+        if (digits.length() == 10 && digits.startsWith("0")) {
+            digits = digits.substring(1);
         }
-        
+
+        // Si on n'arrive pas à 9 chiffres, stocker le numéro brut (pas de blocage)
+        if (digits.length() != 9) {
+            return phoneNumber.trim();
+        }
+
         // Formater le numéro : +221 77 123 45 67
-        return "+221 " + digits.substring(0, 2) + " " + 
-               digits.substring(2, 5) + " " + 
-               digits.substring(5, 7) + " " + 
+        return "+221 " + digits.substring(0, 2) + " " +
+               digits.substring(2, 5) + " " +
+               digits.substring(5, 7) + " " +
                digits.substring(7);
     }
     

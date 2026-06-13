@@ -7,6 +7,6 @@ import sn.edu.ept.mediconnect.common.entities.Hopital;
 import java.util.Optional;
 
 @Repository
-public interface HopitalRepository extends JpaRepository<Hopital, Long> {
+public interface HopitalRepository extends JpaRepository<Hopital, String> {
     Optional<Hopital> findByNom(String nom);
 }

@@ -67,6 +67,20 @@ public class ConsultationController {
                 "timestamp", LocalDateTime.now()
         ));
     }
+    // GET /api/consultations
+    // Liste toutes les consultations
+    @GetMapping
+    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE', 'INFIRMIER', 'ADMIN')")
+    @Operation(summary = "Lister toutes les consultations")
+    public ResponseEntity<?> getAll() {
+        List<ConsultationResponse> liste = consultationService.getAll();
+        return ResponseEntity.ok(Map.of(
+                "success", true,
+                "data", liste,
+                "timestamp", LocalDateTime.now()
+        ));
+    }
+
     // GET /api/consultations/{id}
     // Médecin, Cardiologue, Infirmier peuvent voir le détail
     @GetMapping("/{id}")
@@ -82,9 +96,9 @@ public class ConsultationController {
     }
 
     // GET /api/consultations/patient/{patientId}
-    // Médecin / Cardiologue voient les consultations d'un patient
+    // Médecin / Cardiologue / Infirmier / Patient voient les consultations d'un patient
     @GetMapping("/patient/{patientId}")
-    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE', 'INFIRMIER')")
+    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE', 'INFIRMIER', 'ASSISTANT', 'PATIENT')")
     @Operation(summary = "Lister les consultations d'un patient")
     public ResponseEntity<?> getByPatient(@PathVariable Long patientId) {
         List<ConsultationResponse> liste = consultationService.getByPatient(patientId);
@@ -112,7 +126,7 @@ public class ConsultationController {
     // PATCH /api/consultations/{id}/constantes
     // Infirmier prend les constantes — Phase 1
     @PatchMapping("/{id}/constantes")
-    @PreAuthorize("hasRole('INFIRMIER', 'MEDECIN', 'CARDIOLOGUE')")
+    @PreAuthorize("hasAnyRole('INFIRMIER', 'MEDECIN', 'CARDIOLOGUE')")
     @Operation(summary = "Prise des constantes vitales par l'infirmier")
     public ResponseEntity<?> prendreConstantes(
             @PathVariable Long id,
@@ -135,8 +149,9 @@ public class ConsultationController {
     @Operation(summary = "Compléter la consultation par le médecin")
     public ResponseEntity<?> completerConsultation(
             @PathVariable Long id,
+            @AuthenticationPrincipal User utilisateurConnecte,
             @Valid @RequestBody ConsultationMedecineRequest req) {
-        ConsultationResponse consultation = consultationService.completerConsultation(id, req);
+        ConsultationResponse consultation = consultationService.completerConsultation(id, utilisateurConnecte, req);
         return ResponseEntity.ok(Map.of(
                 "success", true,
                 "message", "Consultation complétée.",

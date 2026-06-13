@@ -16,6 +16,8 @@ public class OrdonnanceResponse {
     private String prenomPatient;
     private String nomMedecin;
     private String prenomMedecin;
+    private String specialiteMedecin;
+    private String hopitalMedecin;
     private Boolean signatureNumerique;
     private String qrCode;
     private LocalDateTime dateEmission;

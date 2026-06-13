@@ -4,13 +4,26 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import sn.edu.ept.mediconnect.common.entities.Role;
+import sn.edu.ept.mediconnect.common.repositories.AdresseRepository;
+import sn.edu.ept.mediconnect.common.repositories.HopitalRepository;
 import sn.edu.ept.mediconnect.common.repositories.OrdreMedecinRepository;
 import sn.edu.ept.mediconnect.common.services.OrdreMedecinImportService;
 import sn.edu.ept.mediconnect.consentement.Consentement;
 import sn.edu.ept.mediconnect.consentement.ConsentementRepository;
 import sn.edu.ept.mediconnect.consentement.TypeConsentement;
+import sn.edu.ept.mediconnect.users.User;
+import sn.edu.ept.mediconnect.users.UserRepository;
+import sn.edu.ept.mediconnect.users.patient.Patient;
+import sn.edu.ept.mediconnect.users.patient.PatientRepository;
+
+import javax.sql.DataSource;
+import java.time.LocalDate;
 
 @Component
 @RequiredArgsConstructor
@@ -20,12 +33,72 @@ public class DataInitializer implements ApplicationRunner {
     private final OrdreMedecinImportService ordreMedecinImportService;
     private final OrdreMedecinRepository    ordreMedecinRepository;
     private final ConsentementRepository    consentementRepository;
+    private final HopitalRepository         hopitalRepository;
+    private final AdresseRepository         adresseRepository;
+    private final DataSource                dataSource;
+    private final UserRepository            userRepository;
+    private final PatientRepository         patientRepository;
+    private final PasswordEncoder           passwordEncoder;
 
     @Override
     @Transactional
     public void run(ApplicationArguments args) {
+        initialiserAdminParDefaut();
+        initialiserPatientTest();
         initialiserTemplatesConsentements();
+        initialiserHopitaux();
+        initialiserAdresses();
         importerOrdreMedecins();
+    }
+
+    private void initialiserAdminParDefaut() {
+        if (userRepository.existsByEmail("admin@mediconnect.sn")) {
+            log.info("Compte admin déjà présent.");
+            return;
+        }
+        User admin = new User();
+        admin.setNom("MediConnect");
+        admin.setPrenom("Admin");
+        admin.setEmail("admin@mediconnect.sn");
+        admin.setTelephone("+221000000000");
+        admin.setMotDePasse(passwordEncoder.encode("Admin@2026"));
+        admin.setRole(Role.ADMIN);
+        admin.setActif(true);
+        admin.setMfaActif(false);
+        userRepository.save(admin);
+        log.info("=== COMPTE ADMIN CRÉÉ ===");
+        log.info("  Email    : admin@mediconnect.sn");
+        log.info("  Password : Admin@2026");
+        log.info("  → Changez ce mot de passe après la première connexion.");
+        log.info("========================");
+    }
+
+    private void initialiserPatientTest() {
+        if (patientRepository.existsByNumPatient("PAT-20260101-0001")) {
+            log.info("Patient de test déjà présent.");
+            return;
+        }
+        Patient patient = new Patient();
+        patient.setNom("DIALLO");
+        patient.setPrenom("Aminata");
+        patient.setEmail("patient.test@mediconnect.sn");
+        patient.setTelephone("+221771234567");
+        patient.setMotDePasse(passwordEncoder.encode("Patient@2026"));
+        patient.setRole(Role.PATIENT);
+        patient.setActif(true);
+        patient.setMfaActif(false);
+        patient.setNumPatient("PAT-20260101-0001");
+        patient.setDateNaissance(LocalDate.of(1990, 5, 15));
+        patient.setAssurance(false);
+        patient.setDemandeSuppressionEnAttente(false);
+        patientRepository.save(patient);
+        log.info("=== PATIENT TEST CRÉÉ ===");
+        log.info("  Email      : patient.test@mediconnect.sn");
+        log.info("  Téléphone  : +221771234567");
+        log.info("  Password   : Patient@2026");
+        log.info("  N° Patient : PAT-20260101-0001");
+        log.info("  → Connectez-vous avec l'email OU le téléphone + le mot de passe.");
+        log.info("=========================");
     }
 
     private void initialiserTemplatesConsentements() {
@@ -94,6 +167,40 @@ public class DataInitializer implements ApplicationRunner {
                     .obligatoire(false)
                     .build());
             log.info("Template TRAIN_MODELS créé.");
+        }
+    }
+
+    private void initialiserHopitaux() {
+        if (hopitalRepository.count() == 0) {
+            log.info("Initialisation des hôpitaux...");
+            try {
+                ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+                populator.addScript(new ClassPathResource("hopitaux-data.sql"));
+                populator.setSqlScriptEncoding("UTF-8");
+                populator.execute(dataSource);
+                log.info("Hôpitaux chargés : {} entrées", hopitalRepository.count());
+            } catch (Exception e) {
+                log.warn("Erreur initialisation hôpitaux : {}", e.getMessage());
+            }
+        } else {
+            log.info("Hôpitaux déjà chargés ({} entrées)", hopitalRepository.count());
+        }
+    }
+
+    private void initialiserAdresses() {
+        if (adresseRepository.count() == 0) {
+            log.info("Initialisation des adresses...");
+            try {
+                ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+                populator.addScript(new ClassPathResource("adresses-data.sql"));
+                populator.setSqlScriptEncoding("UTF-8");
+                populator.execute(dataSource);
+                log.info("Adresses chargées : {} entrées", adresseRepository.count());
+            } catch (Exception e) {
+                log.warn("Erreur initialisation adresses : {}", e.getMessage());
+            }
+        } else {
+            log.info("Adresses déjà chargées ({} entrées)", adresseRepository.count());
         }
     }
 

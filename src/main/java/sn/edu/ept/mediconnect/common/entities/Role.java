@@ -5,5 +5,6 @@ public enum Role {
     MEDECIN,
     CARDIOLOGUE,
     INFIRMIER,
+    ASSISTANT,
     PATIENT
 }

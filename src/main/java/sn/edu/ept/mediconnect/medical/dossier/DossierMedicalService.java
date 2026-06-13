@@ -18,6 +18,25 @@ public class DossierMedicalService {
     private final DossierMedicalRepository dossierMedicalRepository;
     private final PatientRepository patientRepository;
 
+    // Créer manuellement un dossier médical pour un patient
+    @Transactional
+    public DossierMedicalResponse create(Long patientId) {
+        Patient patient = patientRepository.findById(patientId)
+                .orElseThrow(() -> BusinessException.notFound(
+                        "Patient introuvable (id=" + patientId + ")"));
+        if (dossierMedicalRepository.findByPatientId(patientId).isPresent()) {
+            throw BusinessException.conflict(
+                    "Un dossier médical existe déjà pour ce patient.");
+        }
+        DossierMedical dossier = DossierMedical.builder()
+                .patient(patient)
+                .statut(StatutDossier.ACTIF)
+                .build();
+        dossierMedicalRepository.save(dossier);
+        log.info("Dossier médical créé manuellement pour le patient id={}", patientId);
+        return toResponse(dossier);
+    }
+
     // Consulter le dossier d'un patient
     @Transactional(readOnly = true)
     public DossierMedicalResponse getByPatientId(Long patientId) {

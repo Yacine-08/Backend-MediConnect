@@ -22,9 +22,11 @@ import sn.edu.ept.mediconnect.exceptions.BadRequestException;
 import sn.edu.ept.mediconnect.exceptions.BusinessException;
 import sn.edu.ept.mediconnect.exceptions.ResourceNotFoundException;
 import sn.edu.ept.mediconnect.users.User;
+import sn.edu.ept.mediconnect.users.assistant.Assistant;
+import sn.edu.ept.mediconnect.users.assistant.AssistantRepository;
 import sn.edu.ept.mediconnect.users.infirmier.Infirmier;
-import sn.edu.ept.mediconnect.users.patient.Patient;
-import sn.edu.ept.mediconnect.users.patient.PatientNumeroService;
+// import sn.edu.ept.mediconnect.users.patient.Patient;
+// import sn.edu.ept.mediconnect.users.patient.PatientNumeroService;
 import sn.edu.ept.mediconnect.utils.PhoneNumberUtils;
 
 import java.time.LocalDateTime;
@@ -33,7 +35,8 @@ import java.util.List;
 import java.util.UUID;
 
 import sn.edu.ept.mediconnect.users.infirmier.InfirmierRepository;
-import sn.edu.ept.mediconnect.users.patient.PatientRepository;
+// import sn.edu.ept.mediconnect.users.patient.PatientRepository;
+
 
 @Service
 @RequiredArgsConstructor
@@ -43,8 +46,9 @@ public class AuthService {
 
     private final UserRepository userRepo;
     private final MedecinRepository medecinRepo;
-    private final PatientRepository       patientRepo;
+//     private final PatientRepository       patientRepo;
     private final InfirmierRepository     infirmierRepo;
+    private final AssistantRepository     assistantRepo;
     private final CardiologueRepository cardiologueRepo;
     private final HopitalRepository hopitalRepo;
     private final OrdreMedecinRepository ordreRepo;
@@ -55,7 +59,7 @@ public class AuthService {
     private final JwtService jwtService;
     private final PasswordEncoder         passwordEncoder;
     private final PasswordResetTokenRepository passwordResetTokenRepo;
-    private final PatientNumeroService patientNumeroService;
+//     private final PatientNumeroService patientNumeroService;
 
     // INSCRIPTION
     public RegisterResponse register(RegisterRequest req) {
@@ -128,35 +132,48 @@ public class AuthService {
                 "Le numéro d'ordre MSAS est obligatoire pour les médecins.");
         }
 
-        // Vérification par numéro + nom dans le tableau de l'Ordre
-        boolean trouve = ordreRepo.verifier(
-                req.getNumOrdre().trim().toUpperCase(),
-                req.getNom().trim().toUpperCase(),
-                req.getPrenom().trim().toUpperCase(),
-                req.getSection(),
-                req.getSpecialite()
-            ).isPresent();
+        // Si la table n'a pas été peuplée (import réseau raté au démarrage),
+        // on ne bloque pas l'inscription — un admin pourra vérifier manuellement.
+        if (ordreRepo.count() == 0) {
+            log.warn("Table ordre_medecins vide — vérification désactivée pour {}",
+                req.getNumOrdre());
+            return;
+        }
 
-        if (!trouve) {
-            // Essai avec le numéro seul (au cas où le nom diffère légèrement)
-            boolean existeNumero = ordreRepo.existsByNumOrdre(
-                req.getNumOrdre().trim().toUpperCase());
+        String numOrdre = req.getNumOrdre().trim().toUpperCase();
 
-            if (!existeNumero) {
+        // Recherche par numéro d'ordre uniquement
+        var ordreOpt = ordreRepo.findByNumOrdre(numOrdre);
+
+        if (ordreOpt.isEmpty()) {
+            throw BusinessException.badRequest(
+                "Numéro d'ordre introuvable dans le tableau de l'Ordre " +
+                "National des Médecins du Sénégal. " +
+                "Vérifiez votre numéro.");
+        }
+
+        var ordre = ordreOpt.get();
+        boolean nomOk    = ordre.getNom().equalsIgnoreCase(req.getNom().trim());
+        boolean prenomOk = ordre.getPrenom().equalsIgnoreCase(req.getPrenom().trim());
+
+        if (!nomOk || !prenomOk) {
+            throw BusinessException.badRequest(
+                "Le nom ou prénom fourni ne correspond pas au numéro d'ordre " +
+                numOrdre + " dans le tableau de l'Ordre. " +
+                "Vérifiez vos informations.");
+        }
+
+        // Validation de l'email institutionnel (@medisen.sn)
+        if (ordre.getMail() != null && !ordre.getMail().isBlank()) {
+            String reqEmail = req.getEmail() != null ? req.getEmail().trim().toLowerCase() : "";
+            if (!ordre.getMail().equalsIgnoreCase(reqEmail)) {
                 throw BusinessException.badRequest(
-                    "Numéro d'ordre introuvable dans le tableau de l'Ordre " +
-                    "National des Médecins du Sénégal. " +
-                    "Vérifiez votre numéro ");
-            } else {
-                throw BusinessException.badRequest(
-                    "Le nom fourni ne correspond pas au numéro d'ordre " +
-                    req.getNumOrdre() + " dans le tableau de l'Ordre. " +
-                    "Vérifiez vos informations.");
+                    "Les informations fournies ne correspondent pas aux données de l'Ordre des Médecins. " +
+                    "Vérifiez votre adresse email institutionnelle ou contactez l'administration.");
             }
         }
 
-        log.info("Médecin vérifié : {} - {}",
-            req.getNumOrdre(), req.getNom());
+        log.info("Médecin vérifié : {} - {}", numOrdre, req.getNom());
     }
 
 
@@ -173,6 +190,9 @@ public class AuthService {
 
             case INFIRMIER ->
                     createInfirm(req);
+
+            case ASSISTANT ->
+                    createAssistant(req);
 
             default ->
                     throw BusinessException.badRequest(
@@ -192,12 +212,20 @@ public class AuthService {
         Medecin medecin = new Medecin();
         remplirChampCommuns(medecin, req);
 
-        medecin.setNumOrdre(req.getNumOrdre().trim().toUpperCase());
-        medecin.setSection(req.getSection());
-        medecin.setSpecialite(req.getSpecialite());
+        String numOrdreNorm = req.getNumOrdre().trim().toUpperCase();
+        medecin.setNumOrdre(numOrdreNorm);
 
-        Hopital hopital = hopitalRepo.findByNom(req.getEtablissement())
-                .orElseThrow(() -> BusinessException.badRequest("Hôpital introuvable"));
+        // Spécialité et section proviennent de l'Ordre des Médecins (source de vérité)
+        var ordreOpt = ordreRepo.findByNumOrdre(numOrdreNorm);
+        medecin.setSection(ordreOpt.map(o -> o.getSection())
+                .filter(s -> s != null && !s.isBlank())
+                .orElse(req.getSection()));
+        medecin.setSpecialite(ordreOpt.map(o -> o.getSpecialite())
+                .filter(s -> s != null && !s.isBlank())
+                .orElse(req.getSpecialite()));
+
+        Hopital hopital = hopitalRepo.findById(req.getEtablissement().trim())
+                .orElseThrow(() -> BusinessException.badRequest("Hôpital introuvable. Vérifiez votre sélection."));
         medecin.setEtablissement(hopital);
 
         Adresse adresse = adresseRepository
@@ -206,11 +234,15 @@ public class AuthService {
                         req.getAdresse().getDepartement(),
                         req.getAdresse().getCommune()
                 )
-                .orElseThrow(() -> BusinessException.badRequest("Adresse introuvable"));
+                .orElseGet(() -> adresseRepository.save(Adresse.builder()
+                        .region(req.getAdresse().getRegion())
+                        .departement(req.getAdresse().getDepartement())
+                        .commune(req.getAdresse().getCommune())
+                        .build()));
 
         medecin.setAdresse(adresse);
-        medecin.setDisponible(false);
-        medecin.setVerified(true);
+        medecin.setDisponible(true);
+        medecin.setVerified(false); // validation admin requise
 
         medecinRepo.save(medecin);
 
@@ -222,18 +254,22 @@ public class AuthService {
         Cardiologue cardiologue = new Cardiologue();
         remplirChampCommuns(cardiologue, req);
 
-        cardiologue.setNumOrdre(req.getNumOrdre().trim().toUpperCase());
+        String numOrdreCardio = req.getNumOrdre().trim().toUpperCase();
+        cardiologue.setNumOrdre(numOrdreCardio);
 
-        if (req.getSection() != null)
-            cardiologue.setSection(req.getSection());
-
-        cardiologue.setSpecialite(req.getSpecialite());
-        cardiologue.setDisponible(false);
-        cardiologue.setVerified(true);
+        var ordreCardio = ordreRepo.findByNumOrdre(numOrdreCardio);
+        cardiologue.setSection(ordreCardio.map(o -> o.getSection())
+                .filter(s -> s != null && !s.isBlank())
+                .orElse(req.getSection()));
+        cardiologue.setSpecialite(ordreCardio.map(o -> o.getSpecialite())
+                .filter(s -> s != null && !s.isBlank())
+                .orElse(req.getSpecialite()));
+        cardiologue.setDisponible(true);
+        cardiologue.setVerified(false); // validation admin requise
 
         Hopital hopital = hopitalRepo
-                .findByNom(req.getEtablissement())
-                .orElseThrow(() -> BusinessException.badRequest("Hôpital introuvable"));
+                .findById(req.getEtablissement().trim())
+                .orElseThrow(() -> BusinessException.badRequest("Hôpital introuvable. Vérifiez votre sélection."));
 
         cardiologue.setEtablissement(hopital);
 
@@ -243,7 +279,11 @@ public class AuthService {
                         req.getAdresse().getDepartement(),
                         req.getAdresse().getCommune()
                 )
-                .orElseThrow(() -> BusinessException.badRequest("Adresse introuvable"));
+                .orElseGet(() -> adresseRepository.save(Adresse.builder()
+                        .region(req.getAdresse().getRegion())
+                        .departement(req.getAdresse().getDepartement())
+                        .commune(req.getAdresse().getCommune())
+                        .build()));
 
         cardiologue.setAdresse(adresse);
 
@@ -257,9 +297,9 @@ public class AuthService {
         Infirmier infirmier = new Infirmier();
         remplirChampCommuns(infirmier, req);
         infirmier.setServiceAffecte(req.getServiceAffecte());
-        Hopital hopital = hopitalRepo.findByNom(req.getHopital())
+        Hopital hopital = hopitalRepo.findById(req.getHopital().trim())
                 .orElseThrow(() ->
-                        BusinessException.badRequest("Hôpital introuvable")
+                        BusinessException.badRequest("Hôpital introuvable. Vérifiez votre sélection.")
                 );
         infirmier.setHopital(hopital);
         Adresse adresse = adresseRepository
@@ -268,7 +308,11 @@ public class AuthService {
                         req.getAdresse().getDepartement(),
                         req.getAdresse().getCommune()
                 )
-                .orElseThrow(() -> new RuntimeException("Adresse introuvable"));
+                .orElseGet(() -> adresseRepository.save(Adresse.builder()
+                        .region(req.getAdresse().getRegion())
+                        .departement(req.getAdresse().getDepartement())
+                        .commune(req.getAdresse().getCommune())
+                        .build()));
 
         infirmier.setAdresse(adresse);
         log.info("Adresse reçue: {}", req.getAdresse());
@@ -278,6 +322,31 @@ public class AuthService {
                 req.getAdresse().getCommune());
         infirmierRepo.save(infirmier);
         return infirmier.getId();
+    }
+
+    private Long createAssistant(RegisterRequest req) {
+        Assistant assistant = new Assistant();
+        remplirChampCommuns(assistant, req);
+        assistant.setServiceAffecte(req.getServiceAffecte());
+        Hopital hopital = hopitalRepo.findById(req.getHopital().trim())
+                .orElseThrow(() ->
+                        BusinessException.badRequest("Hôpital introuvable. Vérifiez votre sélection.")
+                );
+        assistant.setHopital(hopital);
+        Adresse adresse = adresseRepository
+                .findByRegionAndDepartementAndCommune(
+                        req.getAdresse().getRegion(),
+                        req.getAdresse().getDepartement(),
+                        req.getAdresse().getCommune()
+                )
+                .orElseGet(() -> adresseRepository.save(Adresse.builder()
+                        .region(req.getAdresse().getRegion())
+                        .departement(req.getAdresse().getDepartement())
+                        .commune(req.getAdresse().getCommune())
+                        .build()));
+        assistant.setAdresse(adresse);
+        assistantRepo.save(assistant);
+        return assistant.getId();
     }
 
 
@@ -388,6 +457,15 @@ public class AuthService {
                 "Veuillez vérifier votre email ou téléphone pour le code OTP.");
         }
 
+        // Médecins/Cardiologues : validation administrative requise
+        if ((user.getRole() == Role.MEDECIN || user.getRole() == Role.CARDIOLOGUE)
+                && user instanceof Medecin medecin
+                && !Boolean.TRUE.equals(medecin.getVerified())) {
+            throw BusinessException.badRequest(
+                "COMPTE_EN_ATTENTE_VALIDATION — Votre dossier est en cours d'examen par l'administration. " +
+                "Vous serez notifié par email une fois votre profil vérifié.");
+        }
+
         // Vérifier le mot de passe
         if (!passwordEncoder.matches(
                 req.getPassword(), user.getMotDePasse())) {
@@ -398,7 +476,7 @@ public class AuthService {
         // Générer le JWT
         String token = jwtService.generateToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
-        UserDto userDto;
+        // UserDto userDto;
 
         return AuthenticationResponse.builder()
             .token(token)
@@ -491,76 +569,43 @@ public class AuthService {
             throw new BadRequestException("Veuillez fournir un email ou un numéro de téléphone");
         }
 
-        // delete old tokens
-        passwordResetTokenRepo.deleteByUserId(user.getId());
-
-        // create new token
-        String token = UUID.randomUUID().toString();
-        PasswordResetToken resetToken = PasswordResetToken.builder()
-                .token(token)
-                .userId(user.getId())
-                .expiryDate(LocalDateTime.now().plusHours(24))
-                .used(false)
-                .build();
-
-        passwordResetTokenRepo.save(resetToken);
-
-        // send email or SMS based on user's preferred contact method
-        String prenom = (user.getPrenom() != null && !user.getPrenom().isBlank()) ?
-                user.getPrenom() : "User";
-        if (user.getEmail() != null && !user.getEmail().isBlank()) {
-            emailService.sendPasswordResetEmail(user.getEmail(), token, prenom);
-        } else if (user.getTelephone() != null && !user.getTelephone().isBlank()) {
-            smsService.sendPasswordResetSms(user.getTelephone(), token, prenom);
-        }
+        otpService.generateAndSend(user.getId(), user.getEmail(), user.getTelephone(), TypeOtp.RESET_PASSWORD);
     }
 
     @Transactional
     public void resetPassword(ResetPasswordRequest request) {
+        String email = request.getEmail();
+        String telephone = request.getTelephone();
 
-        PasswordResetToken resetToken = passwordResetTokenRepo.findByToken(request.getToken())
-                .orElseThrow(() -> new BadRequestException("Token invalide"));
-
-        if (resetToken.isUsed()) {
-            throw new BadRequestException("Ce token a déjà été utilisé");
+        if ((email == null || email.isBlank()) && (telephone == null || telephone.isBlank())) {
+            throw new BadRequestException("Email ou téléphone obligatoire");
         }
 
-        if (resetToken.getExpiryDate().isBefore(LocalDateTime.now())) {
-            throw new BadRequestException("Ce token a expiré");
-        }
-
-        // Vérifier la confirmation
         if (!request.getNewPassword().equals(request.getConfirmPassword())) {
-            throw new BadRequestException(
-                    "Le mot de passe et la confirmation ne correspondent pas");
+            throw new BadRequestException("Le mot de passe et la confirmation ne correspondent pas");
         }
 
-        User user = userRepo.findById(resetToken.getUserId())
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Utilisateur non trouvé"));
+        otpService.verify(email, telephone, request.getCode(), TypeOtp.RESET_PASSWORD);
 
-        // Optionnel : empêcher de réutiliser le mot de passe actuel
-        if (passwordEncoder.matches(
-                request.getNewPassword(),
-                user.getMotDePasse())) {
-
-            throw new BadRequestException(
-                    "Le nouveau mot de passe doit être différent de l'ancien");
+        User user;
+        if (email != null && !email.isBlank()) {
+            user = userRepo.findByEmail(email.trim().toLowerCase())
+                    .orElseThrow(() -> new ResourceNotFoundException("Utilisateur non trouvé"));
+        } else {
+            user = userRepo.findByTelephone(telephone)
+                    .orElseThrow(() -> new ResourceNotFoundException("Utilisateur non trouvé"));
         }
 
-        user.setMotDePasse(
-                passwordEncoder.encode(request.getNewPassword())
-        );
+        if (passwordEncoder.matches(request.getNewPassword(), user.getMotDePasse())) {
+            throw new BadRequestException("Le nouveau mot de passe doit être différent de l'ancien");
+        }
 
+        user.setMotDePasse(passwordEncoder.encode(request.getNewPassword()));
         userRepo.save(user);
 
-        resetToken.setUsed(true);
-        passwordResetTokenRepo.save(resetToken);
-
-        emailService.sendPasswordChangedEmail(
-                user.getEmail(),
-                user.getPrenom()
-        );
+        if (user.getEmail() != null && !user.getEmail().isBlank()) {
+            emailService.sendPasswordChangedEmail(user.getEmail(), user.getPrenom());
+        }
     }
 
     @Transactional

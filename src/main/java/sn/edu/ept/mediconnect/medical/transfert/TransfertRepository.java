@@ -17,4 +17,6 @@ public interface TransfertRepository extends JpaRepository<Transfert, Long> {
     List<Transfert> findByHopitalDestinationId(String hopitalDestinationId);
 
     List<Transfert> findByStatut(StatutTransfert statut);
+
+    List<Transfert> findByMedecinDestinationId(Long medecinDestinationId);
 }

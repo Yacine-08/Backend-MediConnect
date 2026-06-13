@@ -24,9 +24,9 @@ public class PatientResponse {
     private Boolean assurance;
     private Boolean actif;
 
-    // Infirmier qui a créé le compte
-    private Long   infirmierId;
-    private String infirmierNomComplet;
+    // Utilisateur (assistant) qui a créé le compte
+    private Long   creeParId;
+    private String creeParNomComplet;
 
     // Adresse
     private String region;

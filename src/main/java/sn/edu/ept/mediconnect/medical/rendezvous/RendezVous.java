@@ -48,6 +48,9 @@ public class RendezVous {
     @Column(name = "lien_video")
     private String lienVideo;
 
+    @Column(name = "date_proposee")
+    private LocalDateTime dateProposee;
+
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 

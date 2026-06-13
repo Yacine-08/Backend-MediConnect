@@ -27,34 +27,56 @@ public class TransfertService {
     private final MedecinRepository medecinRepository;
     private final HopitalRepository hopitalRepository;
 
-    // Créer un transfert
+    // Créer un transfert via patientId (Long) — utilisé par POST /api/transferts
+    @Transactional
+    public TransfertResponse createByPatientId(Long patientId, Long medecinId, TransfertRequest req) {
+        Patient patient = patientRepository.findById(patientId)
+                .orElseThrow(() -> BusinessException.notFound(
+                        "Patient introuvable (id=" + patientId + ")"));
+        return createInternal(patient, medecinId, req);
+    }
+
+    // Créer un transfert via numPatient (String) — utilisé par POST /api/transferts/{numPatient}
     @Transactional
     public TransfertResponse create(String numPatient, Long medecinId, TransfertRequest req) {
-
         Patient patient = patientRepository.findByNumPatient(numPatient)
                 .orElseThrow(() -> BusinessException.notFound(
                         "Patient introuvable : " + numPatient));
+        return createInternal(patient, medecinId, req);
+    }
 
+    private TransfertResponse createInternal(Patient patient, Long medecinId, TransfertRequest req) {
         Medecin medecin = medecinRepository.findById(medecinId)
                 .orElseThrow(() -> BusinessException.notFound(
                         "Médecin introuvable (id=" + medecinId + ")"));
 
-        Hopital hopitalSource = hopitalRepository.findByNom(req.getNomHopitalSource())
-                .orElseThrow(() -> BusinessException.notFound(
-                        "Hôpital source introuvable : " + req.getNomHopitalSource()));
+        Hopital hopitalSource = null;
+        if (req.getNomHopitalSource() != null && !req.getNomHopitalSource().isBlank()) {
+            hopitalSource = hopitalRepository.findByNom(req.getNomHopitalSource())
+                    .orElseThrow(() -> BusinessException.notFound(
+                            "Hôpital source introuvable : " + req.getNomHopitalSource()));
+        }
 
         Hopital hopitalDestination = hopitalRepository.findByNom(req.getNomHopitalDestination())
                 .orElseThrow(() -> BusinessException.notFound(
                         "Hôpital destination introuvable : " + req.getNomHopitalDestination()));
 
-        if (hopitalSource.getId().equals(hopitalDestination.getId())) {
+        if (hopitalSource != null && hopitalSource.getId().equals(hopitalDestination.getId())) {
             throw BusinessException.badRequest(
                     "L'hôpital source et destination ne peuvent pas être identiques.");
+        }
+
+        Medecin medecinDestination = null;
+        if (req.getMedecinDestinationId() != null) {
+            medecinDestination = medecinRepository.findById(req.getMedecinDestinationId())
+                    .orElseThrow(() -> BusinessException.notFound(
+                            "Médecin destinataire introuvable (id=" + req.getMedecinDestinationId() + ")"));
         }
 
         Transfert transfert = Transfert.builder()
                 .patient(patient)
                 .medecin(medecin)
+                .medecinDestination(medecinDestination)
                 .hopitalSource(hopitalSource)
                 .hopitalDestination(hopitalDestination)
                 .type(req.getType())
@@ -65,7 +87,7 @@ public class TransfertService {
 
         transfertRepository.save(transfert);
         log.info("Transfert créé : patient={} source={} destination={}",
-                numPatient, req.getNomHopitalSource(), req.getNomHopitalDestination());
+                patient.getNumPatient(), req.getNomHopitalSource(), req.getNomHopitalDestination());
         return toResponse(transfert);
     }
 
@@ -133,6 +155,24 @@ public class TransfertService {
         return toResponse(transfert);
     }
 
+    // Transferts initiés par un médecin
+    @Transactional(readOnly = true)
+    public List<TransfertResponse> getByMedecin(Long medecinId) {
+        return transfertRepository.findByMedecinId(medecinId)
+                .stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
+    }
+
+    // Transferts dirigés vers un médecin (demandes reçues)
+    @Transactional(readOnly = true)
+    public List<TransfertResponse> getByMedecinDestination(Long medecinDestinationId) {
+        return transfertRepository.findByMedecinDestinationId(medecinDestinationId)
+                .stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
+    }
+
     // Lister les transferts d'un patient
     @Transactional(readOnly = true)
     public List<TransfertResponse> getByPatient(Long patientId) {
@@ -184,6 +224,12 @@ public class TransfertService {
             b.medecinId(t.getMedecin().getId())
                     .nomMedecin(t.getMedecin().getNom())
                     .prenomMedecin(t.getMedecin().getPrenom());
+        }
+
+        if (t.getMedecinDestination() != null) {
+            b.medecinDestinationId(t.getMedecinDestination().getId())
+                    .nomMedecinDestination(t.getMedecinDestination().getNom())
+                    .prenomMedecinDestination(t.getMedecinDestination().getPrenom());
         }
 
         if (t.getHopitalSource() != null) {

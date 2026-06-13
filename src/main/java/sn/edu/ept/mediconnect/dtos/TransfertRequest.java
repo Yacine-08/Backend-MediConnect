@@ -8,7 +8,13 @@ import sn.edu.ept.mediconnect.medical.transfert.TypeTransfert;
 @Data
 public class TransfertRequest {
 
-    @NotBlank(message = "L'hôpital source est obligatoire")
+    // Identifiant numérique du patient (utilisé quand numPatient n'est pas passé en URL)
+    private Long patientId;
+
+    // Médecin destinataire du transfert (qui devra accepter ou refuser)
+    private Long medecinDestinationId;
+
+    // Optionnel : hôpital source peut être omis (déduit du dossier patient)
     private String nomHopitalSource;
 
     @NotBlank(message = "L'hôpital destination est obligatoire")

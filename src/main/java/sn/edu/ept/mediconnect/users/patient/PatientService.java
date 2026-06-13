@@ -18,9 +18,8 @@ import sn.edu.ept.mediconnect.exceptions.BusinessException;
 import sn.edu.ept.mediconnect.medical.dossier.DossierMedical;
 import sn.edu.ept.mediconnect.medical.dossier.DossierMedicalRepository;
 import sn.edu.ept.mediconnect.medical.dossier.StatutDossier;
+import sn.edu.ept.mediconnect.users.User;
 import sn.edu.ept.mediconnect.users.UserRepository;
-import sn.edu.ept.mediconnect.users.infirmier.Infirmier;
-import sn.edu.ept.mediconnect.users.infirmier.InfirmierRepository;
 
 import java.security.SecureRandom;
 import java.util.List;
@@ -31,34 +30,37 @@ import java.util.stream.Collectors;
 @Slf4j
 public class PatientService {
 
-    private final PatientRepository   patientRepository;
-    private final InfirmierRepository infirmierRepository;
+    private final PatientRepository        patientRepository;
     private final DossierMedicalRepository dossierMedicalRepository;
-    private final UserRepository      userRepository;
-    private final AdresseRepository   adresseRepository;
-    private final PatientNumeroService patientNumeroService;
-    private final ConsentementService consentementService;
-    private final PasswordEncoder     passwordEncoder;
-    private final EmailService emailService;
+    private final UserRepository           userRepository;
+    private final AdresseRepository        adresseRepository;
+    private final PatientNumeroService     patientNumeroService;
+    private final ConsentementService      consentementService;
+    private final PasswordEncoder          passwordEncoder;
+    private final EmailService             emailService;
 
-    private static final String CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789";
+    private static final String CHARS  = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789";
     private static final SecureRandom RANDOM = new SecureRandom();
 
-    //  CRÉATION PAR L'INFIRMIER
+    // CRÉATION PAR L'ASSISTANT
     @Transactional
-    public CreatePatientResponse create(Long infirmierId, CreatePatientRequest req) {
+    public CreatePatientResponse create(Long assistantId, CreatePatientRequest req) {
 
-        // Vérifier que l'infirmier existe et est actif
-        Infirmier infirmier = infirmierRepository.findById(infirmierId)
+        // L'assistant doit exister et être actif
+        User assistant = userRepository.findById(assistantId)
                 .orElseThrow(() -> BusinessException.notFound(
-                        "Infirmier introuvable (id=" + infirmierId + ")"));
+                        "Assistant introuvable (id=" + assistantId + ")"));
 
-        if (!Boolean.TRUE.equals(infirmier.getActif())) {
+        if (!Boolean.TRUE.equals(assistant.getActif())) {
             throw BusinessException.forbidden(
                     "Votre compte est inactif. Contactez l'administrateur.");
         }
 
-        // Au moins email ou téléphone requis
+        if (assistant.getRole() != Role.ASSISTANT) {
+            throw BusinessException.forbidden(
+                    "Seul un assistant peut créer un compte patient.");
+        }
+
         String email     = normalizeEmail(req.getEmail());
         String telephone = req.getTelephone();
 
@@ -67,20 +69,16 @@ public class PatientService {
                     "Vous devez fournir un email ou un numéro de téléphone pour le patient.");
         }
 
-        // Unicité email
         if (!estVide(email) && userRepository.existsByEmail(email)) {
             throw BusinessException.conflict("Cet email est déjà utilisé.");
         }
 
-        // Unicité téléphone
         if (!estVide(telephone) && userRepository.existsByTelephone(telephone)) {
             throw BusinessException.conflict("Ce numéro de téléphone est déjà utilisé.");
         }
 
-        // Générer mot de passe temporaire
         String motDePasseTemp = generateTempPassword();
 
-        // Construire l'entité Patient
         Patient patient = new Patient();
         patient.setNom(req.getNom().trim().toUpperCase());
         patient.setPrenom(req.getPrenom().trim());
@@ -88,7 +86,6 @@ public class PatientService {
         patient.setTelephone(telephone);
         patient.setMotDePasse(passwordEncoder.encode(motDePasseTemp));
         patient.setRole(Role.PATIENT);
-        // Compte actif immédiatement : c'est l'infirmier qui valide l'identité
         patient.setActif(true);
         patient.setMfaActif(false);
 
@@ -97,26 +94,26 @@ public class PatientService {
         patient.setSexe(req.getSexe());
         patient.setGroupeSanguin(req.getGroupeSanguin());
         patient.setAssurance(req.getAssurance() != null ? req.getAssurance() : false);
-        patient.setCreePar(infirmier);
+        patient.setCreePar(assistant);
 
         if (req.getAdresse() != null) {
-            Adresse adresse = adresseRepository.findByRegionAndDepartementAndCommune(
+            Adresse adresse = adresseRepository
+                    .findByRegionAndDepartementAndCommune(
                             req.getAdresse().getRegion(),
                             req.getAdresse().getDepartement(),
                             req.getAdresse().getCommune())
-                    .orElseThrow(() -> BusinessException.badRequest(
-                            "Adresse introuvable : "
-                            + req.getAdresse().getRegion() + " / "
-                            + req.getAdresse().getDepartement() + " / "
-                            + req.getAdresse().getCommune()));
+                    .orElseGet(() -> adresseRepository.save(Adresse.builder()
+                            .region(req.getAdresse().getRegion())
+                            .departement(req.getAdresse().getDepartement())
+                            .commune(req.getAdresse().getCommune())
+                            .build()));
             patient.setAdresse(adresse);
         }
 
         patientRepository.save(patient);
-        log.info("Patient créé par l'infirmier {} : {} {} (numPatient={})",
-                infirmierId, patient.getPrenom(), patient.getNom(), patient.getNumPatient());
+        log.info("Patient créé par l'assistant {} : {} {} (numPatient={})",
+                assistantId, patient.getPrenom(), patient.getNom(), patient.getNumPatient());
 
-        // Creation automatique du DME
         DossierMedical dme = DossierMedical.builder()
                 .patient(patient)
                 .statut(StatutDossier.ACTIF)
@@ -128,10 +125,9 @@ public class PatientService {
         consentementService.saveConsentement(
                 patient,
                 Boolean.TRUE.equals(req.getAcceptePolitiqueConfidentialite()),
-                infirmier
+                assistant
         );
 
-        // envoyer uniquement si le patient a un email
         if (!estVide(patient.getEmail())) {
             emailService.sendMotDePasseTemporaire(
                     patient.getEmail(),
@@ -162,9 +158,10 @@ public class PatientService {
                 .collect(Collectors.toList());
     }
 
+    // Patients créés par un assistant donné
     @Transactional(readOnly = true)
-    public List<PatientResponse> getByInfirmier(Long infirmierId) {
-        return patientRepository.findByCreeParId(infirmierId)
+    public List<PatientResponse> getByCreateur(Long createurId) {
+        return patientRepository.findByCreeParId(createurId)
                 .stream()
                 .map(this::toResponse)
                 .collect(Collectors.toList());
@@ -178,24 +175,38 @@ public class PatientService {
                 .collect(Collectors.toList());
     }
 
+    // Patients filtrés par spécialité du médecin (via consultations)
+    @Transactional(readOnly = true)
+    public List<PatientResponse> getBySpecialite(String specialite) {
+        if (specialite == null || specialite.isBlank()) return getAll();
+        return patientRepository.findByMedecinSpecialite(specialite)
+                .stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
+    }
 
-    //  DÉTAIL
+    @Transactional(readOnly = true)
+    public List<PatientResponse> searchBySpecialite(String terme, String specialite) {
+        if (specialite == null || specialite.isBlank()) return search(terme);
+        return patientRepository.searchByMedecinSpecialite(terme, specialite)
+                .stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
+    }
+
     @Transactional(readOnly = true)
     public PatientResponse getById(Long id) {
         return toResponse(find(id));
     }
 
-
-    //  MISE À JOUR
     @Transactional
     public PatientResponse update(Long id, UpdatePatientRequest req) {
 
         Patient patient = find(id);
 
-        String nouvelEmail     = normalizeEmail(req.getEmail());
+        String nouvelEmail      = normalizeEmail(req.getEmail());
         String nouveauTelephone = req.getTelephone();
 
-        // Vérifier unicité uniquement si la valeur change
         if (!estVide(nouvelEmail) && !nouvelEmail.equals(patient.getEmail())) {
             if (userRepository.existsByEmail(nouvelEmail)) {
                 throw BusinessException.conflict("Cet email est déjà utilisé.");
@@ -218,11 +229,16 @@ public class PatientService {
         if (req.getAssurance() != null)     patient.setAssurance(req.getAssurance());
 
         if (req.getAdresse() != null) {
-            Adresse adresse = adresseRepository.findByRegionAndDepartementAndCommune(
+            Adresse adresse = adresseRepository
+                    .findByRegionAndDepartementAndCommune(
                             req.getAdresse().getRegion(),
                             req.getAdresse().getDepartement(),
                             req.getAdresse().getCommune())
-                    .orElseThrow(() -> BusinessException.badRequest("Adresse introuvable."));
+                    .orElseGet(() -> adresseRepository.save(Adresse.builder()
+                            .region(req.getAdresse().getRegion())
+                            .departement(req.getAdresse().getDepartement())
+                            .commune(req.getAdresse().getCommune())
+                            .build()));
             patient.setAdresse(adresse);
         }
 
@@ -230,8 +246,7 @@ public class PatientService {
         log.info("Patient mis à jour : id={}", id);
         return toResponse(patient);
     }
-    
-    //  ACTIVATION / DÉSACTIVATION
+
     @Transactional
     public PatientResponse activate(Long id) {
         Patient patient = find(id);
@@ -247,20 +262,31 @@ public class PatientService {
         patientRepository.save(patient);
         return toResponse(patient);
     }
-    
-    
-    //  HELPERS PRIVÉS
+
+    @Transactional
+    public void demanderSuppression(Long patientId) {
+        Patient patient = find(patientId);
+        patient.setDemandeSuppressionEnAttente(true);
+        patientRepository.save(patient);
+        log.info("Demande de suppression enregistrée : patient id={}", patientId);
+    }
+
+    @Transactional(readOnly = true)
+    public java.util.Map<String, Object> exportDonnees(Long patientId) {
+        Patient patient = find(patientId);
+        java.util.Map<String, Object> donnees = new java.util.LinkedHashMap<>();
+        donnees.put("profil", toResponse(patient));
+        donnees.put("exporteLe", java.time.LocalDateTime.now().toString());
+        donnees.put("notice", "Données exportées conformément à la loi n°2008-12 sur la protection des données personnelles au Sénégal.");
+        return donnees;
+    }
+
     private Patient find(Long id) {
         return patientRepository.findById(id)
                 .orElseThrow(() -> BusinessException.notFound(
                         "Patient introuvable (id=" + id + ")"));
     }
 
-    /**
-     * Génère un mot de passe temporaire de 10 caractères :
-     * format  Med@XXXXXXXX  pour être mémorisable tout en respectant
-     * les critères de complexité (majuscule, chiffre, caractère spécial).
-     */
     private String generateTempPassword() {
         StringBuilder sb = new StringBuilder("Med@");
         for (int i = 0; i < 6; i++) {
@@ -296,8 +322,8 @@ public class PatientService {
                 .updatedAt(p.getUpdatedAt());
 
         if (p.getCreePar() != null) {
-            b.infirmierId(p.getCreePar().getId())
-             .infirmierNomComplet(p.getCreePar().getPrenom() + " " + p.getCreePar().getNom());
+            b.creeParId(p.getCreePar().getId())
+             .creeParNomComplet(p.getCreePar().getPrenom() + " " + p.getCreePar().getNom());
         }
         if (p.getAdresse() != null) {
             b.region(p.getAdresse().getRegion())

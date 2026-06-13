@@ -15,11 +15,12 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins(
-                                "http://localhost:4200", // Angular
-                                "http://localhost:3000", // React
-                                "http://localhost:8080" // Backend
+                                "http://localhost:4200",
+                                "http://localhost:3000",
+                                "http://localhost:8080",
+                                "http://localhost:5173"
                         )
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true)
                         .maxAge(3600);

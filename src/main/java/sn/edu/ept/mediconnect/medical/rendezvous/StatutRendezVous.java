@@ -4,5 +4,6 @@ public enum StatutRendezVous {
     PLANIFIE,
     CONFIRME,
     ANNULE,
-    EFFECTUE
+    EFFECTUE,
+    DATE_PROPOSEE
 }

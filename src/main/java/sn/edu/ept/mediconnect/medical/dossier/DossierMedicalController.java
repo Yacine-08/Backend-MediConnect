@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +22,24 @@ public class DossierMedicalController {
 
     private final DossierMedicalService dossierMedicalService;
 
-    // GET /api/dossiers/patient/{patientId}
-    // Médecin, Cardiologue, Infirmier, Admin peuvent consulter
-    @GetMapping("/patient/{patientId}")
+    // POST /api/dossiers/patient/{patientId}
+    // Créer manuellement un dossier si inexistant
+    @PostMapping("/patient/{patientId}")
     @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE', 'INFIRMIER', 'ADMIN')")
+    @Operation(summary = "Créer manuellement un dossier médical")
+    public ResponseEntity<?> create(@PathVariable Long patientId) {
+        DossierMedicalResponse dossier = dossierMedicalService.create(patientId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
+                "success", true,
+                "data", dossier,
+                "timestamp", LocalDateTime.now()
+        ));
+    }
+
+    // GET /api/dossiers/patient/{patientId}
+    // Médecin, Cardiologue, Infirmier, Admin et le Patient lui-même peuvent consulter
+    @GetMapping("/patient/{patientId}")
+    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE', 'INFIRMIER', 'ADMIN', 'ASSISTANT', 'PATIENT')")
     @Operation(summary = "Consulter le dossier médical d'un patient")
     public ResponseEntity<?> getByPatientId(@PathVariable Long patientId) {
         DossierMedicalResponse dossier = dossierMedicalService.getByPatientId(patientId);
@@ -38,7 +53,7 @@ public class DossierMedicalController {
     // GET /api/dossiers/{id}
     // Médecin, Cardiologue, Infirmier, Admin peuvent consulter
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE', 'INFIRMIER', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE', 'INFIRMIER', 'ADMIN', 'ASSISTANT')")
     @Operation(summary = "Consulter un dossier médical par son id")
     public ResponseEntity<?> getById(@PathVariable Long id) {
         DossierMedicalResponse dossier = dossierMedicalService.getById(id);

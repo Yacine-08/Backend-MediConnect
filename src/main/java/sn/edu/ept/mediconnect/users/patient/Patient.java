@@ -2,9 +2,8 @@ package sn.edu.ept.mediconnect.users.patient;
 
 import jakarta.persistence.*;
 import lombok.*;
-import sn.edu.ept.mediconnect.common.entities.Adresse;
+// import sn.edu.ept.mediconnect.common.entities.Adresse;
 import sn.edu.ept.mediconnect.users.User;
-import sn.edu.ept.mediconnect.users.infirmier.Infirmier;
 
 import java.time.LocalDate;
 
@@ -37,6 +36,9 @@ public class Patient extends User {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cree_par")
-    private Infirmier creePar;
+    private User creePar;
+
+    @Column(name = "demande_suppression", columnDefinition = "boolean not null default false")
+    private Boolean demandeSuppressionEnAttente = false;
 
 }

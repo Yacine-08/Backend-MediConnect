@@ -2,6 +2,8 @@ package sn.edu.ept.mediconnect.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
@@ -38,9 +40,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
+            String fieldName = (error instanceof FieldError fe)
+                    ? fe.getField()
+                    : error.getObjectName();
+            errors.put(fieldName, error.getDefaultMessage());
         });
 
         Map<String, Object> response = new HashMap<>();
@@ -68,6 +71,35 @@ public class GlobalExceptionHandler {
         error.put("message", ex.getMessage());
         error.put("timestamp", LocalDateTime.now());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<?> handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
+        Map<String, Object> error = new HashMap<>();
+        error.put("success", false);
+        String msg = ex.getMostSpecificCause().getMessage();
+        error.put("message", msg != null ? msg : "Corps de la requête illisible ou format invalide");
+        error.put("timestamp", LocalDateTime.now());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<?> handleAccessDeniedException(AccessDeniedException ex) {
+        Map<String, Object> error = new HashMap<>();
+        error.put("success", false);
+        error.put("message", "Accès refusé — vous n'avez pas les droits nécessaires pour cette action.");
+        error.put("timestamp", LocalDateTime.now());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<?> handleBusinessException(BusinessException ex) {
+        Map<String, Object> error = new HashMap<>();
+        error.put("success", false);
+        error.put("message", ex.getMessage());
+        error.put("code", ex.getCode());
+        error.put("timestamp", LocalDateTime.now());
+        return ResponseEntity.status(ex.getStatus()).body(error);
     }
 
     @ExceptionHandler(Exception.class)

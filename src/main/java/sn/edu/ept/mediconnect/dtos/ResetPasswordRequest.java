@@ -6,8 +6,11 @@ import lombok.Data;
 
 @Data
 public class ResetPasswordRequest {
-    @NotBlank(message = "Le token est obligatoire")
-    private String token;
+    private String email;
+    private String telephone;
+
+    @NotBlank(message = "Le code OTP est obligatoire")
+    private String code;
 
     @NotBlank(message = "Le nouveau mot de passe est obligatoire")
     @Size(min = 8, message = "Le mot de passe doit contenir au moins 8 caractères")

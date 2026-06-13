@@ -69,7 +69,7 @@ public class OrdonnanceController {
 
     // GET /api/ordonnances/patient/{patientId}
     @GetMapping("/patient/{patientId}")
-    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE', 'PATIENT')")
+    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE', 'PATIENT', 'INFIRMIER', 'ASSISTANT')")
     @Operation(summary = "Ordonnances d'un patient")
     public ResponseEntity<?> getByPatient(@PathVariable Long patientId) {
         List<OrdonnanceResponse> liste = ordonnanceService.getByPatient(patientId);

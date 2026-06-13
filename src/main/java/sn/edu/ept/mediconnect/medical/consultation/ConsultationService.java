@@ -113,11 +113,7 @@ public class ConsultationService {
                     "Les constantes ne peuvent être prises que pour une consultation en attente.");
         }
 
-        Infirmier infirmier = infirmierRepository.findById(infirmierId)
-                .orElseThrow(() -> BusinessException.notFound(
-                        "Infirmier introuvable (id=" + infirmierId + ")"));
-
-        consultation.setInfirmier(infirmier);
+        infirmierRepository.findById(infirmierId).ifPresent(consultation::setInfirmier);
         consultation.setTensionArterielle(req.getTensionArterielle());
         consultation.setFrequenceCardiaque(req.getFrequenceCardiaque());
         consultation.setTemperature(req.getTemperature());
@@ -189,13 +185,21 @@ public class ConsultationService {
 
     // Phase 2 — Médecin complète la consultation
     @Transactional
-    public ConsultationResponse completerConsultation(Long consultationId, ConsultationMedecineRequest req) {
+    public ConsultationResponse completerConsultation(Long consultationId, User utilisateur, ConsultationMedecineRequest req) {
 
         Consultation consultation = find(consultationId);
 
-        if (consultation.getStatut() != StatutConsultation.CONSTANTES_PRISES) {
+        if (consultation.getStatut() != StatutConsultation.CONSTANTES_PRISES
+                && consultation.getStatut() != StatutConsultation.EN_ATTENTE) {
             throw BusinessException.badRequest(
-                    "Les constantes doivent être prises avant de compléter la consultation.");
+                    "La consultation ne peut pas être complétée dans son statut actuel.");
+        }
+
+        // Associer le médecin connecté si la consultation n'en a pas encore
+        if (consultation.getMedecin() == null
+                && (utilisateur.getRole() == Role.MEDECIN || utilisateur.getRole() == Role.CARDIOLOGUE)) {
+            medecinRepository.findById(utilisateur.getId())
+                    .ifPresent(consultation::setMedecin);
         }
 
         consultation.setMotif(req.getMotif());
@@ -243,6 +247,15 @@ public class ConsultationService {
         consultationRepository.save(consultation);
         log.info("Consultation annulée : id={}", consultationId);
         return toResponse(consultation);
+    }
+
+    // Lister toutes les consultations
+    @Transactional(readOnly = true)
+    public List<ConsultationResponse> getAll() {
+        return consultationRepository.findAll()
+                .stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
     }
 
     // Lister les consultations d'un patient

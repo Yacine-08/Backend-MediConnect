@@ -18,6 +18,9 @@ public class TransfertResponse {
     private Long medecinId;
     private String nomMedecin;
     private String prenomMedecin;
+    private Long medecinDestinationId;
+    private String nomMedecinDestination;
+    private String prenomMedecinDestination;
     private String hopitalSource;
     private String hopitalDestination;
     private TypeTransfert type;

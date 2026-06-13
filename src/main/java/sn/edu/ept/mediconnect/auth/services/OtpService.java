@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.beans.factory.annotation.Value;
 import sn.edu.ept.mediconnect.auth.entities.CanalOtp;
 import sn.edu.ept.mediconnect.auth.entities.OtpCode;
 import sn.edu.ept.mediconnect.auth.entities.TypeOtp;
@@ -15,7 +16,6 @@ import sn.edu.ept.mediconnect.users.UserRepository;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -23,14 +23,16 @@ import java.util.UUID;
 @Transactional
 public class OtpService {
 
-    private static final int    OTP_LONGUEUR      = 6;
-    private static final int    OTP_EXPIRY_MINUTES = 10;
-    private static final int    MAX_TENTATIVES     = 5;
+    private static final int OTP_EXPIRY_MINUTES = 10;
+    private static final int MAX_TENTATIVES     = 5;
+
+    @Value("${sms.provider:log}")
+    private String smsProvider;
 
     private final OtpCodeRepository otpRepo;
     private final EmailService      emailService;
     private final SmsService        smsService;
-    private final UserRepository userRepo;
+    private final UserRepository    userRepo;
 
     //Générer et envoyer l'OTP
 
@@ -45,11 +47,20 @@ public class OtpService {
         // Générer le code à 6 chiffres
         String code = generateCode();
 
-        // Choisir le canal : EMAIL prioritaire, sinon SMS
+        // Choisir le canal :
+        // Si un fournisseur SMS réel (whatsapp/twilio/orange) est configuré et qu'un
+        // numéro de téléphone est disponible → on envoie via SMS/WhatsApp.
+        // Sinon l'email est prioritaire, le téléphone en dernier recours.
         CanalOtp canal;
         String destination;
 
-        if (email != null && !email.isBlank()) {
+        boolean smsActif = !"log".equals(smsProvider)
+                && telephone != null && !telephone.isBlank();
+
+        if (smsActif) {
+            canal       = CanalOtp.SMS;
+            destination = telephone;
+        } else if (email != null && !email.isBlank()) {
             canal       = CanalOtp.EMAIL;
             destination = email;
         } else if (telephone != null && !telephone.isBlank()) {
@@ -60,10 +71,16 @@ public class OtpService {
                 "Email ou numéro de téléphone requis pour recevoir le code OTP");
         }
 
+        // Pour Twilio Verify, c'est Twilio qui génère et envoie son propre code.
+        // On stocke un marqueur en base ; la vérification se fera via l'API Twilio.
+        String codeStocke = "twilio".equals(smsProvider) && canal == CanalOtp.SMS
+                ? "TWILIO"
+                : code;
+
         // Sauvegarder en base
         OtpCode otp = OtpCode.builder()
             .userId(utilisateurId)
-            .code(code)
+            .code(codeStocke)
             .type(type)
             .canal(canal)
             .destination(destination)
@@ -113,7 +130,24 @@ public class OtpService {
                                     "Utilisateur introuvable"));
         }
 
-        // Rechercher OTP valide
+        // ── Branche Twilio Verify : Twilio gère son propre code et sa propre expiration ──
+        // On bypass la DB car c'est Twilio qui est source de vérité.
+        String userTelephone = user.getTelephone();
+        boolean isTwilioVerify = "twilio".equals(smsProvider)
+                && userTelephone != null && !userTelephone.isBlank();
+
+        if (isTwilioVerify) {
+            boolean ok = smsService.verifierViaVerify(userTelephone, codeSaisi);
+            if (!ok) {
+                throw BusinessException.badRequest("Code OTP incorrect ou expiré.");
+            }
+            // Invalider les records DB éventuels pour ce user/type
+            otpRepo.invalidateLastOtp(user.getId(), type);
+            log.info("OTP vérifié via Twilio Verify pour utilisateur {}", user.getId());
+            return;
+        }
+
+        // ── Branche standard (email / log) : vérification via la DB ──
         OtpCode otp = otpRepo.findLastValidOtp(
                         user.getId(),
                         type,

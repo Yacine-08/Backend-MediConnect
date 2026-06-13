@@ -12,6 +12,8 @@ public interface MedecinRepository extends JpaRepository<Medecin, Long> {
 
     List<Medecin> findByActif(Boolean actif);
 
+    List<Medecin> findByDisponibleTrueAndActifTrue();
+
     @Query("SELECT m FROM Medecin m WHERE " +
             "LOWER(m.nom) LIKE LOWER(CONCAT('%', :terme, '%')) OR " +
             "LOWER(m.prenom) LIKE LOWER(CONCAT('%', :terme, '%')) OR " +

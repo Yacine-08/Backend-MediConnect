@@ -137,8 +137,12 @@ public class OrdonnanceService {
         }
 
         if (o.getConsultation().getMedecin() != null) {
-            b.nomMedecin(o.getConsultation().getMedecin().getNom())
-                    .prenomMedecin(o.getConsultation().getMedecin().getPrenom());
+            var med = o.getConsultation().getMedecin();
+            b.nomMedecin(med.getNom())
+             .prenomMedecin(med.getPrenom())
+             .specialiteMedecin(med.getSpecialite());
+            if (med.getEtablissement() != null)
+                b.hopitalMedecin(med.getEtablissement().getNom());
         }
 
         if (o.getLignes() != null) {

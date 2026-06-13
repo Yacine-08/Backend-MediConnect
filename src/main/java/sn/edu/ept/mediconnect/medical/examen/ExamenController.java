@@ -56,7 +56,7 @@ public class ExamenController {
 
     // GET /api/examens/consultation/{consultationId}
     @GetMapping("/consultation/{consultationId}")
-    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE', 'INFIRMIER')")
+    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE', 'INFIRMIER', 'ASSISTANT')")
     @Operation(summary = "Lister les examens d'une consultation")
     public ResponseEntity<?> getByConsultation(@PathVariable Long consultationId) {
         List<ExamenResponse> liste = examenService.getByConsultation(consultationId);
@@ -69,7 +69,7 @@ public class ExamenController {
 
     // GET /api/examens/patient/{patientId}
     @GetMapping("/patient/{patientId}")
-    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE')")
+    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE', 'INFIRMIER', 'ASSISTANT')")
     @Operation(summary = "Lister les examens d'un patient")
     public ResponseEntity<?> getByPatient(@PathVariable Long patientId) {
         List<ExamenResponse> liste = examenService.getByPatient(patientId);

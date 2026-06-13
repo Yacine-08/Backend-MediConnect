@@ -18,12 +18,14 @@ public class RendezVousResponse {
     private Long medecinId;
     private String nomMedecin;
     private String prenomMedecin;
+    private String specialiteMedecin;
     private String hopital;
     private LocalDateTime dateHeure;
     private TypeRendezVous type;
     private StatutRendezVous statut;
     private String motif;
     private String lienVideo;
+    private LocalDateTime dateProposee;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

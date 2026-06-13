@@ -26,6 +26,22 @@ public class MedecinController {
 
     private final MedecinService medecinService;
 
+    // GET /api/medecins/search?q=terme — recherche pour tous les rôles soignants (initiation de transfert)
+    @GetMapping("/search")
+    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE', 'INFIRMIER', 'ASSISTANT', 'ADMIN')")
+    @Operation(summary = "Rechercher des médecins par nom/prénom (tous rôles soignants)")
+    public ResponseEntity<List<MedecinResponse>> search(@RequestParam String q) {
+        return ResponseEntity.ok(medecinService.search(q.trim()));
+    }
+
+    // GET /api/medecins/disponibles — médecins disponibles pour prise de RDV
+    @GetMapping("/disponibles")
+    @PreAuthorize("hasAnyRole('PATIENT', 'ASSISTANT', 'INFIRMIER', 'ADMIN', 'MEDECIN', 'CARDIOLOGUE')")
+    @Operation(summary = "Médecins disponibles pour prise de RDV")
+    public ResponseEntity<List<MedecinResponse>> getDisponibles() {
+        return ResponseEntity.ok(medecinService.getDisponibles());
+    }
+
     // GET /api/medecins
     // ADMIN : tous les médecins, avec filtres optionnels
     @GetMapping
@@ -70,13 +86,31 @@ public class MedecinController {
     }
 
     // GET /api/medecins/me
-    // Raccourci pour le médecin connecté
+    // Raccourci pour le médecin ou cardiologue connecté
     @GetMapping("/me")
-    @PreAuthorize("hasRole('MEDECIN')")
+    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE')")
     @Operation(summary = "Mon profil médecin")
     public ResponseEntity<MedecinResponse> monProfil(
             @AuthenticationPrincipal User utilisateurConnecte) {
         return ResponseEntity.ok(medecinService.getById(utilisateurConnecte.getId()));
+    }
+
+    // PATCH /api/medecins/me/disponibilite — médecin bascule sa propre disponibilité
+    @PatchMapping("/me/disponibilite")
+    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE')")
+    @Operation(summary = "Basculer ma disponibilité (MEDECIN)")
+    public ResponseEntity<?> toggleDisponibilite(
+            @AuthenticationPrincipal User utilisateurConnecte) {
+        MedecinResponse medecin = medecinService.toggleDisponibilite(utilisateurConnecte.getId());
+        String msg = Boolean.TRUE.equals(medecin.getDisponible())
+                ? "Vous êtes maintenant disponible pour les rendez-vous."
+                : "Vous n'êtes plus disponible pour les rendez-vous.";
+        return ResponseEntity.ok(Map.of(
+                "success", true,
+                "message", msg,
+                "data", medecin,
+                "timestamp", LocalDateTime.now()
+        ));
     }
 
     // PUT /api/medecins/{id}
@@ -130,6 +164,32 @@ public class MedecinController {
                 "success", true,
                 "message", "Compte médecin désactivé.",
                 "data", medecin,
+                "timestamp", LocalDateTime.now()
+        ));
+    }
+
+    // PATCH /api/medecins/{id}/valider — ADMIN : valider le profil d'un médecin
+    @PatchMapping("/{id}/valider")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Valider le profil d'un médecin (ADMIN)")
+    public ResponseEntity<?> valider(@PathVariable Long id) {
+        MedecinResponse medecin = medecinService.valider(id);
+        return ResponseEntity.ok(Map.of(
+                "success", true,
+                "message", "Profil médecin validé. Le médecin peut maintenant se connecter.",
+                "data", medecin,
+                "timestamp", LocalDateTime.now()
+        ));
+    }
+
+    // GET /api/medecins/en-attente — ADMIN : médecins en attente de validation
+    @GetMapping("/en-attente")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Médecins en attente de validation (ADMIN)")
+    public ResponseEntity<?> getEnAttente() {
+        return ResponseEntity.ok(Map.of(
+                "success", true,
+                "data", medecinService.getEnAttente(),
                 "timestamp", LocalDateTime.now()
         ));
     }

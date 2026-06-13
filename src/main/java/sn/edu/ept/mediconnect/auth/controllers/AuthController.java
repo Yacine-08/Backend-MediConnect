@@ -9,13 +9,14 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import sn.edu.ept.mediconnect.auth.services.AuthService;
 import sn.edu.ept.mediconnect.users.User;
+import sn.edu.ept.mediconnect.users.medecin.Medecin;
 import sn.edu.ept.mediconnect.dtos.*;
 import sn.edu.ept.mediconnect.dtos.ResetPasswordRequest;
 
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+// import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -38,9 +39,10 @@ public class AuthController {
                     "data", response
             ));
         } catch (Exception e) {
+            String msg = e.getMessage();
             return ResponseEntity.badRequest().body(Map.of(
                     "success", false,
-                    "message", e.getMessage()
+                    "message", msg != null ? msg : "Erreur inattendue lors de l'inscription"
             ));
         }
     }
@@ -190,6 +192,10 @@ public class AuthController {
         userDto.setEmail(userDetails.getEmail());
         userDto.setTelephone(userDetails.getTelephone());
         userDto.setRole(userDetails.getRole());
+
+        if (userDetails instanceof Medecin m && m.getEtablissement() != null) {
+            userDto.setEtablissement(m.getEtablissement().getNom());
+        }
 
         return ResponseEntity.ok(Map.of(
                 "success", true,

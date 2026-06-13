@@ -27,7 +27,7 @@ public class AlerteController {
 
     // GET /api/alertes/{id}
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE')")
+    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE', 'INFIRMIER')")
     @Operation(summary = "Détail d'une alerte")
     public ResponseEntity<?> getById(@PathVariable Long id) {
         AlerteResponse alerte = alerteService.getById(id);
@@ -41,7 +41,7 @@ public class AlerteController {
     // GET /api/alertes/non-acquittees
     // Toutes les alertes en attente
     @GetMapping("/non-acquittees")
-    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE')")
+    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE', 'INFIRMIER')")
     @Operation(summary = "Lister les alertes non acquittées")
     public ResponseEntity<?> getNonAcquittees() {
         List<AlerteResponse> liste = alerteService.getNonAcquittees();
@@ -54,7 +54,7 @@ public class AlerteController {
 
     // GET /api/alertes/patient/{patientId}
     @GetMapping("/patient/{patientId}")
-    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE')")
+    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE', 'INFIRMIER')")
     @Operation(summary = "Alertes d'un patient")
     public ResponseEntity<?> getByPatient(@PathVariable Long patientId) {
         List<AlerteResponse> liste = alerteService.getByPatient(patientId);
@@ -67,7 +67,7 @@ public class AlerteController {
 
     // GET /api/alertes/consultation/{consultationId}
     @GetMapping("/consultation/{consultationId}")
-    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE')")
+    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE', 'INFIRMIER')")
     @Operation(summary = "Alertes d'une consultation")
     public ResponseEntity<?> getByConsultation(@PathVariable Long consultationId) {
         List<AlerteResponse> liste = alerteService.getByConsultation(consultationId);
@@ -80,7 +80,7 @@ public class AlerteController {
 
     // GET /api/alertes/niveau/{niveau}
     @GetMapping("/niveau/{niveau}")
-    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE')")
+    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE', 'INFIRMIER')")
     @Operation(summary = "Alertes par niveau")
     public ResponseEntity<?> getByNiveau(@PathVariable NiveauAlerte niveau) {
         List<AlerteResponse> liste = alerteService.getByNiveau(niveau);
@@ -92,9 +92,9 @@ public class AlerteController {
     }
 
     // PATCH /api/alertes/{id}/acquitter
-    // Médecin / Cardiologue acquitte une alerte
+    // Médecin / Cardiologue / Infirmier acquitte une alerte
     @PatchMapping("/{id}/acquitter")
-    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE')")
+    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE', 'INFIRMIER')")
     @Operation(summary = "Acquitter une alerte")
     public ResponseEntity<?> acquitter(@PathVariable Long id) {
         AlerteResponse alerte = alerteService.acquitter(id);

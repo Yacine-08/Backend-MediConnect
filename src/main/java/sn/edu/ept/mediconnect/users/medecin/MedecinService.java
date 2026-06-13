@@ -40,6 +40,23 @@ public class MedecinService {
     }
 
     @Transactional(readOnly = true)
+    public List<MedecinResponse> getDisponibles() {
+        return medecinRepository.findByDisponibleTrueAndActifTrue()
+            .stream()
+            .map(this::toResponse)
+            .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public MedecinResponse toggleDisponibilite(Long medecinId) {
+        Medecin medecin = find(medecinId);
+        medecin.setDisponible(!Boolean.TRUE.equals(medecin.getDisponible()));
+        medecinRepository.save(medecin);
+        log.info("Disponibilité médecin id={} → {}", medecinId, medecin.getDisponible());
+        return toResponse(medecin);
+    }
+
+    @Transactional(readOnly = true)
     public List<MedecinResponse> getActifs() {
         return medecinRepository.findByActif(true)
             .stream()
@@ -143,6 +160,23 @@ public class MedecinService {
         medecinRepository.save(medecin);
         log.info("Médecin désactivé : id={}", id);
         return toResponse(medecin);
+    }
+
+    @Transactional
+    public MedecinResponse valider(Long id) {
+        Medecin medecin = find(id);
+        medecin.setVerified(true);
+        medecinRepository.save(medecin);
+        log.info("Médecin validé par admin : id={}", id);
+        return toResponse(medecin);
+    }
+
+    @Transactional(readOnly = true)
+    public List<MedecinResponse> getEnAttente() {
+        return medecinRepository.findAll().stream()
+                .filter(m -> !Boolean.TRUE.equals(m.getVerified()))
+                .map(this::toResponse)
+                .collect(Collectors.toList());
     }
 
     private Medecin find(Long id) {

@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface OtpCodeRepository extends JpaRepository<OtpCode, Long> {
+public interface OtpCodeRepository extends JpaRepository<OtpCode, UUID> {
 
     // Dernier OTP valide pour un utilisateur
     @Query("""
