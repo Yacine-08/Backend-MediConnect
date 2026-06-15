@@ -24,6 +24,9 @@ public class ExamenResponse {
     private Long tailleFichier;
     private StatutExamen statut;
     private LocalDateTime dateAcquisition;
+    private String analyseIaJson;
+    private Boolean analyseIaAnomalie;
+    private Float analyseIaConfiance;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

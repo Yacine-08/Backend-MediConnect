@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sn.edu.ept.mediconnect.dtos.EcgAnalyseResultatRequest;
 import sn.edu.ept.mediconnect.dtos.ExamenRequest;
 import sn.edu.ept.mediconnect.dtos.ExamenResponse;
 import sn.edu.ept.mediconnect.exceptions.BusinessException;
@@ -98,6 +99,29 @@ public class ExamenService {
                 .collect(Collectors.toList());
     }
 
+    // Sauvegarder le résultat de l'analyse IA ECG
+    @Transactional
+    public ExamenResponse sauvegarderAnalyseEcg(Long id, EcgAnalyseResultatRequest req) {
+        Examen examen = find(id);
+        examen.setAnalyseIaJson(req.getAnalyseIaJson());
+        examen.setAnalyseIaAnomalie(req.getAnalyseIaAnomalie());
+        examen.setAnalyseIaConfiance(req.getAnalyseIaConfiance());
+        examen.setStatut(StatutExamen.REALISE);
+        examen.setDateAcquisition(LocalDateTime.now());
+        examenRepository.save(examen);
+        log.info("Analyse IA ECG sauvegardée : id={} anomalie={}", id, req.getAnalyseIaAnomalie());
+        return toResponse(examen);
+    }
+
+    // Lister tous les examens ECG
+    @Transactional(readOnly = true)
+    public List<ExamenResponse> getByType(ExamenType type) {
+        return examenRepository.findByType(type)
+                .stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
+    }
+
     // Détail d'un examen
     @Transactional(readOnly = true)
     public ExamenResponse getById(Long id) {
@@ -121,6 +145,9 @@ public class ExamenService {
                 .tailleFichier(e.getTailleFichier())
                 .statut(e.getStatut())
                 .dateAcquisition(e.getDateAcquisition())
+                .analyseIaJson(e.getAnalyseIaJson())
+                .analyseIaAnomalie(e.getAnalyseIaAnomalie())
+                .analyseIaConfiance(e.getAnalyseIaConfiance())
                 .createdAt(e.getCreatedAt())
                 .updatedAt(e.getUpdatedAt());
 

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import sn.edu.ept.mediconnect.dtos.EcgAnalyseResultatRequest;
 import sn.edu.ept.mediconnect.dtos.ExamenRequest;
 import sn.edu.ept.mediconnect.dtos.ExamenResponse;
 
@@ -95,6 +96,35 @@ public class ExamenController {
                 "success", true,
                 "message", "Examen marqué comme réalisé.",
                 "data", examen,
+                "timestamp", LocalDateTime.now()
+        ));
+    }
+
+    // PATCH /api/examens/{id}/ecg-resultat — Sauvegarder le résultat de l'analyse IA
+    @PatchMapping("/{id}/ecg-resultat")
+    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE')")
+    @Operation(summary = "Sauvegarder le résultat de l'analyse ECG par IA")
+    public ResponseEntity<?> sauvegarderAnalyseEcg(
+            @PathVariable Long id,
+            @RequestBody EcgAnalyseResultatRequest req) {
+        ExamenResponse examen = examenService.sauvegarderAnalyseEcg(id, req);
+        return ResponseEntity.ok(Map.of(
+                "success", true,
+                "message", "Résultat ECG sauvegardé.",
+                "data", examen,
+                "timestamp", LocalDateTime.now()
+        ));
+    }
+
+    // GET /api/examens/type/ecg — Tous les examens ECG (dashboard)
+    @GetMapping("/type/ecg")
+    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE', 'INFIRMIER', 'ASSISTANT')")
+    @Operation(summary = "Lister tous les examens ECG")
+    public ResponseEntity<?> getAllEcg() {
+        List<ExamenResponse> liste = examenService.getByType(ExamenType.ECG);
+        return ResponseEntity.ok(Map.of(
+                "success", true,
+                "data", liste,
                 "timestamp", LocalDateTime.now()
         ));
     }

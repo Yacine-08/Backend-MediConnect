@@ -46,6 +46,15 @@ public class Examen {
     @Column(name = "date_acquisition")
     private LocalDateTime dateAcquisition;
 
+    @Column(name = "analyse_ia_json", columnDefinition = "TEXT")
+    private String analyseIaJson;
+
+    @Column(name = "analyse_ia_anomalie")
+    private Boolean analyseIaAnomalie;
+
+    @Column(name = "analyse_ia_confiance")
+    private Float analyseIaConfiance;
+
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
