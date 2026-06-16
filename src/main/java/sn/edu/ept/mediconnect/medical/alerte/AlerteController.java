@@ -23,7 +23,19 @@ public class AlerteController {
 
     private final AlerteService alerteService;
 
-
+    // POST /api/alertes — Créer une alerte clinique
+    @PostMapping
+    @PreAuthorize("hasAnyRole('MEDECIN', 'CARDIOLOGUE', 'INFIRMIER')")
+    @Operation(summary = "Créer une alerte clinique")
+    public ResponseEntity<?> create(@Valid @RequestBody AlerteRequest req) {
+        AlerteResponse alerte = alerteService.create(req);
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
+                "success", true,
+                "message", "Alerte créée avec succès.",
+                "data", alerte,
+                "timestamp", LocalDateTime.now()
+        ));
+    }
 
     // GET /api/alertes/{id}
     @GetMapping("/{id}")
